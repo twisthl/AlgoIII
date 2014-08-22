@@ -3,8 +3,8 @@
 using namespace std;
 
 int main(){
-	int cantBoards;
-	int maxJump;
+	int cantTablones;
+	int saltoMaximo;
 
 	while(true){
 
@@ -14,23 +14,23 @@ int main(){
 		}
 
 		//1er y 2do params cantidad de tablas del puente y salto maximo.
-		cin >> cantBoards;
-		cin >> maxJump;
+		cin >> cantTablones;
+		cin >> saltoMaximo;
 
-		//cout << "cantidad de tablas: " << cantBoards << endl;
-		//cout << "salto maximo: " << maxJump << endl;
+		//cout << "cantidad de tablas: " << cantTablones << endl;
+		//cout << "salto maximo: " << saltoMaximo << endl;
 
-		LBoardState* boards = new LBoardState();
+		LTablonesEstado* tablones = new LTablonesEstado();
 
 		//Armo la lista de estado de Tablas del puente
-		for(int i=0; i<cantBoards;i++){
-			cin >> boardI;
+		for(int i=0; i<cantTablones;i++){
+			cin >> tablonI;
 
-			boards->push_back(boardI);
+			tablones->push_back(tablonI);
 		}
 		cin >> endEntry;
 
-		res = resolver(cantBoards, maxJump, *boards);
+		res = resolver(cantTablones, saltoMaximo, *tablones);
 	
 
 

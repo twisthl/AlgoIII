@@ -9,8 +9,8 @@
 
 using namespace std;
 
-typedef std::vector<int> LBoardState;
-typedef std::vector<int> LJumps;
+typedef std::vector<int> LTablonesEstado;
+typedef std::vector<int> LSaltos;
 
 
-LJumps resolver(int cantBoards, int maxJumps, LBoardState& boards);
+LSaltos resolver(int cantTablones, int saltoMaximo, LTablonesEstado& tablones);
