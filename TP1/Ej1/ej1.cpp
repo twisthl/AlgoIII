@@ -5,6 +5,8 @@ using namespace std;
 int main(){
 	int cantTablones;
 	int saltoMaximo;
+	int tablonI;
+	int endEntry;
 
 	while(true){
 
@@ -17,10 +19,11 @@ int main(){
 		cin >> cantTablones;
 		cin >> saltoMaximo;
 
-		//cout << "cantidad de tablas: " << cantTablones << endl;
-		//cout << "salto maximo: " << saltoMaximo << endl;
+		cout << "cantidad de tablas: " << cantTablones << endl;
+		cout << "salto maximo: " << saltoMaximo << endl;
 
 		LTablonesEstado* tablones = new LTablonesEstado();
+		LSaltos res = LSaltos();
 
 		//Armo la lista de estado de Tablas del puente
 		for(int i=0; i<cantTablones;i++){

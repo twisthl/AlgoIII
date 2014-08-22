@@ -2,23 +2,14 @@
 
 using namespace std;
 
-LJumps resolver(int cantTablones, int saltoMaximo, LTablonesEstado& tablones){
-	int ini = 1;
+LSaltos resolver(int cantTablones, int saltoMaximo, LTablonesEstado& tablones){
+//	int ini = 1;
 
-
-//	vector<int>::iterator lastBoard;
-//	int ultimoTablon;
-//	int ultimoTablonValido;
-
-	LSaltos saltos* = new LSaltos();
-	
-	std::vector<int>::iterator ultimoTablon = tablones.begin();
+	LSaltos* saltos = new LSaltos();
+//	std::vector<int>::iterator ultimoTablon = tablones.begin();
 	
 	int contadorSaltoMaximo = 0;
-	
-	//inserto el primer tablon
-//	saltos->push_back(1);
-	
+	int tablonASaltar;	
 	bool encontroSalto = false;
 
 //	for(ultimoTablon; ultimoTablon != tablones.end(); ultimoTablon++){
@@ -41,16 +32,5 @@ LJumps resolver(int cantTablones, int saltoMaximo, LTablonesEstado& tablones){
 			break;
 		}
 	}
-	
-	return saltos;//Tambien devolver si se pudo llegar al final con saltos.
-
-
-/*	for(int i=0; i < saltoMaximo; i++){
-		int tablonMasLejano = i;
-		if(tablones[i] == 1){
-			//actualizo los datos
-			tablonMasLejano = i;
-		}
-	}
-*/
+	return *saltos;//Tambien devolver si se pudo llegar al final con saltos.
 }
