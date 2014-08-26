@@ -1,0 +1,443 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{fixltx2e}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{lastpage}
+\usepackage{caratula}
+\usepackage[colorlinks=true, linkcolor=black]{hyperref}
+\usepackage{calc}
+\usepackage{alltt}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{graphicx, subfigure}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% Pseudocódigo a lo Cormen
+\usepackage{package/clrscode}
+
+\input{spanishAlgorithmic}
+
+
+
+\parskip = 11pt
+
+\newcommand{\sisosi}{\Leftrightarrow}
+
+\newcommand{\Frac}{\displaystyle\frac}
+
+\newcommand{\suma}[2]{\sum\limits_{#1}^{#2}}
+
+\newcommand{\Suma}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+
+\begin{document}
+
+
+\section{Ejercicio 1}
+
+En este ejercicio se nos pide un algoritmo mejor que O($n^2$) para devolver el dia en el cual de comenzar el inspector su trabajo le permita controlar la mayor cantidad de camiones, donde '$n$' es la cantidad de camiones.\\
+Hay dos problemas ¿Como armamos los intervalos y cómo contamos en cada intervalo la cantidad de camiones?
+
+\subsection{Idea}
+
+\emph{Cómo elegimos cada intervalo}
+
+Una opción sería obtener el primer y último día de arrivo de camiones y por cada día comprendido entre ambos contar la cantidad de camiones que entran en el intervalo.\\
+El problema con esta propuesta es que ahora el algoritmos depende no solo de la cantidad de camiones si no de la diferencia en dias de arribo entre el primero y último.
+¿Es necesario recorrer tanto? o dicho de otra manera ¿Hace falta considerar todos los posibles días en que el inspector puede comenzar su trabajo?\\
+
+Para visualizar mejor, hicimos un gráfico esquemático de tiempo en días. Cada intersección a la recta larga horizontal es un camión $C_i$ que llega en el día dado, donde $i$ es el orden. La llave de abajo representa el intervalo de tiempo donde el inspector se encontrará trabajando, aquí D es el intervalo en día dado al problema como dato y $t_i$ el día de comienzo del turno del inspector. Este es el valor buscado.\\ Veamos tres casos:\\
+
+
+Si se empieza el turno en un día arbitrario, anterior a la llegada de un camión:\\
+\includegraphics[scale=0.6]{imagenes/pre.png}\\
+se controla del camión cero al cinco.
+
+Si se empieza el turno en un día arbitrario entre dos camiones.\\
+\includegraphics[scale=0.6]{imagenes/pos.png}\\
+se controla el camión seis pero pierdo el cero.
+
+Si se empieza el turno justo en la llegada de un camión.\\
+\includegraphics[scale=0.6]{imagenes/cero.png}\\
+se controla el camion cero y el seis.\\
+Ahora $t_i = t_0 = C_0$
+
+Vemos que de los tres casos el óptimo, mejor o igual al resto, es el que tiene al inspector comenzando el mismo día que la llegada de un camión. Por eso llamamos a $t_i$, $t_0$ y ahora se cumple que $0 \le i < k$ con $k$ el orden de llegada del último camión.
+
+Tenemos entonces una cantidad de intervalos o de $t_i$ lineal con respecto a $n$. No decimos igual, porque hay algunas mejoras que se pueden agregar para que en algunos casos poder considerar menos que $n$ intervalos, pero sin embargo la relación sigue siendo lineal.
+
+\emph{¿Cómo contamos los camiones en cada intervalo?}
+
+Lo siguiente es para cada intervalo saber que cantidad de camiones el inspector revisa. Lo primero que a uno se le ocurre es algo como:
+
+\begin{codebox}
+\zi $c \gets 0$
+\RComment cantidad de camiones
+\zi \For $j \gets$ 0 \To $n$
+\zi \Do
+\zi   \If $C[j] < t_i + D$ 
+
+\zi
+\Then $c \gets c + 1$
+\End
+\End
+\zi
+\Return $c$
+\end{codebox}
+
+Con C un arreglo o lista de los días en los que llega cada camión - no necesariamente ordenada.\\
+Pero esta forma de contar es lineal. Nada impide que $t_i + D$ sea mayor al ante último camión y por lo tanto por cada $t_i$ haríamos una cantidad $n - 1$ de operaciones, esto nos deja en un algoritmo O($n^2$).
+
+Pero mirando el gráfico es claro que si puedo ubicar rápido cual es el último camion que llega justo antes que termine el turno del inspector, esto es si puedo hallar $max([j | C_j < t_i + D])$ con poco costo, se puede obtener la cantidad de camiones en una cantidad constante de pasos, mediante $c \gets j - i + 1$.\\
+Lo único que necesitamos para hacer esto es que nuestros datos estén dispuestos de forma similar al gráfico, esto es que estén ordenados y luego poder encontrar ``rápido'' el máximo $j$.\\
+
+Si nos construimos un arreglo en donde cada posición tenga el número de día de la llegada de un camión y además pedimos que esté ordenado, luego podemos buscar $j$ con una búsqueda binaria que cuesta O($log(n)$). Vamos a tener que hacer tantas busquedas binarias como intervalos posibles con lo cual la complejidad quedaría O($nlog(n)$), siempre y cuando ordenar el arreglo no nos lleve más, pero esto no es así dado que existen algoritmos de ordenamiento de exactamente esta complejidad.
+
+\emph{Observaciones finales}
+
+En realidad no es necesario recorrer todos los $t_i$ posibles. 
+Basta con seguir hasta que $t_j + D >= C_k$ con $k$ el último de los camiones y $j$ el \emph{primero}\footnote{asumo que por día pueden llegar más de un camión.} de los camiones que cumple esto, porque es evidente que $\forall i, j < j$ la cantidad de camiones que caen en dicho intervalo es una sucesión monótona decreciente.
+
+La búsqueda binaria que vamos a hacer tiene la particularidad que no busca un número particular, pues $t_i + D$ puede no ser un día en el que caiga camión alguno, si no el máximo de los valores menores a $t_i + D$. 
+
+\subsection{Pseudocódigo}
+
+\begin{codebox}
+\zi \RComment Requiere: $\id{largo(V)>1} \wedge \forall i,j$ $i<j : V[i] < V[j] \wedge a \le V[largo(V)]$
+\Procname{\proc{maximo-menor-a}(V, a)}
+\li \If $\id{largo(V)} = 2$ 
+\li	\Then	
+\li	\If $V[1] < a$
+\li		\Then \Return $V[1]$
+\li		\Else \Return $V[0]$
+	\End
+    \End
+%% \li \If $\id{largo(V)} = 2 \wedge V[1] < a$
+%% \li 	\Then \Return $V[1]$
+%% \li \ElseIf $\id{largo(V)} = 2$  
+%% \li	\Then \Return $V[0]$
+%% 	\End
+\li $i \gets \id{largo(V)} / 2$ 
+\li \If $V[i] < a$ 
+\li	\Then \Return \proc{maximo-menor-a}($V[i+1$ .. $ \id{largo(V)}-1] $)
+\li	\Else \Return \proc{maximo-menor-a}(V[$0$ .. $i-1$])
+    \End
+\end{codebox}
+
+\begin{codebox}
+\zi \Comment Requiere: $D \ge 1$ 
+\Procname{\proc{dia-optimo}(V, D)}
+\li \proc{ordenar}(V) \RComment O($n.log(n)$)
+\li $c \gets 0$
+\li $i \gets -1$
+\li $k \gets 0$
+
+\li \If $V[0] + D > V[\id{largo}(V)]$
+\li 	\Then \Return $(0, \id{largo}(V))$
+\li	\Else 
+
+\li \Repeat \RComment O(n)
+\li 	$i \gets i + 1$
+\li	$j \gets $ \proc{lower\_bound}(V[i..\id{largo(V)}], V[i] + D - 1) \RComment O($log(n)$)
+\li	\If $c < j - i$
+\li		\Then $c \gets j - i$
+\li		      $k \gets V[i]$
+	\End
+\li \Until $V[i] + D \le V[\id{largo}(V)]$ 
+\li	\If $V[i] + D - 1 \ge V[\id{largo(V)}] \wedge c = j - i $
+\li		\Then 
+\li			$ c \gets c + 1$
+		\End
+\li \Return $(k, c)$
+	\End
+
+
+\RComment O($n.log(n)$)
+\end{codebox}
+
+\subsection{An\'alisis}
+
+Como podemos ver en el gr\'afico la curva que se produce es del orden de O(nlog(n)). A simplevista no se puede apreciar f\'acilmente, pero al graficar la curva que resulta de dividirla por nlog(n), vemos que tiende a ser una constante. La dispersi\'on para valores "peque\'nos" de n queda disuelta al ir aumentando. Con lo cual podemos concluir que la curva que mejor ajusta al calculo te\'orico es nlog(n) y k(n) se aprox\'ima a la constante que no es contemplada en los c\'alculos. Esta constante servir\'ia para comparar implementaciones de algor\'itmos con una misma complejidad te\'orica.
+
+
+%----------------------------------------------------------------------------------------------------------------
+
+\section{Ejercicio 2}
+
+\subsection{Idea}
+
+En este problema tenemos que devolver un orden en el cual las piezas al ser fabricadas minimicen la pérdida de dinero del joyero por la devaluación del metal.\\
+La complejidad que se nos pide es estrictamente menor a O($n^2$) con lo cual explorar todas las combinaciones no sirve pues es O($n!$).\\
+La pregunta es ¿Qué usamos para ordenar?.
+Intuitivamente podemos pensar que si el joyero fabrica las piezas que menos tiempo le llevan, tendrá menos pérdida, al acumulularse menos perdidas en el tiempo porque hay menos piezas pendientes.\\
+Sin embargo con un simple contra ejemplo vemos que no es una elección que nos de una respuesta óptima.\\
+\bc
+$p_1 : (t_1 = 1, d_1 = 1)$\\
+$p_2 : (t_2 = 3, d_2 = 9)$\\
+$t_1 \le t_2  \Rightarrow$ $PM = [p_1, p_2]$\\
+Sería la permutación buscada, y su costo:\\
+$C(2, PM) = d_1t_1 + d_2(t_1+t_2) = 1 + 9*4 = 37$\\
+Pero la permutación \\
+$PM^* = [p_2, p_1]$\\
+$C(2, PM^*) = d_2t_2 + d_1(t_1+t_2) = 3*9 + 1*4 = 31$\\
+\ec
+Es decir es más importante el precio y el algoritmo propuesto nos lleva a una permutación incorrecta. 
+
+Viendo de nuevo un poco la fórmula de costo para dos piezas \ldots\\
+\bc
+$d_1t_1 + d_2(t_1+t_2)$
+\ec
+Si $t_1 = t_2 \Rightarrow t_1 < t_1 + t_2$ entonces conviene que $d_2 < d_1$.\\
+Podríamos ordenar entonces solamente considerando el precio. \\
+Es facil ver que tendríamos un problea similar, pero antes veamos un contrajemplo.
+\bc
+$p_1 : (t_1 = 1, d_1 = 1)$\\
+$p_2 : (t_2 = 10, d_2 = 5)$\\
+$PM = [p_2, p_1]$ es la permutación que arrojaría el algoritmo y su costo:\\
+$C(2, PM) = d_2t_2 + d_1(t_1 + t_2) = 5*10 + 1(10+1) = 50 + 11 = 61$\\
+Mientras que la permutación:\\
+$PM^* = [p_1, p_2]$ tiene un costo de \\
+$C(2, PM^*) = d_1t_1 + d_2(t_1 + t_2) = 1*1 + 5(10+1) = 1 + 55 = 56$\\
+\ec
+
+De hecho reordenando la fórmula de costo
+\bc
+$d_1$ $t_1 + d_2(t_1+t_2) = t_1(d_1+d_2) + t_2$ $d_2$
+\ec
+Lo cual nos dice que si los precios son todos iguales, conviene ordenar los tiempos de menor a mayor, que es lo que habiamos propuesto antes.\\
+Entonces tenemos por un lado que tenemos que ordenar los precios de mayor a menor y por otro lado que los tiempos de menor a mayor, pero esto no siempre es posible, porque las piezas pueden tener ordenes arbitrarios y es poco probable que esto se pueda hacer siempre.\\
+¿Cómo podemos mantener la idea?\\
+Podemos usar el cociente $t_i/d_i$ para la pieza $i$ y ordenar según el mismo.\\
+Veamos los dos ejemplos anteriores:\\
+\bc
+$t_1 / d_1 = 1$\\
+$t_2 / d_2 = 3 / 9 = 1 / 3$\\
+$t_2 / d_2 \le t_1 / d_1 $\\
+entonces la permutación devuelta es la $[p_2, p_1]$ que es la óptima\\
+
+y para el otro ejemplo...\\
+$t_1 / d_1 = 1$\\
+$t_2 / d_2 = 10 / 5 = 1 / 2$\\
+$t_2 / d_2 \le t_1 / d_1 $\\
+entonces la permutación devuelta es la $[p_2, p_1]$ que era la óptima\\
+\ec
+
+Es importante notar que la desigualdad, debe ser menor o igual y no menor estricta, si no se puede dar el caso de no poder ordenar el arreglo, por ejemplo:
+\bc
+$p_1 : (t_1 = 1, d_1 = 2)$
+$p_2 : (t_1 = 5, d_2 = 10)$
+\ec
+Sería una entrada inválida si el algoritmo usara desigualdades estrictas. Relajemos está condición.\\
+Las razones de $t / d$ dan lo mismo. Ahora nuestro criterio no permite distinguir entre ambas permutaciones, entonces surgue la siguiente pregunta. ¿Dan lo mismo los costos de ambas permutaciones?\\
+Veamos:\\
+\bc
+$PM_1 = [p_1,p_2], PM_2 = [p_2, p_1]$\\
+$C(2, PM_1) = 2*1 + 10*6 = 62 $\\
+$C(2, PM_2) = 10*5 + 2*6 = 62 $\\ 
+$C(2, PM_1) = C(2, PM_2)$
+\ec
+Aparentemente vamos bien encaminados.
+
+\subsubsection{Pseudocódigo}
+
+\begin{codebox}
+\Procname{$\proc{Permutación-Con-Menor-Costo}(V)$}
+\zi
+  \Comment Calculamos los cocientes
+\li $C \gets$ Arreglo($\id{largo}[V]$)
+\li \For $i \gets 1$ \To $\id{largo}[V]$  \RComment O($n$)
+\li   \Do
+\li     $C[i] \gets (\id{V[i].tiempo} / \id{V[i].perdida-por-dia}, i) $  
+     \End
+     \RComment O(1)
+\zi
+  \Comment Ordenamos según el cociente de $C$
+\li \proc{algun-algoritmo-de-ordenamiento}(C) \RComment O($n^2$) o O($nlog(n)$)
+\li $R \gets  \id{Array[largo(C)]}$
+\li \For $i \gets 1$ \To $\id{largo}[C]$ \RComment O($n$)
+\li   \Do
+\li     $R[i] \gets C[i].indice$
+      \End
+\li \Return $R$
+\RComment O($n$) + O($n^2$) = O($n^2$) ó \zi
+\RComment O($n$) + O($nlog(n)$) = O($nlog(n)$) \zi \RComment dependiendo del algoritmo de ordenamiento usado.
+\end{codebox}
+
+\subsection{Correctitud}
+
+Tenemos un orden en que se fabricarán las piezas, esto es una permutación y queremos encontrar la que minimice costo.
+
+Sean $t_i$, el tiempode fabricaci\'on, $d_i$ la perdida por día y $p_i$ la posición en la permutación de la $i$-esima pieza.
+
+Sea $PM$ una permutaci\'on de las piezas en el orden de fabricaci\'on :
+
+\bc
+$PM = [p_1, p_2, \ldots , p_n]$
+\ec
+
+Como ya vimos, la ecuaci\'on de costos para una permitaci\'on es :
+
+\bc
+$C(n, PM) = d_1t_1 + d_2(t_1 + t_2) + \ldots + d_n(t_1 + t_2 + \ldots +t_n)$\\
+\ec
+
+Lo que tambi\'en se puede expresar en una formula cerrada como:
+
+\bc
+$\Suma{i=1}{n}(d_i \Suma{j=1}{i}t_j)$
+\ec
+
+\texttt{Por absurdo vamos a demostrar que si yo tengo una permutaci\'on \'optima no ordenada segun el cociente $t_i/d_i$ de sus piezas, de menor a mayor, puedo encontrar otra permutaci\'on cuya ecuaci\'on de costos sea menor a la ecuaci\'on de costos de la \'optima, con lo cual eso nos llevar\'ia al absurdo y el mundo puede colapsar.}
+
+Entonces:
+
+Sea PM una permutaci\'on \textbf{\'optima} con por lo menos dos elementos no ordeanados seg\'un nuestro criterio establecido.
+
+Sean $p_i$, $p_{i+1}$ dos piezas consecutivas\footnote{No tienen por que ser consecutivas pero se toma as\'i para simplificar los indices en los c\'alculos.} de la permutaci\'on $PM$ que no cumplen el orden definido. Lo que quiere decir que $\frac{t_i}{d_i} > \frac{t_{i+1}}{d_{i+1}}$
+
+Luego me genero una nueva permutaci\'on $PM^*$ exactamente igual a $PM$ salvo el orden de $p_i$, $p_{i+1}$. En esta nueva permutaci\'on estas dos piezas cumplen el orden pretendido.
+
+\bc
+$PM = [p_1, p_2, \ldots, p_i, p_{i+1}, \ldots , p_n$]\\
+$PM = [p_1, p_2, \ldots, p_{i+1}, p_i, \ldots , p_n$]
+\ec
+
+
+Veamos entonces las ecuaciones de costos de cada una:
+
+\bc
+$C(n, PM) = d_1t_1 + d_2(t_1 + t_2) + \ldots + d_i\suma{j=1}{i}t_j + d_{i+1}\suma{j=1}{i+1}t_j + \ldots + d_n(t_1 + t_2 + \ldots +t_n)$\\
+$C(n, PM^*) = d_1t_1 + d_2(t_1 + t_2) + \ldots + d_{i+1}(\suma{j=1}{i-1}t_j + t_{i+1})+ d_i(\suma{j=1}{i+1}t_j)  + \ldots + d_n(t_1 + t_2 + \ldots +t_n)$\\
+\ec
+
+Como \textbf{PM} es una permutaci\'on \'optima entonces :
+
+\bc
+$C(n, PM) - C(n,PM^*) \le 0$\\
+$\sisosi$\\
+$ d_i\suma{j=1}{i}t_j + d_{i+1}\suma{j=1}{i+1}t_j - (d_{i+1}(\suma{j=1}{i-1}t_j + t_{i+1})+ d_i\suma{j=1}{i+1}t_j) \le 0$\\
+$\sisosi$\\
+$d_{i}(\suma{j=1}{i}t_j - \suma{j=1}{i+1}t_j) + d_{i+1}(\suma{j=1}{i+1}t_j - \suma{j=1}{i-1}t_j + t_{i+1}) \le 0$\\
+$\sisosi$\\
+$d_{i+1}$ $t_i - d_i$ $t_{i+1}$ $\le 0$\\
+$\sisosi$\\
+$d_{i+1}$ $t_i \le d_i$ $t_{i+1}$\\
+$\sisosi$\\
+$\frac{t_i}{d_i} \le \frac{t_{i+1}}{d_{i+1}}$\\
+\ec
+
+Lo cu\'al es \textsc{absuro}, pues $\frac{t_i}{d_i} > \frac{t_{i+1}}{d_{i+1}}$. Y el absurdo provino de suponer que la permutaci\'on $PM$ es \'optima y no est\'a ordenada de menor a mayor segun $\frac{t_i}{d_i}$.\\
+
+
+%%Vamos a demostrar por inducción que la \emph{permutación óptima} para ordenar las piezas y minimizar la pérdida es la que cumple:
+
+%%lema:
+%%$ \forall p_i < p_j \le n $
+%%$ t_i / d_i \le t_j / d_j $
+
+%Es decir, el arreglo está ordenado de menor a mayor según el cociente $\frac{t_i}{d_i}$ de la pieza i-ésima.
+
+%%\emph{Caso base:}
+
+%%Para una sola pieza es trivial.
+
+%%Para dos piezas $n=2$
+%%\begin{center}
+%%$P(2):= \forall p_i < p_j \le 2 : \Frac{t_i}{d_i} \le \Frac{t_j}{d_j} $
+%%\end{center}
+
+%%Veamos como es el costo de fabricar en un determinado orden las piezas.\\
+%%Empecemos por el caso $n=2$ para luego generalizar para $n$ arbitrario.\\
+
+%%Sea $pm_1$ la permutación $p_i < p_j$ y $pm_2$ la que cumple $p_j < p_i$.\\
+%%\begin{center}
+%%$C(2, pm_1) = d_1t_1 + d_2(t_1+t_2)$\\
+%%$C(2, pm_2) = d_2t_2 + d_1(t_1+t_2)$\\
+%%\end{center}
+
+%%Es claro que no hay más permutaciones posibles. Ahora veamos que condiciones se tienen que cumplir sobre las propiedades de las piezas para elegir $pm_1$ sobre $pm_2$.
+%%\begin{center}
+%%$\Delta C(2) = C(2, pm_1) - C(2, pm_2) = d_1t_1 + d_2(t_1+t_2) - (d_2t_2 + d_1(t_1+t_2)) = $\\
+%%$d_1(t_1 - t_1 - t_2) + d_2(t_1+t_2 - t_2) = -d_1t_2 + d_2t_1 = d_2t_1 - d_1t_2$ 
+%%\end{center}
+
+%%Suponemos que el costo en $pm_1$ es menor que en $pm_2$, o lo que es lo mismo...\\
+
+%\bc
+%$\Delta C(2) \le 0 \sisosi d_2t_1 - d_1t_2 \le 0 \sisosi d_2t_1 \le d_1t_2 \sisosi \Frac{t_1}{d_1} \le %%\Frac{t_2}{d_2}$\\
+%\ec
+
+%con lo cual la permutación $pm_1$ es menos costosa que $pm_2$ solo si pasa esto. 
+%Si la desigualdad no se cumple, simplemente se toma la permutación $pm_2$ y se sigue cumpliendo lo que %se quiere demostrar, porque ahora $p_2 < p_1$.
+
+%llegamos a lo que queriamos demostrar para el caso base $n=2$\\
+
+%\emph{Paso inductivo:}
+
+%Vamos a suponer que vale P(n).%\footnote{Hay que hacer notar que $pm[1,n-1]_o$ puede no ser una %subpermutación de $pm[1,n]_o$ porque el elemento $n$ puede no haber sido agregado al final de la misma. Lo que si vale para ambas permutaciones es que se cumple la propiedad, están ordenados crecientemente según el cociente tiempo, perdida por día.}
+%Para demostrar P(n+1) vamos a ver que sucede con la función de costo para $n+1$. %Para simplificar vamos a considerar que \emph{cada pieza agregada, es decir la pieza $n+1$ tiene un cociente mayor a todas} y vamos a ver si el costo es menor cuando queda al final o si se incorpora en algún punto intermedio.
+
+%Si la pieza es agregada al final, decimos que estamos en la permutación $pm_1$ pero si intercambiamos el último elemento de la permutación de n piezas con esta nueva pieza, llamamos a esta permutación $pm_2$.\\
+%Similarmente al caso para 2 piezas...
+
+%\bc
+%$ C(n+1, pm_1) = \Suma{i=1}{n}d_i \Suma{j=1}{i}t_j + d_{n+1} \Suma{j=1}{n+1}t_j = $\\
+%$ = \Suma{i=1}{n-1}d_i \Suma{j=1}{i}t_j + d_n \Suma{j=1}{n}t_j + d_{n+1}\Suma{j=1}{n+1}t_j$\\
+%$ C(n+1, pm_2) = \Suma{i=1}{n-1}d_i \Suma{j=1}{i}t_j + d_{n+1} ( t_{n+1} + \Suma{j=1}{n-1}t_j ) + d_n %%\Suma{j=1}{n+1}t_j$
+%\ec
+
+%Nuevamente para que el costo de $pm_1$ sea menor a $pm_2$ debe cumplirse:
+%\bc
+%$C(n+1, pm_1) < C(n+1, pm_2) \sisosi $\\
+%$\sisosi \Suma{i=1}{n-1} d_i \Suma{j=1}{i}t_j + d_n \Suma{j=1}{n}t_j + d_{n+1}\Suma{j=1}{n+1}t_j \le $\\
+%$\le     \Suma{i=1}{n-1} d_i \Suma{j=1}{i}t_j + d_{n+1} ( t_{n+1} + \Suma{j=1}{n-1}t_j ) + d_n \Suma%{j=1}{n+1}t_j \sisosi$\\
+%Paso restando.\\
+%$\sisosi d_n(\Suma{j=1}{n}t_j - \Suma{j=1}{n+1}t_j) + d_{n+1}(\Suma{j=1}{n+1}t_j - ( t_{n+1} + \Suma%{j=1}{n-1}t_j)) \le 0 \sisosi$\\
+%$\sisosi -d_nt_{n+1} + d_{n+1}t_n \le 0 \sisosi \Frac{t_n}{d_n} \le \Frac{t_{n+1}}{d_{n+1}}$
+%\ec
+
+%Tenemos dos casos:
+
+%\begin{itemize}
+%\item \emph{ $ t_n / d_n \le t_{n+1} / d_{n+1} $}
+%Sabemos entonces que es mejor la permutación $pm_1$ sobre $pm_2$, pues la última pieza agregada es de %mayor cociente. \\
+%Pero ahora existen más permutaciones que $pm_1$ y $pm_2$, tantas como (n+1)!. Supongamos entonces que %existe una permutación entre ellas óptima que llamaremos $pm$ tal que el costo es menor que $pm_1$, en particular será mejor que $pm_2$. \footnote{Dicho de otra manera, podríamos pensar que el incremento de costo que pagamos para meter esta nueva pieza en la ante última posición, es compenzado con creces si seguimos empujándola hacia abajo}
+%Ahora bien si en $pm$ se tiene que $p_{n+1} < n$ y sea $k$ la pieza tal que $p_{n+1} + 1 = p_k$ absurdo, pues $t_{n+1} / d_{n+1} > t_k / d_k$ $p_{n+1} \le p_k$ y vale la hipotesis inductiva. 
+%Entonces la permutación $pm$ debe tener $p_{n+1} = n$ pero esta es $pm_2$, absurdo.\footnote{Pero si lo de la nota anterior es válido, entonces tiene que existir alguna permutación entre 1 y n que teniendo algún par adyacente de piezas donde no se cumpla el orden de los cocientes sea mejor que la permutación de la hipotesis inductiva para compenzar y esto es absurdo}
+
+%\item \emph{ $ t_{n+1} / d_{n+1} \le t_n / d_n $}
+%Sabemos entonces que la permutación $pm_2$ es mejor que $pm_1$. \\Sea $pm_{2,n}$ la permutación $pm_2$ sin la última pieza. Por H.I existirá una permutación $pm_{h,n}$ de $pm_{2,n}$ que cumpla P(n) y por lo tanto sea menor o igual de costosa que esta y es óptima para n piezas. Además la pieza n, tiene el máximo cociente con lo cual si a la permutación $pm_{h,n}$ se le agrega la pieza n, se cumple $t_k / d_k \le t_n / d_n$ con $k$ la última pieza de la permutación $pm_{h,n}$. Sea $pm_h$ dicha permutación.\\
+
+%Entonces:
+%\bc
+%$ C(pm_h, n+1) \le C(pm_2, n+1) < C(pm_1, n+1)$ \\ $pm_h$ cumple P(n+1) y no hay más permutaciones %posibles..
+%\ec
+%\end{itemize}
+%% De la misma manera que para el caso base, tenemos dos posibilidades: la nueva pieza cumple esta relación o no la cumple.
+
+%% \begin{itemize}
+%% \item $\Frac{t_n}{d_n} \le \Frac{t_{n+1}}{d_{n+1}}$: $pm_1$ produce menor costo que $pm_2$ además no toqué ninguna pieza anterior, con lo cual vale P(n) y $pm[1,n]_o$ es permutación óptima. Además como el cociente de la pieza $n+1$ es el máximo, de estar en la permutación de 1 hasta n no puede estar si no en la última posición, con lo cual basta considerar solo si $pm_1$ es mejor que $pm_2$ con lo cual queda demostrado.
+%% \item $\Frac{t_{n+1}}{ d_{n+1}} \le \Frac{t_n}{d_n} $: $pm_2$ produce menor costo que $pm_1$ con lo cual existe una permutación mejor - $pm_2$ o una mejor a esta.\\
+%% Intercambiamos la última pieza de la permutación $pm[1,n]_o$ por la pieza agregada, es decir miramos $pm_2$. Si para todas las piezas entre 1 y n cumple P(n), tenemos nuestra permutación óptima.
+%% Obtenemos otra permutación $pm[1,n]^*_o$ que es óptima por valer la hipótesis inductiva.\footnote{En el caso de que la pieza $n+1$ no le corresponda el último lugar entre la posición 1 y n, la hipotesis inductiva se encarga de ubicarla, pues debe valer la propiedad de orden creciente por cociente.}
+%%   Además la pieza $n$ tiene el cociente máximo de todas las piezas de 1 hasta $n$, y sea $k$ la pieza que quedó ante última - que puede o no ser la pieza $n+1$. Por lo tanto cumple que $p_k < p_n$ y $t_k / d_k \le t_n / d_n$ y tiene hasta la posición $n$ la permutación $pm[1,n]^*_o$. Estamos en el caso anterior y por lo tanto $pm[1,n+1]^*_o$ es óptima.
+%% \end{itemize}
+
+
+\end{document}
