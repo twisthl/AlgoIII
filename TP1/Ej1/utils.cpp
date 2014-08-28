@@ -32,8 +32,8 @@ LSaltos resolver(int cantTablones, int saltoMaximo, LTablonesEstado& tablones){
 			contadorSaltoMaximo = saltoMaximo - tamSalto;
 		}else if (!encontroSalto)
 		{
-			break;
 			saltos.clear();
+			break;
 		}
 	}
 	return saltos;//Tambien devolver si se pudo llegar al final con saltos.

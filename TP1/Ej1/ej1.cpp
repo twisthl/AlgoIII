@@ -37,11 +37,12 @@ int main(){
 
 		res = resolver(cantTablones, saltoMaximo, *tablones);
 
-		cout << "termino algoritmo" << endl;
+		cout << "termino algoritmo, imprimo resultados" << endl;
 
 		imprimirResultado(res);
+
+		cout << "termino de imprimir resultado" << endl;
+
 		delete(tablones);
-
-
 	}
 }
