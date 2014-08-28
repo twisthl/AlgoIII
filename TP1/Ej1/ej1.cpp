@@ -23,18 +23,24 @@ int main(){
 		cout << "salto maximo: " << saltoMaximo << endl;
 
 		LTablonesEstado* tablones = new LTablonesEstado();
-		LSaltos res = LSaltos();
+		LSaltos res;// = LSaltos();
 
 		//Armo la lista de estado de Tablas del puente
 		for(int i=0; i<cantTablones;i++){
 			cin >> tablonI;
 
 			tablones->push_back(tablonI);
+			cout << "tablon " << i << ": " << tablonI << endl;
 		}
 		cin >> endEntry;
 
+
 		res = resolver(cantTablones, saltoMaximo, *tablones);
-	
+
+		cout << "termino algoritmo" << endl;
+
+		imprimirResultado(res);
+		delete(tablones);
 
 
 	}
