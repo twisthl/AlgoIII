@@ -69,10 +69,10 @@ void imprimirResultadoAFile(LSaltos saltos, string nombreArchivo){
 	int cantSaltos = saltos.size();
 	nombreArchivo = nombreArchivo + ".out";
 
-	ofstream fileResultados("resultados.out");
+	ofstream fileResultados("resultados.out", std::fstream::app);
 
 	if(cantSaltos == 0){
-		fileResultados << "no" << endl;
+		fileResultados << "no";
 	}else{
 		fileResultados << cantSaltos << " ";
 
@@ -82,4 +82,6 @@ void imprimirResultadoAFile(LSaltos saltos, string nombreArchivo){
 		}
 	}
 	fileResultados << endl;
+	fileResultados << endl;
+	fileResultados.close();
 }

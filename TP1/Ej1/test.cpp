@@ -23,11 +23,11 @@ int main(int argc, char *argv[])
 		ofstream fileTiempos("tiempos.out");
 		
 		// Tests aleatorios	
-		for(int i=0;i<100;i++){
+		for(int i=0;i<10;i++){
 			cantTablones = rand() % 100000000;
 			saltoMaximo = rand() % 100000;
 			tablonesEstado = new LTablonesEstado();
-			saltoMaximo = rand() % 1000000 + 1;
+			//saltoMaximo = rand() % 1000000 + 1;
 
 			for(int k=0;k<cantTablones;k++){
 				tablonEstado = rand() % 2;
