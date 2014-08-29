@@ -1,6 +1,7 @@
 #include "ej1.h"
 #include <time.h>
 #include <cmath>
+#include <fstream>
 
 using namespace std;
 
@@ -19,11 +20,12 @@ int main(int argc, char *argv[])
 				
 		srand(seed);
 
-		cantTablones = rand() % 1000000;
-		saltoMaximo = rand() % 100000;
+		ofstream fileTiempos("tiempos.out");
 		
 		// Tests aleatorios	
 		for(int i=0;i<100;i++){
+			cantTablones = rand() % 100000000;
+			saltoMaximo = rand() % 100000;
 			tablonesEstado = new LTablonesEstado();
 			saltoMaximo = rand() % 1000000 + 1;
 
@@ -31,14 +33,21 @@ int main(int argc, char *argv[])
 				tablonEstado = rand() % 2;
 				tablonesEstado->push_back(tablonEstado);
 			}
+
+			LSaltos res;
+
 			clock_t t = clock();
-			resolver(cantTablones, saltoMaximo, *tablonesEstado);
+			res = resolver(cantTablones, saltoMaximo, *tablonesEstado);
 			t = clock() - t;
-		
+
+			fileTiempos << cantTablones << "\t" << t << endl;
+			imprimirResultadoAFile(res, "resultados");
 			cout << cantTablones << "\t" << t << endl;
 			
 			delete tablonesEstado;	
 		}
+
+		fileTiempos.close();
 	}
 	
 	return 0;

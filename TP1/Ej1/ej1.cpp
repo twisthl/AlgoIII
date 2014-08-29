@@ -32,16 +32,19 @@ int main(){
 			tablones->push_back(tablonI);
 			cout << "tablon " << i << ": " << tablonI << endl;
 		}
+
+		//agrego un uno al final para simular haber terminado el puente, este lugar es siempre valido.
+		tablones->push_back(1);
 		cin >> endEntry;
 
 
-		res = resolver(cantTablones, saltoMaximo, *tablones);
+		res = resolver(cantTablones + 1, saltoMaximo, *tablones);
 
-		cout << "termino algoritmo, imprimo resultados" << endl;
+// 		cout << "termino algoritmo, imprimo resultados" << endl;
 
 		imprimirResultado(res);
 
-		cout << "termino de imprimir resultado" << endl;
+// 		cout << "termino de imprimir resultado" << endl;
 
 		delete(tablones);
 	}
