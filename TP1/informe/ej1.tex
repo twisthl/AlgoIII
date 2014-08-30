@@ -12,21 +12,78 @@ Para no hacer demasiado trivial la competencia, no todos los tablones del puente
 \subsection{Complejidad del algoritmo}
 
 
-\subsection{Codigo fuente}
+\subsection{C\'odigo fuente}
 
-%\lstset{language=C++,
-%                basicstyle=\ttfamily\footnotesize,
-%                keywordstyle=\color{blue}\ttfamily,
-%                stringstyle=\color{red}\ttfamily,
-%                commentstyle=\color{green}\ttfamily,
-%                morecomment=[l][\color{magenta}]{\#},
-%                breaklines=true
-%}
-%\begin{lstlisting}
+\lstset{language=C++,
+                basicstyle=\ttfamily\footnotesize,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                breaklines=true
+}
+\begin{lstlisting}
 
+typedef std::vector<int> LTablonesEstado;
+typedef std::vector<int> LSaltos;
 
-%\end{lstlisting}
+LSaltos resolver(int cantTablones, int saltoMaximo, LTablonesEstado& tablones){
+
+	LSaltos saltos;
+	int contadorSaltoMaximo = 0;
+	int tablonASaltar;
+	int tamSalto = 0;
+	bool encontroSalto = false;
+
+	for(int nroTablon = 0; nroTablon < cantTablones; nroTablon++){
+
+		contadorSaltoMaximo++;
+		tamSalto++;
+		
+		//Si hay un tablon en ese lugar actualizo tablonASaltar
+		if(tablones[nroTablon] == 1){
+			tablonASaltar = nroTablon;
+			encontroSalto = true;
+		}
+		
+		//Si llegue al limite de salto agrego (Y pude hacer un salto) agrego el tablon al que voy a saltar a la lista de saltos y reinicio los contadores
+		if(contadorSaltoMaximo == saltoMaximo && encontroSalto){			
+			//Guardo el tablon al que salte
+			saltos.push_back(tablonASaltar);
+
+			//reinicio las variables para un nuevo salto
+			contadorSaltoMaximo = saltoMaximo - tamSalto;
+			tamSalto = 0;
+			encontroSalto = false;
+
+		}else if (contadorSaltoMaximo == saltoMaximo && !encontroSalto)
+		{
+			saltos.clear();
+			break;
+		}
+	}
+	return saltos;//Tambien devolver si se pudo llegar al final con saltos.
+}
+
+\end{lstlisting}
 
 \subsection{Casos de prueba}
+
+Para este ejercicio escogimos algunos casos de prueba que tienen las siguientes características:
+
+\begin{itemize}
+
+\item Caso en el que el puente no posee ningún tablón roto. Aquí el participante debería cruzar el puente dando saltos de tamaño igual a su salto máximo, ya que no hay nada que impida que no lo haga.
+
+\item Caso en el que el puente no posee tablones sanos, y el limite de salto del jugador es menor a la cantidad de tablones del puente. El participante no podrá hacer ningún salto, ya que no importa de que longitud sea este, siempre terminará cayendo en un tablón roto.
+
+\item Caso en el que el puente no posee tablones sanos, y el limite de salto del jugador es mayor a la cantidad de tablones del puente. En este caso el participante podrá cruzar el puente de un salto igual al tamaño del puente mas uno.
+
+\item Caso en el que los tablones sanos están cada $x$ tablones, donde $x$ es igual al salto máximo del participante. En este caso el participante cruzara el puente en $m$ cantidad de saltos, donde $m$ es la cantidad de tablones sanos. Osea que pasará por todos los tablones sanos.
+
+\item Caso en el cual los últimos $m$ tablones están rotos, por lo tanto el algoritmo debe ejecutarse con normalidad, pero a la hora de evaluar el ultimo salto, este no podrá efectuarse y se debe borrar la lista de saltos hechos y retornar "no".
+
+\end{itemize}
+
 
 \subsection{Performance}
