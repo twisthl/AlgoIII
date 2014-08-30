@@ -20,15 +20,16 @@ int main(int argc, char *argv[])
 				
 		srand(seed);
 
-		ofstream fileTiempos("tiempos.out");
+		ofstream fileTiempos("tiempos3.out");
 		
-		// Tests aleatorios	
-		for(int i=0;i<10;i++){
-			cantTablones = rand() % 100000000;
-			saltoMaximo = rand() % 100000;
-			tablonesEstado = new LTablonesEstado();
-			//saltoMaximo = rand() % 1000000 + 1;
+//		cantTablones = 	rand() % 100000000;
 
+		// Tests aleatorios	
+		for(int i=0;i<150;i++){
+			cantTablones = rand() % 100000000;
+			saltoMaximo = rand() % cantTablones;
+			tablonesEstado = new LTablonesEstado();
+			
 			for(int k=0;k<cantTablones;k++){
 				tablonEstado = rand() % 2;
 				tablonesEstado->push_back(tablonEstado);
@@ -40,9 +41,12 @@ int main(int argc, char *argv[])
 			res = resolver(cantTablones, saltoMaximo, *tablonesEstado);
 			t = clock() - t;
 
+//			fileTiempos << saltoMaximo << "\t" << t << endl;
+//			cout << saltoMaximo << "\t" << t << endl;
 			fileTiempos << cantTablones << "\t" << t << endl;
-			imprimirResultadoAFile(res, "resultados");
 			cout << cantTablones << "\t" << t << endl;
+//			imprimirResultadoAFile(res, "resultados");
+			
 			
 			delete tablonesEstado;	
 		}
