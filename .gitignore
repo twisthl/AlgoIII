@@ -3,3 +3,9 @@ ej1
 test
 INFORME EJ1.txt
 INFORME EJ1.txt~
+*.log
+*.toc
+*.out
+*.aux
+*.synctex.gz
+tp1_informe.pdf
