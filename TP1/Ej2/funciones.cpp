@@ -31,5 +31,7 @@ int imprimirCiudad(Ciudad& ciudad){
 		cout << *it << " ";
 	}
 
+	cout<< endl;
+
 	return 0;
 }

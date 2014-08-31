@@ -5,13 +5,13 @@ using namespace std;
 //int ejercicio2(){
 int main(){
 
-	cout << "Comenzando el algoritmo..." << endl;
+	cout << "Comenzando el algoritmo..." << endl << endl;
 
-	int cantEdificios;
-	int cantCiudades;
+	int cantEdificios = 0;
+	int cantCiudades = 0;
 	Edificio* edificio;
 	Edificios* edificios;
-	Ciudad* ciudad = 0;
+	Ciudad* ciudad;
 
 	int salida;
 
@@ -38,8 +38,8 @@ int main(){
 
 			edificio = new Edificio(comienzo,fin,altura);
 			edificios->push_back(*edificio);
-			cout << "Edificio " << i << ": Comienza en " << comienzo << ", su altura es de "
-				<< altura << " y termina en " << fin << endl;
+			cout << "Edificio " << i + 1 << ":" << endl <<" Comienza en " << comienzo <<
+				", su altura es de " << altura << " y termina en " << fin << endl;
 		}
 
 		int cero;
@@ -61,5 +61,6 @@ int main(){
 
 		salida = imprimirCiudad(*ciudad);
 	}
+
 	return salida;
 }
