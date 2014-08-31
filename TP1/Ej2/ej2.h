@@ -31,5 +31,6 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios);
 
 int imprimirCiudad(Ciudad& ciudad);
 
+Ciudad* ciudadFantasma(void);
 
 #endif

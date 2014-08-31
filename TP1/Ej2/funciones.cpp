@@ -2,12 +2,40 @@
 
 
 struct PuntoCritico{
+	PuntoCritico(bool s, Edificio& e){
+		sube = s;
+		edificio = &e;
+		altura = edificio->altura;
+		if (s){
+			posicion = edificio->comienzo;
+		} else {
+			posicion = edificio->fin;
+		}
+
+	}
 	bool sube;
 	int altura, posicion;
-	Edificio edificio;
+	Edificio *edificio;
 };
 
-Ciudad* edificar(int cantEdificios, Edificios& Edificios){
+Ciudad* edificar(int cantEdificios, Edificios& edificios){
+
+	std::vector<PuntoCritico> puntos;
+
+	Edificios::iterator itEdificios = edificios.begin();
+
+	for( ; itEdificios != edificios.end() ; ++itEdificios){
+		Edificio edificio = *itEdificios;
+		PuntoCritico pc = new PuntoCritico(true,edificio);
+
+		puntos.push_back(pc);
+
+		pc = new PuntoCritico(false,edificio);
+
+		puntos.push_back(pc);
+	}
+
+	
 	Ciudad* ciudad = new Ciudad();
 	ciudad->push_back(9);
 	ciudad->push_back(8);
@@ -31,7 +59,6 @@ int imprimirCiudad(Ciudad& ciudad){
 		cout << *it << " ";
 	}
 
-	cout<< endl;
-
+	cout << endl << "-------------------------" << endl;
 	return 0;
 }
