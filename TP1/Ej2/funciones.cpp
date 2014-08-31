@@ -7,7 +7,7 @@ struct PuntoCritico{
 	Edificio edificio;
 };
 
-Edificacion edificar(int cantEdificios, Edificios Edificios){
+Ciudad* edificar(int cantEdificios, Edificios& Edificios){
 	Ciudad* ciudad = new Ciudad();
 	ciudad->push_back(9);
 	ciudad->push_back(8);
@@ -25,9 +25,11 @@ Edificacion edificar(int cantEdificios, Edificios Edificios){
 
 int imprimirCiudad(Ciudad& ciudad){
 
-	Ciudad::iterator it = ciudad.begin():
+	Ciudad::iterator it = ciudad.begin();
 
-	for(;it != ciudad.end():++it){
+	for(;it != ciudad.end();++it){
 		cout << *it << " ";
 	}
+
+	return 0;
 }

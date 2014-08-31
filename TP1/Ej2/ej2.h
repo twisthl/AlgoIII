@@ -27,9 +27,9 @@ typedef std::vector<Edificio> Edificios;
 
 typedef std::vector<int> Ciudad;
 
-Ciudad edificar(int cantEdificios, Edificios& Edificios);
+Ciudad* edificar(int cantEdificios, Edificios& edificios);
 
-int imprimirCiudad(Ciudad ciudad);
+int imprimirCiudad(Ciudad& ciudad);
 
 
 #endif
