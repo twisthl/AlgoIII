@@ -33,6 +33,12 @@ struct orden_PuntoCritico{
 	};
 };
 
+// Mi igual entre PuntosCriticos es si comparten la posicion y si son la misma pared...
+// La altura la analizo en el algoritmo
+bool operator==(PuntoCritico & a,PuntoCritico & b){
+	return a.posicion == b.posicion && a.sube == b.sube;
+}
+
 Ciudad* edificar(int cantEdificios, Edificios& edificios){
 
 	/*
@@ -66,8 +72,13 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 	for(;itPuntos!=puntos.end();++itPuntos){
 		if (itPuntos->sube){
 			//agregar al mapa el edificio abierto
- 
-
+			
+			std::vector<PuntoCritico>::iterator itCopy = itPuntos;
+ 			if(*itCopy.next() == *itPuntos){
+				continue;
+			} else {
+			
+			}
 		} else {
 			//Sacar del mapa el edificio
 		}
