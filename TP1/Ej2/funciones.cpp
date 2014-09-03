@@ -20,35 +20,58 @@ struct PuntoCritico{
 
 Ciudad* edificar(int cantEdificios, Edificios& edificios){
 
-	std::vector<PuntoCritico> puntos;
+	/*
+	Desdoblar la informacion para tener los puntos criticos a analizar.
+	*/
 
+	//Inicializo un vector del doble de tamanio
+	std::vector<PuntoCritico> puntos(2*cantEdificios);
+
+	//Recorrer los edificios para definir los PuntosCriticos a analizar
 	Edificios::iterator itEdificios = edificios.begin();
 
-	for( ; itEdificios != edificios.end() ; ++itEdificios){
+	for(;itEdificios!=edificios.end();++itEdificios){
 		Edificio edificio = *itEdificios;
+	
 		PuntoCritico pc = new PuntoCritico(true,edificio);
-
 		puntos.push_back(pc);
 
 		pc = new PuntoCritico(false,edificio);
-
 		puntos.push_back(pc);
 	}
 
-	
-	Ciudad* ciudad = new Ciudad();
-	ciudad->push_back(9);
-	ciudad->push_back(8);
-	ciudad->push_back(7);
-	ciudad->push_back(6);
-	ciudad->push_back(5);
-	ciudad->push_back(4);
-	ciudad->push_back(3);
-	ciudad->push_back(2);
-	ciudad->push_back(1);
-	ciudad->push_back(0);
+	//Ordenar los puntos criticos para luego analizar en orden realizando una barrida lineal
 
-	return ciudad;
+
+	//Recorrer los puntos criticos en orden e ir generando la salida.
+	Ciudad* ciudad = new Ciudad();
+	
+	std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
+	for(;itPuntos!=puntos.end();++itPuntos){
+		if (itPuntos->sube){
+			//agregar al mapa el edificio abierto
+
+
+		} else {
+			//Sacar del mapa el edificio
+		}
+
+	}
+
+	
+	Ciudad* ciudad2 = new Ciudad();
+	ciudad2->push_back(9);
+	ciudad2->push_back(8);
+	ciudad2->push_back(7);
+	ciudad2->push_back(6);
+	ciudad2->push_back(5);
+	ciudad2->push_back(4);
+	ciudad2->push_back(3);
+	ciudad2->push_back(2);
+	ciudad2->push_back(1);
+	ciudad2->push_back(0);
+
+	return ciudad2;
 }
 
 int imprimirCiudad(Ciudad& ciudad){
