@@ -21,12 +21,12 @@ struct orden_PuntoCritico{
 	bool operator()(const PuntoCritico& a, const PuntoCritico& b) const{
 		if(a.posicion == b.posicion){
 			if (a.sube == b.sube){
-				return a.altura > b.altura;
+				return a.altura < b.altura;
 			} else {
 				return a.sube > b.sube;
 			}
 		} else {
-			return a.posicion > b.posicion;
+			return a.posicion < b.posicion;
 		}
 	};
 };
@@ -44,7 +44,7 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 	*/
 
 	//Inicializo un vector del doble de tamanio
-	std::vector<PuntoCritico> puntos(2*cantEdificios);
+	std::vector<PuntoCritico> puntos;
 
 	//Recorrer los edificios para definir los PuntosCriticos a analizar
 	Edificios::iterator itEdificios = edificios.begin();
@@ -65,9 +65,13 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 	Ciudad* ciudad = new Ciudad();
 	int nivelActual = 0;
 	MapAlturas edificiosAbiertos;
+	edificiosAbiertos.insert(make_pair(0,0));
 
 	std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 	for(;itPuntos!=puntos.end();++itPuntos){
+		cout << endl;
+		//cout << "AlturaActual: " << nivelActual << endl;
+		cout << "PuntoCritico: " << (*itPuntos).sube << " " << (*itPuntos).posicion << " " << (*itPuntos).altura << endl;
 		if (itPuntos->sube){
 			//agregar al mapa el edificio abierto
 			edificiosAbiertos.insert(make_pair(itPuntos->altura,itPuntos->altura));
@@ -77,20 +81,28 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 			} else if (itPuntos->altura > nivelActual){
 				ciudad->push_back(itPuntos->posicion);
 				ciudad->push_back(itPuntos->altura);
+				cout << "AlturaAnterior: " << nivelActual << endl;
 				nivelActual = itPuntos->altura;
+				cout << "AlturaActual: " << nivelActual << endl;
 			}
 		} else {
 			//Sacar del mapa el edificio
 			edificiosAbiertos.erase(itPuntos->altura);
-			MapAlturas::iterator itEdificiosAbiertos = edificiosAbiertos.begin();
+			cout << "Saque una altura: " << itPuntos->altura << endl;
+			MapAlturas::iterator itEdificiosAbiertos = edificiosAbiertos.end();
+			if (edificiosAbiertos.size() > 1) --itEdificiosAbiertos;
 			if(itPuntos->altura == nivelActual && (*itEdificiosAbiertos).first < itPuntos->altura){
+				cout << "Maximo edificio: " << (*itEdificiosAbiertos).first << endl;
 				ciudad->push_back(itPuntos->posicion);
 				ciudad->push_back((*itEdificiosAbiertos).first);
+				cout << "AlturaAnterior: " << nivelActual << endl;
 				nivelActual = (*itEdificiosAbiertos).first;
+				cout << "AlturaActual: " << nivelActual << endl;
 			}
 		}
 
 	}
+	cout << endl;
 	return ciudad;
 }
 
