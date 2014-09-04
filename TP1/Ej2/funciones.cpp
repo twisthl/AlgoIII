@@ -1,5 +1,6 @@
 #include "ej2.h"
 
+#typdef std::map<int,int> MapAlturas;
 
 struct PuntoCritico{
 	PuntoCritico(bool s, Edificio& e){
@@ -18,6 +19,26 @@ struct PuntoCritico{
 	Edificio *edificio;
 };
 
+struct orden_PuntoCritico{
+	bool operator()(const PuntoCritico& a, const PuntoCritico& b) const{
+		if(a.posicion == b.posicion){
+			if (a.sube == b.sube){
+				return a.altura > b.altura;
+			} else {
+				return a.sube > b.sube;
+			}
+		} else {
+			return a.posicion > b.posicion;
+		}
+	};
+};
+
+// Mi igual entre PuntosCriticos es si comparten la posicion y si son la misma pared...
+// La altura la analizo en el algoritmo
+bool operator==(PuntoCritico & a,PuntoCritico & b){
+	return a.posicion == b.posicion && a.sube == b.sube;
+}
+
 Ciudad* edificar(int cantEdificios, Edificios& edificios){
 
 	/*
@@ -29,7 +50,6 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 
 	//Recorrer los edificios para definir los PuntosCriticos a analizar
 	Edificios::iterator itEdificios = edificios.begin();
-
 	for(;itEdificios!=edificios.end();++itEdificios){
 		Edificio edificio = *itEdificios;
 	
@@ -41,17 +61,26 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 	}
 
 	//Ordenar los puntos criticos para luego analizar en orden realizando una barrida lineal
-
+	orden_PuntoCritico ord_functor;
+	sort(puntos.begin(), puntos.end(), ord_functor);
 
 	//Recorrer los puntos criticos en orden e ir generando la salida.
 	Ciudad* ciudad = new Ciudad();
 	
+	int nivelActual = 0;
+	MapAlturas edificiosAbiertos;
+
 	std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 	for(;itPuntos!=puntos.end();++itPuntos){
 		if (itPuntos->sube){
 			//agregar al mapa el edificio abierto
-
-
+			edificiosAbiertos.insert(make_pair(itPuntos->altura,itPuntos->altura));
+			std::vector<PuntoCritico>::iterator itCopy = itPuntos;
+ 			if(*(++itCopy) == *itPuntos){
+				continue;
+			} else {
+			
+			}
 		} else {
 			//Sacar del mapa el edificio
 		}
