@@ -1,24 +1,22 @@
 #include "ej2.h"
 
-#typdef std::map<int,int> MapAlturas;
+#define std::map<int,int> MapAlturas;
 
 struct PuntoCritico{
 	PuntoCritico(bool s, Edificio& e){
 		sube = s;
-		edificio = &e;
-		altura = edificio->altura;
+		altura = e.altura;
 		if (s){
-			posicion = edificio->comienzo;
+			posicion = e.comienzo;
 		} else {
-			posicion = edificio->fin;
+			posicion = e.fin;
 		}
-
 	}
 	bool sube;
 	int altura, posicion;
-	Edificio *edificio;
 };
 
+//El orden está establecido por: Posicion,Sube o Baja, Altura
 struct orden_PuntoCritico{
 	bool operator()(const PuntoCritico& a, const PuntoCritico& b) const{
 		if(a.posicion == b.posicion){
@@ -55,7 +53,6 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 	
 		PuntoCritico pc = new PuntoCritico(true,edificio);
 		puntos.push_back(pc);
-
 		pc = new PuntoCritico(false,edificio);
 		puntos.push_back(pc);
 	}
@@ -66,7 +63,6 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 
 	//Recorrer los puntos criticos en orden e ir generando la salida.
 	Ciudad* ciudad = new Ciudad();
-	
 	int nivelActual = 0;
 	MapAlturas edificiosAbiertos;
 
@@ -78,11 +74,19 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 			std::vector<PuntoCritico>::iterator itCopy = itPuntos;
  			if(*(++itCopy) == *itPuntos){
 				continue;
-			} else {
-			
+			} else if (itPuntos->altura > nivelActual){
+				ciudad->push_back(itPuntos->posicion);
+				ciudad->push_back(itPuntos->altura);
+				nivelActual = itPuntos->altura;
 			}
 		} else {
 			//Sacar del mapa el edificio
+			edificiosAbiertos.erase(itPuntos->altura)
+			if(itPuntos->altura == nivelActual && edificiosAbiertos.begin().first < itPuntos->altura){
+				ciudad->push_back(itPuntos->posicion);
+				ciudad->push_back(edificiosAbiertos.begin().first);
+				nivelActual = edificiosAbiertos.begin().first;
+			}
 		}
 
 	}
