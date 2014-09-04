@@ -1,7 +1,5 @@
 #include "ej2.h"
 
-#define std::map<int,int> MapAlturas;
-
 struct PuntoCritico{
 	PuntoCritico(bool s, Edificio& e){
 		sube = s;
@@ -11,6 +9,8 @@ struct PuntoCritico{
 		} else {
 			posicion = e.fin;
 		}
+	}
+	PuntoCritico(){
 	}
 	bool sube;
 	int altura, posicion;
@@ -51,10 +51,10 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 	for(;itEdificios!=edificios.end();++itEdificios){
 		Edificio edificio = *itEdificios;
 	
-		PuntoCritico pc = new PuntoCritico(true,edificio);
-		puntos.push_back(pc);
+		PuntoCritico* pc = new PuntoCritico(true,edificio);
+		puntos.push_back(*pc);
 		pc = new PuntoCritico(false,edificio);
-		puntos.push_back(pc);
+		puntos.push_back(*pc);
 	}
 
 	//Ordenar los puntos criticos para luego analizar en orden realizando una barrida lineal
@@ -81,11 +81,12 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 			}
 		} else {
 			//Sacar del mapa el edificio
-			edificiosAbiertos.erase(itPuntos->altura)
-			if(itPuntos->altura == nivelActual && edificiosAbiertos.begin().first < itPuntos->altura){
+			edificiosAbiertos.erase(itPuntos->altura);
+			MapAlturas::iterator itEdificiosAbiertos = edificiosAbiertos.begin();
+			if(itPuntos->altura == nivelActual && (*itEdificiosAbiertos).first < itPuntos->altura){
 				ciudad->push_back(itPuntos->posicion);
-				ciudad->push_back(edificiosAbiertos.begin().first);
-				nivelActual = edificiosAbiertos.begin().first;
+				ciudad->push_back((*itEdificiosAbiertos).first);
+				nivelActual = (*itEdificiosAbiertos).first;
 			}
 		}
 

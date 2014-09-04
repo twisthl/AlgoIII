@@ -4,6 +4,7 @@
 #include <list>
 #include <utility>
 #include <iostream>
+#include <map>
 #include <algorithm>
 #include <stdlib.h>
 #include <fstream>
@@ -22,6 +23,8 @@ struct Edificio{
 	int altura;
 	int fin;
 };
+
+typedef std::multimap<int,int> MapAlturas;
 
 typedef std::vector<Edificio> Edificios;
 
