@@ -1,6 +1,6 @@
 #include "ej2.h"
 
-#define arbol_bb(T) map<edificio, edificio, T>
+#typdef std::map<int,int> MapAlturas;
 
 struct PuntoCritico{
 	PuntoCritico(bool s, Edificio& e){
@@ -61,20 +61,22 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 	}
 
 	//Ordenar los puntos criticos para luego analizar en orden realizando una barrida lineal
-
+	orden_PuntoCritico ord_functor;
+	sort(puntos.begin(), puntos.end(), ord_functor);
 
 	//Recorrer los puntos criticos en orden e ir generando la salida.
 	Ciudad* ciudad = new Ciudad();
 	
 	int nivelActual = 0;
+	MapAlturas edificiosAbiertos;
 
 	std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 	for(;itPuntos!=puntos.end();++itPuntos){
 		if (itPuntos->sube){
 			//agregar al mapa el edificio abierto
-			
+			edificiosAbiertos.insert(make_pair(itPuntos->altura,itPuntos->altura));
 			std::vector<PuntoCritico>::iterator itCopy = itPuntos;
- 			if(*itCopy.next() == *itPuntos){
+ 			if(*(++itCopy) == *itPuntos){
 				continue;
 			} else {
 			
