@@ -91,21 +91,7 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 		}
 
 	}
-
-	
-	Ciudad* ciudad2 = new Ciudad();
-	ciudad2->push_back(9);
-	ciudad2->push_back(8);
-	ciudad2->push_back(7);
-	ciudad2->push_back(6);
-	ciudad2->push_back(5);
-	ciudad2->push_back(4);
-	ciudad2->push_back(3);
-	ciudad2->push_back(2);
-	ciudad2->push_back(1);
-	ciudad2->push_back(0);
-
-	return ciudad2;
+	return ciudad;
 }
 
 int imprimirCiudad(Ciudad& ciudad){
