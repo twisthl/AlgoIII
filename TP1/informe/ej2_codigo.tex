@@ -1,3 +1,8 @@
+No se consideró relevante ni la conversión de estructuras, ni el ordenamiento de los elementos por ser funciones básicas y/o implementadas en librerias de C++.
+
+El código interesante para la resolución de este problema es aquel que recorre los PuntoCriticos en orden y decide si pertenecen o no a la solución del problema.
+
+
 \lstset{language=C++,
                 basicstyle=\ttfamily\footnotesize,
                 keywordstyle=\color{blue}\ttfamily,
@@ -7,6 +12,9 @@
                 breaklines=true
 }
 \begin{lstlisting}
+typedef std::multimap<int,PuntoCritico> MapAlturas;
+
+typedef std::vector<int> Ciudad;
 
 struct PuntoCritico{
 	PuntoCritico(bool s, Edificio& e){
@@ -24,9 +32,20 @@ struct PuntoCritico{
 	Edificio* edificio;
 };
 
-typedef std::multimap<int,PuntoCritico> MapAlturas;
-
-typedef std::vector<int> Ciudad;
+//El orden est\'a establecido por: Posicion,Sube o Baja, Altura
+struct orden_PuntoCritico{
+	bool operator()(const PuntoCritico& a, const PuntoCritico& b) const{
+		if(a.posicion == b.posicion){
+			if (a.sube == b.sube){
+				return a.altura < b.altura;
+			} else {
+				return a.sube > b.sube;
+			}
+		} else {
+			return a.posicion < b.posicion;
+		}
+	};
+};
 
 std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 	//Recorro los 2N elementos
@@ -65,3 +84,4 @@ std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 			}
 		}
 	}
+\end{lstlisting}
