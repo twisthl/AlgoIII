@@ -1,27 +1,171 @@
 \subsection{Descripci\'on del problema}
 
+Se pide resolver la problem'atica que tiene una empresa transportadora en reducir optimamente la cantidad de camiones que utiliza para transportar una serie de productos quimicos. 
+Dada una cierta cantidad n de productos quimicos, tal que para cada par de combinaciones de productos se corresponde un valor numerico positivo llamado coeficiente de peligrosidad (un coeficiente por cada par), debemos reducir al minimo la cantidad de camiones que utilizamos para transportar los n productos siendo que existe un valor numerico positivo M que llamaremos umbral de peligrosidad, y cuyo valor debe ser mayor o igual a la suma de todas las peligrosidades dentro de un camion. La suma de todas las peligrosidades dentro de un camion como esta expresado es lo mismo que decir la suma de todos los coeficientes de peligrosidad de todas las combinaciones de pares de productos que se encuentren en el cami'on.
 
 \subsection{Resoluci\'on}
 
+Para resolver el problema utilizamos la t'ecnica de backtracking. 
+M'etodicamente la resoluci'on consiste en "crear/traer" un camion y llamar a una funcion recursiva que itera sobre quimicos que no esten en ningun otro camion. En cada iteracion, el producto se agrega al ultimo camion creado y se llama nuevamente a la funcion recursiva, al volver de esa funcion se quita el producto. Una vez terminado de iterar, si existe al menos un producto en el camion (de lo contrario termina la funcion), se crea un nuevo camion, y se llama a la funcion recursiva.
+Cuando se llama a la funcion recursiva y no quedan productos sin agregar, se considera el estado actual como solucion y se compara con la mejor solucion ya guardada. Si no hay una tal mejor solucion guardada o si la cantidad de camiones de esta solucion es mas chica q la guardada, pasa a ser la nueva mejor solucion.
+La solucion planteada entonces distribuye los productos de todas las maneras posibles dentro de los camiones. 
 
-\subsection{Demostraci\'on de la resoluci\'on}
+Tomando esto como base implementamos podas para ayudar mejorar los tiempos de ejecuci'on. Las podas son 3. 
+La primera poda, la mas basica se trata de la validacion de caminos. Es decir no agregar productos a un camion tal que si lo agregase no cumpla la cota M de peligrosidad, si lo hiciera estaria perdiendo tiempo en recorrer ramas que no son solucion.
+La segunda poda es no permitir soluciones practicamente iguales. Donde una solucion es practicamente igual a una segunda si la segunda solucion tiene los mismos quimimos en los mismos camiones, pero el orden en el que se agregaron conrespecto a la primera es distinto. Tambien es practicamente igual si los grupos de quimicos de una solucion son iguales que otra, solo que varia en que camiones se ubicaron.
+Y la tercera y ultima poda es no recorrer ramas tal que sepa que su solucion no puede mejorar la que ya esta guardada como mejor hasta el momento.
+
+La implementacion de la primera poda se encuentra al nivel de la iteracion de productos no agregados. Se itera sobre productos no agregados y se agregan al camion solo si la peligrosidad del camion es menor a M, de lo contrario la iteracion continua con el proximo producto.
+
+La implementacion de la segunda poda es simple aunque su justificacion es mas compleja. Establecemos que hay un identificador numeros natural unico por cada quimico distinto. Luego en cada camion solo permito que se agregue un producto tal que su identificador deba ser mayor al ultimo agregado. A su vez cuando creamos un camion nuevo se agrega automaticamente el producto quimico con identificador de menor valor numerico entre los que no se agregaron a ningun camion. Esto efectivamente garantiza que no se repitan soluciones practicamente iguales, como anteriormente definimos informalmente, y en principio deber'an creernos.
+
+
+Y la implementacion de la ultima poda se encuentra antes de crear un nuevo camion. Antes de crear un nuevo camion primero se consulta si la cantidad de camiones que tiene por ahora la rama m'as el proximo camion a agregar es igual o mayor a la cantidad que tiene la mejor solucion. Si efectivamente alcanz'o a la cantidad de la mejor solucion entonces no se continua la rama.
+ 
+
+
+\subsection{PseudoCorrectitud de la resoluci\'on}
+
+
+Justificaci'on breve de algunos detalles de la resoluci'on.
+
+Dado que no puede haber un camion sin productos la maxima cantidad de camiones es igual a la cantidad de quimicos y el arbol de soluciones es finito.
+
+
+En cuanto a las podas, podemos decir que la primera es trivial y no requiere detalle.
+
+En cuanto a la segunda poda, la justificacion de por qu'e esa implementacion se traduce a no tener mas de una solucion practicamente igual se basa en la intuicion de que dado cualquier secuencia de enteros distintos, hay una sola manera de ordenarlos de menor a mayor. Y utilizando el mismo concepto, dado varias secuencias de numeros enteros tambien puedo ordenarlos de menor a mayor por el primer numero de cada secuencia, siempre que estos sean distintos. 
+Estableciendo una biyectividad entre los numeros naturales y los productos quimicos utilizamos estas propiedades de los enteros positivos que no demostraremos para asegurar que qumicos dentro de un camion y grupos de quimicos en distintos camiones no se puedan repetir en otro orden.
+Es importante destacar que tampoco existen secuencias de numeros enteros tal que no puedan ser ordenados de menor a mayor y de la misma manera no existe en la implementacion combinaciones de quimicos que no puedan ser representadas coom solucion. 
+
+Y en cuanto a la tercera poda tiene una justificaci'on bastante simple. Dada cualquier solucion incompleta o rama en construcci'on, es decir que tenga productos en algunos camiones pero que todavia tenga productos sin agregar a alg'un camion, la cantidad de camiones no puede decrementar mientras no se quiten productos de camiones. Ramificar la rama significa agregar un producto, ya sea a un camion que ya se encuentra en uso u a otro nuevo. Luego si ya hay una solucion guardada con la misma cantidad de camiones o menor a la de una solucion incompleta, la mejor soluci'on a la que la rama puede aspirar no es mejor a la guardada, ya que la cantidad de camiones no puede decrementar y por lo tanto no puede llegar a tener menos camiones que la guardada.
 
 
 \subsection{Complejidad del algoritmo}
 
 
+
+
+$\proc{BIOHAZARD(k)}$
+
+\begin{itemize}
+	\item Inicializar matriz de coeficientes de peligrocidad,		$O(n^2)$
+	\item crear primer camion y meter el primer quimico,		$O(1)$
+	\item RECURSION(n)										$O(R(n))$
+\end{itemize}		$O(R(n) + n^2 )$ \\
+
+
+\\
+
+
+
+$\proc{RECURSION(k)}$
+\begin{itemize}
+\item Si es solucion y es la mejor la guardo,						$O(n)$
+\item Por cada producto quimico de menor a mayor, 						$*O(n)$
+	\begin{itemize}
+	\item Si no esta agregado a ningun otro camion,						$O(1)$			
+		\begin{itemize}
+		\item Si la peligrosidad de agregar no es mas grande que M,		$O(n)$
+			\begin{itemize}
+			\item agregar el producto al camion							$O(1)$
+			\item RECURSION(k-1)											$O(R(k-1))$
+			\item eliminar el producto del camion							$O(1)$
+			\end{itemize}													$O(nR)$
+		\end{itemize}													$O(n^2R)$
+	\end{itemize}															$O(n^2R)$
+\item Si la solucion final podria ser mejor a la mejor por ahora,				$O(1)$
+	\begin{itemize}
+	\item Por cada producto quimico de menor a mayor,								$O(n)$
+		\begin{itemize}
+		\item si no esta agregado													$O(1)$
+			\begin{itemize}
+			\item crear un nuevo camion y agregar el producto ese camion			$O(1)$
+			\item RECURSION(k-1)													$O(R(k-1))$
+			\item borrar el camion nuevo y quitar el producto de ese camion		$O(1)$
+			\end{itemize}						$O(R)$
+		\end{itemize}						$O(nR)$
+	\end{itemize}						$O(nR)$
+\end{itemize}	$O(n^2R(k-1))$
+
+
+
+
+
+Luego $R(n) = n^2*R(n-1) = n^2*n^2*R(n-2) = ... = (n^2)^n = (n^n)^2$
+
+
 \subsection{C\'odigo fuente}
 
-%\lstset{language=C++,
-%                basicstyle=\ttfamily\footnotesize,
-%                keywordstyle=\color{blue}\ttfamily,
-%                stringstyle=\color{red}\ttfamily,
-%                commentstyle=\color{green}\ttfamily,
-%                morecomment=[l][\color{magenta}]{\#},
-%                breaklines=true
-%}
-%\begin{lstlisting}
+\lstset{language=C++,
+                basicstyle=\ttfamily\footnotesize,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                breaklines=true
+}
+\begin{lstlisting}
 
+//se fuerza el primer producto quimico en el primer camion
+void Ej3::resolverBiohazard(){
+	carga[0] = 0;
+	combinar(0, 0, 0, carga, this->n-1);
+}
+
+void Ej3::combinar(Camion camion, Quimico ultimaCarga, int peligrosidad, vector<Camion> &carga, int noCargados){
+
+	if (noCargados == 0) {
+		if (minCamiones > camion + 1){
+			mostrarSolucion(carga, camion + 1);
+			this->minCamiones = camion + 1;
+			this->cargaMinima = carga;
+			
+		}
+		return;
+	}
+
+	// Se buscan quimicos siempre para adelante del ultimo cargado. 
+	//De esta manera se evitan colecciones de igual distribucion de quimicos.
+	for (Quimico quimico = ultimaCarga++; quimico < this->n; quimico++){
+
+		if (carga[quimico] != -1) continue; // Si el quimico ya esta cargado entonces busco otro para cargar
+
+		int nuevaPeligrosidad = peligrosidad + calcularPeligrosidadAgregada(carga, camion, quimico);
+		if (this->M >= nuevaPeligrosidad){
+			carga[quimico] = camion;
+			combinar(camion, quimico, nuevaPeligrosidad, carga, noCargados-1);
+			carga[quimico] = -1;
+		}
+	}
+
+	// Podamos las combinaciones de carga de quimicos que ya no 
+	//pueden superar a la mejor solucion obtenida hasta ahora
+	if (camion + 1 + 1 < minCamiones) {
+		for (Quimico quimico = 0; quimico < this->n; quimico++){ 
+			bool encontre = false;
+			if (carga[quimico] == -1 && !encontre){
+				//El quimico obligatoriamente se ubica en el proximo camion. 
+				//Esto se hace para no repetir combinaciones.
+				carga[quimico] = camion + 1;
+				combinar(camion+1, quimico, 0, carga, noCargados-1);
+				carga[quimico] =  -1;
+				encontre = true;
+			}
+		}
+	}
+	
+}
+// Calcula la peligrosidad que agrega el combinar un nuevo quimico
+//a un camion con una cierta distribucion.
+int Ej3::calcularPeligrosidadAgregada(vector<Camion> &carga, Camion camion, Quimico quimicoA){
+	int peligrosidadAgregada = 0;
+	for (Quimico quimicoB = 0; quimicoB < this->n; quimicoB++){
+		if (carga[quimicoB] == camion)
+			peligrosidadAgregada += peligrosidad[quimicoA][quimicoB];
+	}
+	return peligrosidadAgregada;
+}
 
 %\end{lstlisting}
 
