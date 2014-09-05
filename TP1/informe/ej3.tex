@@ -11,6 +11,11 @@ Cuando se llama a la funcion recursiva y no quedan productos sin agregar, se con
 La solucion planteada entonces distribuye los productos de todas las maneras posibles dentro de los camiones. 
 
 
+$\proc{BIOHAZARD(n)}$
+\begin{itemize}
+	\item RECURSION(n)		
+\end{itemize} 
+
 $\proc{RECURSION(k)}$
 \begin{itemize}
 \item Si es solucion y es la mejor la guardo,					
@@ -78,15 +83,12 @@ Y en cuanto a la tercera poda tiene una justificaci'on bastante simple. Dada cua
 
 
 
-$\proc{BIOHAZARD(k)}$
-
+$\proc{BIOHAZARD(n)}$
 \begin{itemize}
 	\item Inicializar matriz de coeficientes de peligrocidad,		$O(n^2)$
 	\item crear primer camion y meter el primer quimico,		$O(1)$
 	\item RECURSION(n)										$O(R(n))$
 \end{itemize}		$O(R(n) + n^2 )$ 
-
-
 
 
 
@@ -119,9 +121,6 @@ $\proc{RECURSION(k)}$
 	\end{itemize}						$O(nR)$
 \end{itemize}	$O(n^2R(k-1))$
 
-
-\linebreak
-\linebreak
 
 Con $k$ incializado en $n$:
 $R(k) = n^2*R(k-1) = n^2*n^2*R(k-2) = ... = (n^2)^n = (n^n)^2$
