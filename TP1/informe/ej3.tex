@@ -10,6 +10,38 @@ M'etodicamente la resoluci'on consiste en "crear/traer" un camion y llamar a una
 Cuando se llama a la funcion recursiva y no quedan productos sin agregar, se considera el estado actual como solucion y se compara con la mejor solucion ya guardada. Si no hay una tal mejor solucion guardada o si la cantidad de camiones de esta solucion es mas chica q la guardada, pasa a ser la nueva mejor solucion.
 La solucion planteada entonces distribuye los productos de todas las maneras posibles dentro de los camiones. 
 
+
+$\proc{RECURSION(k)}$
+\begin{itemize}
+\item Si es solucion y es la mejor la guardo,					
+\item Por cada producto quimico de menor a mayor, 					
+	\begin{itemize}
+	\item Si no esta agregado a ningun otro camion,							
+		\begin{itemize}
+		\item Si la peligrosidad de agregar no es mas grande que M,	
+			\begin{itemize}
+			\item agregar el producto al camion						
+			\item RECURSION(k-1)										
+			\item eliminar el producto del camion						
+			\end{itemize}													
+		\end{itemize}												
+	\end{itemize}															
+\item Si la solucion final podria ser mejor a la mejor por ahora,				
+	\begin{itemize}
+	\item Por cada producto quimico de menor a mayor,							
+		\begin{itemize}
+		\item si no esta agregado													
+			\begin{itemize}
+			\item crear un nuevo camion y agregar el producto ese camion			
+			\item RECURSION(k-1)												
+			\item borrar el camion nuevo y quitar el producto de ese camion
+			\end{itemize}		
+		\end{itemize}						
+	\end{itemize}			
+\end{itemize}
+
+
+
 Tomando esto como base implementamos podas para ayudar mejorar los tiempos de ejecuci'on. Las podas son 3. 
 La primera poda, la mas basica se trata de la validacion de caminos. Es decir no agregar productos a un camion tal que si lo agregase no cumpla la cota M de peligrosidad, si lo hiciera estaria perdiendo tiempo en recorrer ramas que no son solucion.
 La segunda poda es no permitir soluciones practicamente iguales. Donde una solucion es practicamente igual a una segunda si la segunda solucion tiene los mismos quimimos en los mismos camiones, pero el orden en el que se agregaron conrespecto a la primera es distinto. Tambien es practicamente igual si los grupos de quimicos de una solucion son iguales que otra, solo que varia en que camiones se ubicaron.
@@ -52,10 +84,9 @@ $\proc{BIOHAZARD(k)}$
 	\item Inicializar matriz de coeficientes de peligrocidad,		$O(n^2)$
 	\item crear primer camion y meter el primer quimico,		$O(1)$
 	\item RECURSION(n)										$O(R(n))$
-\end{itemize}		$O(R(n) + n^2 )$ \\
+\end{itemize}		$O(R(n) + n^2 )$ 
 
 
-\\
 
 
 
@@ -89,10 +120,13 @@ $\proc{RECURSION(k)}$
 \end{itemize}	$O(n^2R(k-1))$
 
 
+\linebreak
+\linebreak
 
-
-
-Luego $R(n) = n^2*R(n-1) = n^2*n^2*R(n-2) = ... = (n^2)^n = (n^n)^2$
+Con $k$ incializado en $n$:
+$R(k) = n^2*R(k-1) = n^2*n^2*R(k-2) = ... = (n^2)^n = (n^n)^2$
+Esta es una cota teorica de la complejidad del algoritmo sin podar en repeticion de combinaciones. 
+En el pseudoc'odigo mostramos $*O(n)$ con $*$ indicando que se puede acotar todav'ia m'as. Evitando combinaciones se itera solamente por los productos no agregados que tengan identificador mas grande que el ultimo agregado.
 
 
 \subsection{C\'odigo fuente}
