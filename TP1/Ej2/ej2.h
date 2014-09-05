@@ -36,8 +36,6 @@ struct PuntoCritico{
 			posicion = e.fin;
 		}
 	}
-	PuntoCritico(){
-	}
 	bool sube;
 	int altura, posicion;
 	Edificio* edificio;
@@ -52,7 +50,5 @@ typedef std::vector<int> Ciudad;
 Ciudad* edificar(int cantEdificios, Edificios& edificios);
 
 int imprimirCiudad(Ciudad& ciudad);
-
-Ciudad* ciudadFantasma(void);
 
 #endif
