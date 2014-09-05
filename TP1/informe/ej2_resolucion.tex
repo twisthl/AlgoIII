@@ -1,0 +1,28 @@
+Para la resolución de este problema se optó por una estrategia simple. Vamos a generar un tipo de dato que representa un texttt{PuntoCritico} (un punto en el eje orizontal que representa el comienzo de un edificio o su final), para luego ordenar en forma creciente todos los puntos que tiene una ciudad y analizar haciendo una barrida lineal punto a punto para luego tomar la desicion de si ese punto va a formar parte de la solución o no.
+Se decidió por esta metodología, ya que al trabajar con un tipo de dato comparable, los algoritmos de ordenamiento que se basan en comparaciones se pueden utilizar sin ningún problema.
+
+El problema se divide en tres etapas:
+
+\begin{itemize}
+	\item Pasar nuestra entrada de N edificios a 2N PuntosCriticos, que coresponden al comienzo y final de cada edificio.$O(n)$
+		\begin{itemize}
+		\item  Se recorre linealmente la colección de edificios y se generan 2 PuntoCritico por cada uno, y estos se insertan en una colección de PuntosCriticos $O(1)$
+		\end{itemize}
+	\item Ordenar nuestro nuevo arreglo de 2N PuntosCriticos para luego analizar en orden ascendente.$O(n log(n))$
+		\begin{itemize}
+		\item  Se ordena \footnote{C++ reference \url{http://www.cplusplus.com/reference/algorithm/sort/}} la coleccion mediante (el orden está definido por; posicion del edificio, Punto de apertura $<$ Punto de clausura, altura del edificio)\\
+			$O(2n log(2n)) = O(2n (log(2) + log(n)) = O(2n + 2n log(n)) = O(2n log(n)) = O(n log(n))$
+		\end{itemize}
+	\item Volver a recorrer nuestro arreglo haciendo una barrida lineal por los elementos y en cada paso tomar la decicion de si el PuntoCritico pertenece a la solucion.$O(n log(n))$
+	\begin{itemize}
+		\item  Se recorre linealmente la colección de PuntosCriticos; Cuando es un punto de comienzo se inserta en un map 
+		\footnote{C++ reference \url{http://www.cplusplus.com/reference/map/multimap/}}  un elemento con esa altura, cuando es un pundo de finalizacion de un edificio se lo saca del map $O(log(n))$
+		\end{itemize}
+\end{itemize}
+
+Los detalles de como se analizan los puntos críticos estan en el apartado de código relevante, que es la única parte interesante del algoritmo, el resto son manipulaciones de objetos y funciones de las librerias existentes.
+
+Como se puede apreciar en las tres etapas no se supera el orden de n log(n) y como son tres etapas consecutivas e independientes se puede afirmar que la complejidad es InfraCuadrática como se pide en el enunciado.
+
+
+

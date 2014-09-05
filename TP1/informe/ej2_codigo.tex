@@ -1,0 +1,67 @@
+\lstset{language=C++,
+                basicstyle=\ttfamily\footnotesize,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                breaklines=true
+}
+\begin{lstlisting}
+
+struct PuntoCritico{
+	PuntoCritico(bool s, Edificio& e){
+		edificio = &e;
+		sube = s;
+		altura = e.altura;
+		if (s){
+			posicion = e.comienzo;
+		} else {
+			posicion = e.fin;
+		}
+	}
+	bool sube;
+	int altura, posicion;
+	Edificio* edificio;
+};
+
+typedef std::multimap<int,PuntoCritico> MapAlturas;
+
+typedef std::vector<int> Ciudad;
+
+std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
+	//Recorro los 2N elementos
+	for(;itPuntos!=puntos.end();++itPuntos){
+		if (itPuntos->sube){
+		//Si es un punto de comienzo de un edificio
+			//agregar al mapa el edificio abierto
+			edificiosAbiertos.insert(make_pair(itPuntos->altura,*itPuntos));
+			std::vector<PuntoCritico>::iterator itCopy = itPuntos;
+ 			if(*(++itCopy) == *itPuntos){
+ 			//Si no es el m\'as alto de los edificios que empiezan en la misma posici\'on.	
+				continue;
+			} else if (itPuntos->altura > nivelActual){
+			//Si el nivel de este edificio supera al nivel actual del recorrido
+				//Lo inserto en la soluci\'on
+				ciudad->push_back(itPuntos->posicion);
+				ciudad->push_back(itPuntos->altura);
+				//Actualizo el nivel actual
+				nivelActual = itPuntos->altura;
+			}
+		} else {
+		//Si es un punto de cierre de un edificio
+			//Sacar del mapa el edificio que estoy cerrando
+			MapAlturas::iterator it = edificiosAbiertos.find(itPuntos->altura);
+			edificiosAbiertos.erase (it);
+			//Consigo el m\'aximo edificio abierto
+			MapAlturas::iterator itEdificiosAbiertos = --edificiosAbiertos.end();
+			int alturaMaximoEdificio = (*itEdificiosAbiertos).first;
+			if(itPuntos->altura == nivelActual && alturaMaximoEdificio < itPuntos->altura){
+			//Si estoy bajando desde el edificio que est\'a abierto y no hay ninguno del mismo tama\'no
+				//Inserto el punto de bajada hasta la posicion del m\'aximo abierto
+				ciudad->push_back(itPuntos->posicion);
+				ciudad->push_back(alturaMaximoEdificio);
+				//Actualizo el nivel actual
+				nivelActual = alturaMaximoEdificio;
+			}
+		}
+	}
