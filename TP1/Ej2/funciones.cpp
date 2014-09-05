@@ -1,21 +1,5 @@
 #include "ej2.h"
 
-struct PuntoCritico{
-	PuntoCritico(bool s, Edificio& e){
-		sube = s;
-		altura = e.altura;
-		if (s){
-			posicion = e.comienzo;
-		} else {
-			posicion = e.fin;
-		}
-	}
-	PuntoCritico(){
-	}
-	bool sube;
-	int altura, posicion;
-};
-
 //El orden está establecido por: Posicion,Sube o Baja, Altura
 struct orden_PuntoCritico{
 	bool operator()(const PuntoCritico& a, const PuntoCritico& b) const{
@@ -65,7 +49,9 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 	Ciudad* ciudad = new Ciudad();
 	int nivelActual = 0;
 	MapAlturas edificiosAbiertos;
-	edificiosAbiertos.insert(make_pair(0,0));
+	Edificio* edificioPrueba = new Edificio(0,0,0);
+	PuntoCritico* pc = new PuntoCritico(true,*edificioPrueba);
+	edificiosAbiertos.insert(make_pair(0,*pc));
 
 	std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 	for(;itPuntos!=puntos.end();++itPuntos){
@@ -74,7 +60,8 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 		//cout << "PuntoCritico: " << (*itPuntos).sube << " " << (*itPuntos).posicion << " " << (*itPuntos).altura << endl;
 		if (itPuntos->sube){
 			//agregar al mapa el edificio abierto
-			edificiosAbiertos.insert(make_pair(itPuntos->altura,itPuntos->altura));
+			//cout << "Agregue un par :" << itPuntos->altura << " " << itPuntos->posicion << endl;
+			edificiosAbiertos.insert(make_pair(itPuntos->altura,*itPuntos));
 			std::vector<PuntoCritico>::iterator itCopy = itPuntos;
  			if(*(++itCopy) == *itPuntos){
 				continue;
@@ -87,15 +74,20 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 			}
 		} else {
 			//Sacar del mapa el edificio
-			edificiosAbiertos.erase(itPuntos->altura);
+			//cout << "VOY A BORRAR!!!!!!!!!!!" << endl;
+			MapAlturas::iterator it = edificiosAbiertos.find(itPuntos->altura);
+			//cout << "MaP: " << it->first << " " << it->second.posicion << endl;
+			//cout << "FIND!!!!!!!!!!!" << endl;
+			edificiosAbiertos.erase (it);
 			//cout << "Saque una altura: " << itPuntos->altura << endl;
 			MapAlturas::iterator itEdificiosAbiertos = --edificiosAbiertos.end();
-			if(itPuntos->altura == nivelActual && (*itEdificiosAbiertos).first < itPuntos->altura){
+			int alturaMaximoEdificio = (*itEdificiosAbiertos).first;
+			if(itPuntos->altura == nivelActual && alturaMaximoEdificio < itPuntos->altura){
 				//cout << "Maximo edificio: " << (*itEdificiosAbiertos).first << endl;
 				ciudad->push_back(itPuntos->posicion);
-				ciudad->push_back((*itEdificiosAbiertos).first);
+				ciudad->push_back(alturaMaximoEdificio);
 				//cout << "AlturaAnterior: " << nivelActual << endl;
-				nivelActual = (*itEdificiosAbiertos).first;
+				nivelActual = alturaMaximoEdificio;
 				//cout << "AlturaActual: " << nivelActual << endl;
 			}
 		}

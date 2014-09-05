@@ -24,7 +24,26 @@ struct Edificio{
 	int fin;
 };
 
-typedef std::multimap<int,int> MapAlturas;
+struct PuntoCritico{
+	PuntoCritico(bool s, Edificio& e){
+		
+		edificio = &e;
+		sube = s;
+		altura = e.altura;
+		if (s){
+			posicion = e.comienzo;
+		} else {
+			posicion = e.fin;
+		}
+	}
+	PuntoCritico(){
+	}
+	bool sube;
+	int altura, posicion;
+	Edificio* edificio;
+};
+
+typedef std::multimap<int,PuntoCritico> MapAlturas;
 
 typedef std::vector<Edificio> Edificios;
 
