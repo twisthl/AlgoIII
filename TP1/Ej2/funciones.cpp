@@ -69,9 +69,9 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 
 	std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 	for(;itPuntos!=puntos.end();++itPuntos){
-		cout << endl;
+		//cout << endl;
 		//cout << "AlturaActual: " << nivelActual << endl;
-		cout << "PuntoCritico: " << (*itPuntos).sube << " " << (*itPuntos).posicion << " " << (*itPuntos).altura << endl;
+		//cout << "PuntoCritico: " << (*itPuntos).sube << " " << (*itPuntos).posicion << " " << (*itPuntos).altura << endl;
 		if (itPuntos->sube){
 			//agregar al mapa el edificio abierto
 			edificiosAbiertos.insert(make_pair(itPuntos->altura,itPuntos->altura));
@@ -81,23 +81,22 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 			} else if (itPuntos->altura > nivelActual){
 				ciudad->push_back(itPuntos->posicion);
 				ciudad->push_back(itPuntos->altura);
-				cout << "AlturaAnterior: " << nivelActual << endl;
+				//cout << "AlturaAnterior: " << nivelActual << endl;
 				nivelActual = itPuntos->altura;
-				cout << "AlturaActual: " << nivelActual << endl;
+				//cout << "AlturaActual: " << nivelActual << endl;
 			}
 		} else {
 			//Sacar del mapa el edificio
 			edificiosAbiertos.erase(itPuntos->altura);
-			cout << "Saque una altura: " << itPuntos->altura << endl;
-			MapAlturas::iterator itEdificiosAbiertos = edificiosAbiertos.end();
-			if (edificiosAbiertos.size() > 1) --itEdificiosAbiertos;
+			//cout << "Saque una altura: " << itPuntos->altura << endl;
+			MapAlturas::iterator itEdificiosAbiertos = --edificiosAbiertos.end();
 			if(itPuntos->altura == nivelActual && (*itEdificiosAbiertos).first < itPuntos->altura){
-				cout << "Maximo edificio: " << (*itEdificiosAbiertos).first << endl;
+				//cout << "Maximo edificio: " << (*itEdificiosAbiertos).first << endl;
 				ciudad->push_back(itPuntos->posicion);
 				ciudad->push_back((*itEdificiosAbiertos).first);
-				cout << "AlturaAnterior: " << nivelActual << endl;
+				//cout << "AlturaAnterior: " << nivelActual << endl;
 				nivelActual = (*itEdificiosAbiertos).first;
-				cout << "AlturaActual: " << nivelActual << endl;
+				//cout << "AlturaActual: " << nivelActual << endl;
 			}
 		}
 

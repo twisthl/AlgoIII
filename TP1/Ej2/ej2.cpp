@@ -25,6 +25,10 @@ int main(){
 		//1er parametro cantidad de edificios que tiene la ciudad.
 		cin >> cantEdificios;
 
+		if (cantEdificios == 0) {
+			break;
+		}
+
 		cout << "Cantidad de edificios: " << cantEdificios << endl;
 
 		edificios = new Edificios();
@@ -33,22 +37,13 @@ int main(){
 		for(int i=0; i<cantEdificios;i++){
 			int comienzo,fin,altura;
 			cin >> comienzo;
-			cin >> fin;
 			cin >> altura;
+			cin >> fin;
 
 			edificio = new Edificio(comienzo,fin,altura);
 			edificios->push_back(*edificio);
 			cout << "Edificio " << i + 1 << ":" << endl <<" Comienza en " << comienzo <<
 				", su altura es de " << altura << " y termina en " << fin << endl;
-		}
-
-		int cero;
-
-		cin >> cero;
-
-		if (cero != 0){
-			cout << "Error parseando." << endl;
-			return 1;
 		}
 
 		cout << endl;
