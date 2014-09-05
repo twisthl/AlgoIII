@@ -93,18 +93,17 @@ Ciudad* edificar(int cantEdificios, Edificios& edificios){
 		}
 
 	}
-	cout << endl;
+	//cout << endl;
 	return ciudad;
 }
 
 int imprimirCiudad(Ciudad& ciudad){
-
 	Ciudad::iterator it = ciudad.begin();
-
 	for(;it != ciudad.end();++it){
-		cout << *it << " ";
+		cout << *it;
+		if (it != --ciudad.end()) cout << " ";
 	}
 
-	cout << endl << "-------------------------" << endl;
+	cout << endl;
 	return 0;
 }
