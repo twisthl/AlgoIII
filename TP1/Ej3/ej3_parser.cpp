@@ -6,9 +6,6 @@
 
 using namespace std;
 
-Ej3Parser::Ej3Parser(){
-}
-
 void Ej3Parser::cargar(string path){
 
 	// Se carga el archivo
@@ -29,6 +26,10 @@ void Ej3Parser::cargar(string path){
 		break;
 	}
 
+	this->peligrosidad.resize(this->n);
+	for (int i=0; i <= n; i ++){
+		this->peligrosidad[i].resize(this->n, 0);
+	}
 
 	// Datos
 	int i = 0;
@@ -36,12 +37,13 @@ void Ej3Parser::cargar(string path){
 		if(line.find("#") != line.npos || line.empty()) continue;
 
 		istringstream iss(line);
-;
+
 		for (int j = i+1; j < this->n; j++){
 			iss >> this->peligrosidad[i][j];
 			this->peligrosidad[j][i] = this->peligrosidad[i][j];
-			cout << "H" << i  << j << ": " << " izq:" <<this->peligrosidad[i][j] << ";  ";
+			cout << "h" << i  << j << ": " <<this->peligrosidad[i][j] << ";  ";
 		}
+		i++;
 		cout << endl;
 	}
 	cout << endl;

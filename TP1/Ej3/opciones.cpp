@@ -42,12 +42,6 @@ bool Opciones::cargarArgumentos(int argc, const char* argv[]){
 		else if ((string(argv[i]) == "-3") || (string(argv[i]) == "--ej3")) {
 			exercise = ej3;
 		}
-		else if ((string(argv[i]) == "-ph") || (string(argv[i]) == "--podar")) {
-			poda_habilitada = true;
-		}
-		else if ((string(argv[i]) == "-m") || (string(argv[i]) == "--noRepite")) {
-			mejora_habilitada = true;
-		}
 		else if ((string(argv[i]) == "-h") || (string(argv[i]) == "--help")) {
 			help = true;
 		}
@@ -85,8 +79,6 @@ void Opciones::mostrarUso() {
 		<< "\t-3, --ej3\t\t\tSe ejecuta el ejercicio 3\n"
 		<< "\t-p, --path\t\t[PATH]\tCarga el archivo de [PATH]\n"
 		<< "\t-o, --ouput\t\t[PATH]\tArchivo de salida\n"
-		<< "\t-ph, --podar\t\t\tHabilida la poda en el Ejercicio 3\n"
-		<< "\t-m, --mejorar\t\t\tUtiliza el algoritmo mejorado en el Ejercicio 3\n"
 		<< endl;
 }
 

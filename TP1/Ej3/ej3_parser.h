@@ -11,8 +11,8 @@ using namespace std;
 
 class Ej3Parser {
 	public:
-		Ej3Parser();
-		~Ej3Parser(){}
+		Ej3Parser(){};
+		~Ej3Parser(){};
 		void cargar(string path);
 		int getN(){return this->n;}
 		int getM(){return this->M;}

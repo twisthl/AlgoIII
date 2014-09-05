@@ -24,8 +24,12 @@ void Ej3::resolverBiohazard(){
 	vector<Camion> carga;
 	for (int i = 0; i < n; i++){
 		carga.push_back(-1);
-	}
-	combinar(0, 1, 0, carga, this->n-1);
+	} 
+
+	// BEGIN BIOHAZARD
+	carga[0] = 0;
+	combinar(0, 0, 0, carga, this->n-1);
+	// END BIOHAZARD
 
 	cout << "Tiempo de ejecucion: " << endl;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_end);
@@ -40,8 +44,10 @@ void Ej3::combinar(Camion camion, Quimico ultimaCarga, int peligrosidad, vector<
 
 	if (noCargados == 0) {
 		if (minCamiones > camion + 1){
+			mostrarSolucion(carga, camion + 1);
 			this->minCamiones = camion + 1;
 			this->cargaMinima = carga;
+			
 		}
 		return;
 	}
@@ -62,10 +68,13 @@ void Ej3::combinar(Camion camion, Quimico ultimaCarga, int peligrosidad, vector<
 	// Podamos las combinaciones de carga de quimicos que ya no pueden superar a la mejor solucion obtenida hasta ahora
 	if (camion + 1 + 1 < minCamiones) {
 		for (Quimico quimico = 0; quimico < this->n; quimico++){ 
-			if (carga[quimico] == -1){
+			bool encontre = false;
+			if (carga[quimico] == -1 && !encontre){
 				//El quimico obligatoriamente se ubica en el proximo camion. Esto se hace para no repetir combinaciones.
 				carga[quimico] = camion + 1;
 				combinar(camion+1, quimico, 0, carga, noCargados-1);
+				carga[quimico] =  -1;
+				encontre = true;
 			}
 		}
 	}

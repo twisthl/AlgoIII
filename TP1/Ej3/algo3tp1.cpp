@@ -43,5 +43,6 @@ int main(int argc, const char* argv[]) {
 			cerr << "Error fatal, no se ejecuta ningun ejercicio" << endl;
 		}
 	}
+	return 0;
 }
 
