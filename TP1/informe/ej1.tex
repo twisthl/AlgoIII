@@ -6,12 +6,58 @@ Para no hacer demasiado trivial la competencia, no todos los tablones del puente
 
 \subsection{Resoluci\'on}
 
+Para resolver el problema decidimos implementar un algoritmo goloso que consiste en saltar siempre al lugar más lejano posible, siendo caer en un tablón roto la única posibilidad de reducir la longitud de salto hacia el tablón anterior.
+Primero pensamos en un algoritmo que verifique el lugar más lejano al que puede saltar, hacerlo y repetir la operación hasta terminar de cruzar el puente o no poder saltar. Pero de esta forma no nos aseguraríamos que la complejidad sea $O(n)$. Por lo que decidimos recorrer cada tablón del puente $(1)$ verificando el estado del mismo, y guardandolo como $lugarMasLejanoAlcanzable$ si está sano $(2)$, cuando llegue a verificar $saltoMaximo$ tablones, salto al $lugarMasLejanoAlcanzable$ y seteo $saltoMaximo$ como $saltoMaximoReal - tamañoUltimoSalto$ $(3)$. Esto es porque si el jugador no llego a hacer un salto de tamaño igual a su capacidad de salto máximo es porque el o los últimos tablones estaban rotos, y el algoritmo pasará a analizar los tablones que a estos les siguen, contando como ya analizados los tablones rotos ya que sabemos que están rotos y no se puede saltar a ellos.
+Si llegamos hasta el salto máximo y $lugarMasLejanoAlcanzable$ es igual al lugar donde ya estoy es porque no pudo efectuar ningún salto, y en este caso termino la ejecución. $(4)$
+
+\begin{itemize}
+\item Mientras no termine de cruzar el puente $(1)$
+	\begin{itemize}
+	\item Si este tablón est\'a sano:
+		\begin{itemize}
+		\item Lo seteo como lugarMasLejanoAlcanzable $(2)$
+		\end{itemize}
+	\item fin si.
+
+	\item Si este tablón es el más lejano al que podría saltar:
+		\begin{itemize}
+		\item Si pude efectuar algún salto:
+			\begin{itemize}
+			\item Salto al lugarMasLejanoAlcanzable y lo guardo. 
+			\item Restablesco el contador saltoMaximo. $(3)$
+			\end{itemize}
+		\item Sino:
+			\begin{itemize}
+			\item Termino y devuelvo "no". $(4)$
+			\end{itemize}
+		\item fin si.
+		\end{itemize}
+	\item fin si.
+	\item Veo el tablon siguiente
+	\end{itemize}
+\item fin mientras
+\item Devuelto una lista de los tablones a los que salte
+\end{itemize}
+
 
 \subsection{Demostraci\'on de la resoluci\'on}
 
 
 \subsection{Complejidad del algoritmo}
 
+A continuación analizaremos la complejidad del algoritmo propuesto utilizando un pseudo-código simplificado como guía.
+
+\begin{itemize}
+\item Inicializo contadores,													$O(1)$
+\item Para cada tablón del puente, 												$O(n)$
+	\begin{itemize}
+	\item Si puedo saltar a este tablón, lo guardo como tablon más lejano		$O(1)$
+	\item Si llegue al salto máximo y pude saltar, salto al tablon más lejano	$O(1)$
+	\item Si llegue al salto máximo y no pude saltar, termino devolviendo 'no'	$O(1)$
+	\end{itemize}
+\end{itemize}
+
+El analisis es bastante simple, ya que el algoritmo se basa en recorrer una vez cada tablón, y saltar al tablón sano más lejano posible cuando se llegue al salto máximo. Tanto inicializar los contadores, como verificar el estado del tablón actual, verificar si se llego al salto máximo, saltar y guardarse el tablón más lejano cuestan $O(1)$, y estas operaciones se repiten por cada tablón, osea $n$ veces. Por lo tanto podemos decir que la complejidad del algoritmo es $O(n)$.
 
 \subsection{C\'odigo fuente}
 
@@ -98,9 +144,9 @@ Esto lo hicimos para corroborar y tratar de probar empíricamente que, como esta
 Los resultados los guardamos en el archivo testSaltoMaximo.out, los cuales graficamos obteniendo lo siguiente:
 
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
-\includegraphics[scale=1]{./imagenes/ej1_testSaltoMaximo.png}
+\includegraphics[scale=.45]{./imagenes/ej1_testSaltoMaximo.png}
 \caption{Gr\'afico de tiempo en funci\'on del salto m\'aximo.}
 \end{center}
 \end{figure}
@@ -115,7 +161,7 @@ A continuación corrimos 'test' con 3 semillas distintas: 1, 2 y 3, para ahora s
 Esto lo hicimos 10 veces, para poder promediar los tiempos de ejecución, por los motivos arriba enumerados, razón por la cual podríamos obtener tiempo de ejecución mayor al real. Y porque al correr 10 veces seguidas un mismo test, el procesador podría llegar a cachear algunos resultados, dándonos un tiempo de ejecución menor al real.
 Una vez obtenidos estos promedios, graficamos los resultados de los 3 test junto con una representación lineal de $n$,para esto calculamos $t$ $/$ $n$ (El promedio de la esta división en todos los test dio aproximadamente 0.17) para así obtener la constante por la cual podemos multiplicar $n$ y poder compararlos gráficamente de una forma más simple de analizar.  De esta forma obtuvimos el siguiente gráfico:
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.4]{./imagenes/ej1_chartRendimiento.png}
 \caption{Gr\'afico de tiempos con test pseudo-aleatorios.}
