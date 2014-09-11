@@ -1,7 +1,7 @@
 set out "../informe/imagenes/ej1_testSaltoMaximo.png"
 set xlabel "Salto Maximo"
 set ylabel "Tiempo (clocks)"
-set key left top
+set key noenhanced
 set terminal png size 1300,800 enhanced font "Helvetica,20"
 #set xrange [0:1e+06]
 #set yrange [0:1e+06]
