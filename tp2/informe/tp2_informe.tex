@@ -1,0 +1,115 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{listings}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{fixltx2e}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{lastpage}
+\usepackage{caratula}
+\usepackage[colorlinks=true, linkcolor=black]{hyperref}
+\usepackage{calc}
+\usepackage{alltt}
+\usepackage{verbatim}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{graphicx, subfigure}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\input{spanishAlgorithmic}
+\parskip = 11pt
+
+% Pseudocódigo a lo Cormen
+\usepackage{package/clrscode}
+
+% auxiliares
+\newcommand{\sisosi}{\Leftrightarrow}
+
+\newcommand{\Frac}{\displaystyle\frac}
+
+\newcommand{\suma}[2]{\sum\limits_{#1}^{#2}}
+
+\newcommand{\Suma}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+
+
+%\addtolength{\hoffset}{-1cm}
+%\addtolength{\textwidth}{2cm}
+ \addtolength{\voffset}{-0.5cm}
+ \addtolength{\textheight}{1cm}
+ 
+ %Datos de la caratula
+\materia{Algorítmos y Estructura de Datos III}
+\subtitulo{Algoritmos, complejidad, recursión}
+\titulo{Trabajo Práctico 1}
+
+\fecha{05 / 09 / 2014}
+\integrante{Augusto Mascitti}{954/11}{mascittija@gmail.com}
+\integrante{Patricio Capanna}{866/10}{patriciocapanna@gmail.com}
+\integrante{Ariel Paez}{668/09}{twizt.hl@gmail.com}
+
+
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\eme}{\mathcal{M}}
+\newcommand{\emeh}{\widehat{\mathcal{M}}}
+\newcommand{\ere}{\mathcal{R}}
+
+%%%%%%%%% MACROS %%%%%%%%%
+\input{macros.tex}
+%%%%%%%% FIN MACROS %%%%%%
+
+\parskip=5pt % 10pt es el tama�o de fuente
+
+\begin{document}
+
+\thispagestyle{empty}
+\maketitle
+\tableofcontents
+
+
+
+\newpage
+\section{Problema 1: Puentes sobre lava caliente}
+\input{ej1.tex}
+
+\newpage
+\section{Problema 2: Horizontes lejanos}
+\input{ej2.tex}
+
+\newpage
+\section{Problema 3: Biohazard}
+\input{ej3.tex}
+
+\newpage
+\begin{thebibliography}{2}
+
+\bibitem{sort}
+  C++ reference,
+  \url{http://www.cplusplus.com/reference/algorithm/sort/}
+ 
+
+\bibitem{upper}
+	C++ reference,
+	\url{http://www.cplusplus.com/reference/map/multimap/}
+  
+\end{thebibliography}
+
+
+
+\end{document}
+
+\end{document}
