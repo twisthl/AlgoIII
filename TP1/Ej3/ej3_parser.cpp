@@ -26,10 +26,14 @@ void Ej3Parser::cargar(string path){
 		break;
 	}
 
-	this->peligrosidad.resize(this->n);
-	for (int i=0; i <= n; i ++){
-		this->peligrosidad[i].resize(this->n, 0);
-	}
+
+	vector<int> aux(this->n, 0);
+    this->peligrosidad.resize(this->n, aux);
+
+	//this->peligrosidad.resize(this->n);
+	//for (int i=0; i <= n; i ++){
+	//	this->peligrosidad[i].resize(this->n, 0);
+	//}
 
 	// Datos
 	int i = 0;
