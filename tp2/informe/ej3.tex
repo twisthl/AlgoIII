@@ -18,9 +18,20 @@ Para demostrar que con este procedimiento efectivamente obtenemos una red de ser
 Ahora para ser mas claros separaremos la demostracion en dos partes:
 
 \begin{itemize}
-\item Primero demostraremos que al obtener un AGM y agregarle la menor arista restante del grafo, obtenemos una componente conexa con un ciclo de peso optimo.
+\item Demostraremos que al obtener un AGM y agregarle la menor arista restante del grafo, obtenemos una componente conexa con un ciclo de peso optimo.
 \item Para demostrar lo anterior necesitaremos probar que no existe la posibilidad de que nuestra solucion genere un AGM donde pueda existir otro AGM que deje afuera a una arista de menor peso, siendo finalmente una solucion mejor. Por lo tanto en segundo lugar probaremos que cualquier AGM de un mismo grafo siempre esta formado el mismo multiconjunto de pesos de aristas, por lo tanto la arista de menor peso que quede afuera de nuestro AGM siempre será del mismo peso (aunque pueda no ser la misma arista).
 \end{itemize}
+
+Por un simple hecho de comodidad comenzaremos demostrando el segundo punto:
+
+Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente y $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. \forall $x$ \in $W$, ($x$ \in $M_1$ \wedge $x$ \nin $M_2$) \vee ($x$ \in $M_2$ \wedge $x$ \in $M_1$)
+Tomaremos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ \in $T_1$.
+
+
+%CONTINUAR DESDE ACA
+Si agregamos $e$ al AGM $T_2$, estaremos formando un ciclo $C$
+
+Ahora podemos decir que todas las aristas de menor o igual peso que el peso de $e$ que pertenecen a $T_2$ tambien pertenecen a $T_1$, por como escogimos $e$
 
 \subsection{Complejidad del algoritmo}
 
