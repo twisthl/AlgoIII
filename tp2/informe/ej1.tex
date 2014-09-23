@@ -1,6 +1,7 @@
 \subsection{Descripci\'on del problema}
 
-
+Somos parte del equipo de desarrollo de una web de ventas de pasajes aereos, y queremos ofrecerles a nuestros clientes un servicio que le calcule el itinerario mediante el cual puede llegar de una ciudad, a otra. Se quiere que el itinerario calculado llegue al destino en el menor tiempo posible. Para esto debe evaluar todos los trasbordos necesarios para que el momento de llegada sea minimo.
+Hay una restriccion que dee cumplirse, en un trasbordo, tiene que haber por lo menos dos horas de diferencia entre la hora de llegada a la ciudad, hasta la salida del proximo vuelo. 
 
 \subsection{Resoluci\'on}
 
@@ -33,9 +34,9 @@ Para este ejercicio escogimos algunos casos de prueba que tienen las siguientes 
 
 \begin{itemize}
 
-\item 
-\item 
-\item 
+\item Caso sin vuelos hacia la ciudad de destino. En este caso el algoritmo no tiene solucion.
+\item Caso con un vuelo directo de origen a destino.
+\item Caso con un vuelo directo de origen a destino, pero donde la hora de llegada del vuelo directo es mayor a la hora de llegada tomando una via alternativa.
 \item 
 \item 
 

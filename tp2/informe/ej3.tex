@@ -1,6 +1,7 @@
 \subsection{Descripci\'on del problema}
 
-
+En el problema somos una empresa que provee soluciones algoritmicas para problemas sobre redes informaticas. Tenemos un cliente que desea implementar un servicio particular en una red de computadoras ya existente.
+Lo que se desea es crear en esta red una especie de red de computadoras donde los servidores deben formar un backbone 
 
 \subsection{Resoluci\'on}
 
@@ -8,6 +9,18 @@
 
 \subsection{Demostraci\'on de la resoluci\'on}
 
+Para demostrar que nuestra resolucion realmente resuelve el problema propuesto haremos una demostracion por partes.
+
+Como ya dijimos, a grandes razgos la forma que proponemos de resolver el problema es correr el algoritmo de Kruskal para obtener un arbol generador mínimo (AGM) a partir de todas las conexiones ya existentes, y luego agregarle a este la conexión de menor costo que no haya sido utilizada. Con lo cual obtenemos el anillo que pasaría a ser parte del anillo de servidores.
+
+Para demostrar que con este procedimiento efectivamente obtenemos una red de servidores de tipo anillo y como efectivamente tratamos a este problema como un problema de grafos a partir de ahora diremos que las computadoras y servidores son nodos en el grafo, y las conexiones entre ellos serán las aristas, donde el costo de conexión es el peso de estas. Por lo tanto reducimos el problema a obtener un grafo de peso mínimo en el que todos los nodos formen solo una componente conexa y en esta exista un (y solo un) ciclo.
+
+Ahora para ser mas claros separaremos la demostracion en dos partes:
+
+\begin{itemize}
+\item Primero demostraremos que al obtener un AGM y agregarle la menor arista restante del grafo, obtenemos una componente conexa con un ciclo de peso optimo.
+\item Para demostrar lo anterior necesitaremos probar que no existe la posibilidad de que nuestra solucion genere un AGM donde pueda existir otro AGM que deje afuera a una arista de menor peso, siendo finalmente una solucion mejor. Por lo tanto en segundo lugar probaremos que cualquier AGM de un mismo grafo siempre esta formado el mismo multiconjunto de pesos de aristas, por lo tanto la arista de menor peso que quede afuera de nuestro AGM siempre será del mismo peso (aunque pueda no ser la misma arista).
+\end{itemize}
 
 \subsection{Complejidad del algoritmo}
 
