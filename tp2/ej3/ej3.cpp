@@ -26,7 +26,7 @@ int main(){
 		cout << "cantidad de computadoras en red: " << cantCompus << endl;
 		cout << "cantidad de enlaces: " << cantEnlaces << endl;
 
-		list<Enlace> listaEnlaces = list<Enlace>();
+		Red red = Red();
 		
 		//Creo mi estructura de vuelos
 
@@ -38,12 +38,10 @@ int main(){
 			cin >> enlace.compu2;
 			cin >> enlace.costo;
 
-			listaEnlaces->push_back(enlace);
+			red->push_back(enlace);
 			cout << "Enlace desde: " << enlace.compu1 << "; hasta: " << enlace.compu2 << "; con costo: " << enlace.costo << endl;
 		}
 
-		//agrego un uno al final para simular haber terminado el puente, este lugar es siempre valido.
-		tablones->push_back(1);
 		cin >> endEntry;
 
 
