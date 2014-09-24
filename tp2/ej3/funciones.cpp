@@ -1,6 +1,12 @@
 // Declaraciones en el archivo .h
 
-MatrizAdyacencia ady; //matriz de adyacencia
+
+// Comparador de el struct Enlace.
+bool esMayorEnlace(const Enlace& a, const Enlace& b)
+{
+    return a.costo > b.costo;
+}
+
  
 // Devuelve la matriz de adyacencia del árbol mínimo.
 vector< vector<int> > kruskal(int cantCompus, Red red){
@@ -22,7 +28,10 @@ vector< vector<int> > kruskal(int cantCompus, Red red){
     Enlace menorEnlaceExcluido;
     bool noEncontreEnlaceExcluido = true;
 
-    //FALTA ORDENAR LA LISTA DE CONEXIONES POR PESO DE MENOR A MAYOR redOrdenada
+    // Ordeno la lista de camiones en O(n*log(n))
+    // http://www.cplusplus.com/reference/algorithm/sort/?kw=sort
+    sort(redOrdenada.begin(), redOrdenada.end(), esMayorEnlace);
+
 
     while(cantAristas < cantCompus){
         compu1 = redOrdenada[posicionEnRed].compu1;
@@ -54,13 +63,3 @@ vector< vector<int> > kruskal(int cantCompus, Red red){
     }
     return agm;
 }
-
-        // Encontrar  el arco mínimo que no forma ciclo y guardar los nodos y la distancia.
-        int min = INF;
-        for(int i = 0; i < cantCompus; i++)
-            for(int j = 0; j < cantCompus; j++)
-                if(min > red[i][j] && red[i][j]!=0 && pertenece[i] != pertenece[j]){
-                    min = red[i][j];
-                    compu1 = i;
-                    compu2 = j;
-                }

@@ -22,6 +22,8 @@ struct Enlace {
 		int costo;
 };
 
+
+
 // class RedAnillo{
 
 // 	private:
