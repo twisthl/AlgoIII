@@ -13,19 +13,33 @@ Para demostrar que nuestra resolucion realmente resuelve el problema propuesto h
 
 Como ya dijimos, a grandes razgos la forma que proponemos de resolver el problema es correr el algoritmo de Kruskal para obtener un arbol generador mínimo (AGM) a partir de todas las conexiones ya existentes, y luego agregarle a este la conexión de menor costo que no haya sido utilizada. Con lo cual obtenemos el anillo que pasaría a ser parte del anillo de servidores.
 
-Para demostrar que con este procedimiento efectivamente obtenemos una red de servidores de tipo anillo y como efectivamente tratamos a este problema como un problema de grafos a partir de ahora diremos que las computadoras y servidores son nodos en el grafo, y las conexiones entre ellos serán las aristas, donde el costo de conexión es el peso de estas. Por lo tanto reducimos el problema a obtener un grafo de peso mínimo en el que todos los nodos formen solo una componente conexa y en esta exista un (y solo un) ciclo.
+Para demostrar que con este procedimiento efectivamente obtenemos una red de servidores de tipo anillo y como efectivamente tratamos a este problema como un problema de grafos, a partir de ahora diremos que las computadoras y servidores son nodos en el grafo, y las conexiones entre ellos serán las aristas, donde el costo de conexión es el peso de estas. Por lo tanto reducimos el problema a obtener un grafo de peso mínimo en el que todos los nodos formen solo una componente conexa y en esta exista un (y solo un) ciclo.
 
 Ahora para ser mas claros separaremos la demostracion en dos partes:
 
 \begin{itemize}
-\item Demostraremos que al obtener un AGM y agregarle la menor arista restante del grafo, obtenemos una componente conexa con un ciclo de peso optimo.
+\item Demostraremos que al obtener un AGM y agregarle la menor arista restante del grafo, obtenemos una componente conexa con un ciclo, de peso total óptimo.
 \item Para demostrar lo anterior necesitaremos probar que no existe la posibilidad de que nuestra solucion genere un AGM donde pueda existir otro AGM que deje afuera a una arista de menor peso, siendo finalmente una solucion mejor. Por lo tanto en segundo lugar probaremos que cualquier AGM de un mismo grafo siempre esta formado el mismo multiconjunto de pesos de aristas, por lo tanto la arista de menor peso que quede afuera de nuestro AGM siempre será del mismo peso (aunque pueda no ser la misma arista).
 \end{itemize}
 
 Por un simple hecho de comodidad comenzaremos demostrando el segundo punto:
 
-Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente y $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. \forall $x$ \in $W$, ($x$ \in $M_1$ \wedge $x$ \nin $M_2$) \vee ($x$ \in $M_2$ \wedge $x$ \in $M_1$)
-Tomaremos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ \in $T_1$.
+Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente. Vamos a suponer que los pesos de las aristas en M_1 y M_2 son distintos. Sea $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. \forall $x$ \in $W$, ($x$ \in $M_1$ \wedge $x$ \nin $M_2$) \vee ($x$ \in $M_2$ \wedge $x$ \in $M_1$)
+Tomamos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ \in $T_1$ \wedge $e$ \nin T_2. Podemos decir entonces que todas las aristas que posean menor peso que el de $e$ estan en T_1 y en T_2.
+Como T_2 es un AGM si le agregamos una arista, se formar\'a un ciclo que la contiene, llamemoslo C. Ahora podemos observar que en este ciclo C debe existir al menos una arista $e'$ tal que $e'$ \nin T_1, porque sino seria lo mismo que decir que en T_1 hay un ciclo, y este es un AGM. Tambien podemos decir que le peso de $e'$ es mayor o igual al peso de $e$ por la observacion hecha anteriormente, y aqui pueden pasar dos cosas:
+\begin{itemize}
+\item $e'$ \geq $e$
+\end{itemize}
+Si $e'$ \geq $e$ entonces podriamos agregar $e$ a T_2 y sacar $e'$, finalmente formando un arbol T_3 de peso menor que el de T_2. Esto es absurdo ya que T_2 es un AGM, y no podria haber una arbol de peso menor.
+
+\begin{itemize}
+\item $e'$ \eq $e$
+\end{itemize}
+Si $e'$ \eq $e$, podriamos agarrar la arista de menor peso en W \setminus ${$ $e$ $}$ y repetir el procedimiento.
+Como supusimos que los pesos de las aristas en M_1 y M_2 son distintos, en algun momento debemos llegar a formar un ciclo en T_2 tal que en el existe una arista $e'$ de peso mayor que el de $e$, de otra forma W estaria formado por pares de aristas de un mismo peso donde una pertenece a T_1 y otra a T_2, y esto tambien ser\'ia absurdo, ya que supusimos que los pesos de los conjuntos de M_1 y M_2 son distintos.
+
+Ahora que sabemos que un AGM esta formado siempre por un conjunto de aristas de los mismos pesos, podemos decir que al tener el conjunto de aristas total $C_1$ y le sacamos las aristas del AGM $C_2$, C_1 tambien estara formado por un conjunto de aristas de los mismos pesos para cualquier AGM. Por lo tanto la arista de menor peso que queda afuera puede no ser siempre la misma, pero siempre sera del mismo peso.
+
 
 
 %CONTINUAR DESDE ACA
