@@ -63,3 +63,4 @@ vector< vector<int> > kruskal(int cantCompus, Red red){
     }
     return agm;
 }
+
