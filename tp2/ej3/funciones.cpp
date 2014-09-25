@@ -1,6 +1,27 @@
 // Declaraciones en el archivo .h
 
 
+void resolver(int cantCompus, int cantEnlaces, Red& red){
+
+
+    Enlace aristaParaCiclo = new Enlace();
+    
+    //Primero ordeno la red por peso en O(n*log(n))
+    // http://www.cplusplus.com/reference/algorithm/sort/?kw=sort
+    sort(red.begin(), red.end(), esMayorEnlace);
+
+
+    //Obtengo el AGM a partir de la red.
+    MatrizAdyacencia agm = kruskal(cantCompus, *red, *aristaParaCiclo);
+    int cantEnlacesEnCamino;
+
+    //Aplicar BFS en agm, empezando en algunas de las compus de aristaParaCiclo
+    //este BFS debe ir guardando el antecesor para despues reconstruir el camino de una compu a la otra
+    //A medida que reconstruimos el camino, guardarlo en un vector para mostrarlo
+
+}
+
+
 // Comparador de el struct Enlace.
 bool esMayorEnlace(const Enlace& a, const Enlace& b)
 {
@@ -9,7 +30,8 @@ bool esMayorEnlace(const Enlace& a, const Enlace& b)
 
  
 // Devuelve la matriz de adyacencia del árbol mínimo.
-vector< vector<int> > kruskal(int cantCompus, Red red){
+// Debe recibir la red ordenada por peso de menor a mayor.
+MatrizAdyacencia kruskal(int cantCompus, Red& red, Enlace& menorEnlaceExcluido){
     Red redOrdenada = red;
     MatrizAdyacencia agm(cantCompus);
     vector<int> pertenece(cantCompus); // indica a que árbol pertenece el nodo
@@ -25,13 +47,8 @@ vector< vector<int> > kruskal(int cantCompus, Red red){
     int cantAristas = 1;
     int posicionEnRed = 0;
 
-    Enlace menorEnlaceExcluido;
+//    Enlace menorEnlaceExcluido;
     bool noEncontreEnlaceExcluido = true;
-
-    // Ordeno la lista de camiones en O(n*log(n))
-    // http://www.cplusplus.com/reference/algorithm/sort/?kw=sort
-    sort(redOrdenada.begin(), redOrdenada.end(), esMayorEnlace);
-
 
     while(cantAristas < cantCompus){
         compu1 = redOrdenada[posicionEnRed].compu1;
@@ -64,3 +81,21 @@ vector< vector<int> > kruskal(int cantCompus, Red red){
     return agm;
 }
 
+
+void imprimirResultado(int costoTotal, int cantEnlacesEnCamino, int canEnlacesFuera, Red anilloServidores, Red compusEnRed){
+
+    if(costoTotal == 0){
+        cout << "no";// << endl;
+    }else{
+        cout << costoTotal << " " << cantEnlacesEnCamino << " " << canEnlacesFuera << endl;
+
+        for (int i = 0; i < cantEnlacesEnCamino; ++i){
+            cout << anilloServidores[i].compu1 << " " << anilloServidores[i].compu2 << endl;
+        }
+
+        for (int i = 0; i < canEnlacesFuera; ++i){
+            cout << compusEnRed[i].compu1 << " " << compusEnRed[i].compu2 << endl;
+        }
+    }
+    cout << endl;    
+}

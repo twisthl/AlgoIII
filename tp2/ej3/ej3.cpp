@@ -26,14 +26,11 @@ int main(){
 		cout << "cantidad de computadoras en red: " << cantCompus << endl;
 		cout << "cantidad de enlaces: " << cantEnlaces << endl;
 
-		Red red = Red();
-		
-		//Creo mi estructura de vuelos
+		Red red = new Red();
+		Enlace enlace;
 
 		//Armo la lista de estado de Tablas del puente
 		for(int i=0; i<cantEnlaces;i++){
-			Enlace enlace = Enlace();
-
 			cin >> enlace.compu1;
 			cin >> enlace.compu2;
 			cin >> enlace.costo;
@@ -45,7 +42,7 @@ int main(){
 		cin >> endEntry;
 
 
-		res = resolver();
+		res = resolver(cantCompus, cantEnlaces, *red);
 
 // 		cout << "termino algoritmo, imprimo resultados" << endl;
 
