@@ -99,3 +99,49 @@ void imprimirResultado(int costoTotal, int cantEnlacesEnCamino, int canEnlacesFu
     }
     cout << endl;    
 }
+
+
+void bfs(Enlace desde, Enlace hasta){
+
+}
+
+
+
+//MODIFICAR TODO EL BFS
+void bfs(int s, Red red, int cantAristas)
+{
+    // Mark all the vertices as not visited
+    bool *visited = new bool[cantAristas];
+    for(int i = 0; i < cantAristas; i++)
+        visited[i] = false;
+ 
+    // Create a queue for BFS
+    vector<int> cola;
+ 
+    // Mark the current node as visited and enqueue it
+    visited[s] = true;
+    cola.push_back(s);
+ 
+    // 'i' will be used to get all adjacent vertices of a vertex
+    vector<int>::iterator i;
+ 
+    while(!cola.empty())
+    {
+        // Dequeue a vertex from cola and print it
+        s = cola.front();
+        cout << s << " ";
+        cola.pop_front();
+ 
+        // Get all adjacent vertices of the dequeued vertex s
+        // If a adjacent has not been visited, then mark it visited
+        // and enqueue it
+        for(i = adj[s].begin(); i != adj[s].end(); ++i)
+        {
+            if(!visited[*i])
+            {
+                visited[*i] = true;
+                cola.push_back(*i);
+            }
+        }
+    }
+}
