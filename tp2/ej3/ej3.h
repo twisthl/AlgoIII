@@ -22,6 +22,11 @@ struct Enlace {
 		int costo;
 };
 
+struct Vertice{
+	bool visitado;
+	int distancia = INF;
+	Vertice predecesor;
+};
 
 
 // class RedAnillo{
