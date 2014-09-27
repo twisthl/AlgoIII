@@ -12,7 +12,7 @@ void resolver(int cantCompus, int cantEnlaces, Red& red){
 
 
     //Obtengo el AGM a partir de la red.
-    MatrizAdyacencia agm = kruskal(cantCompus, *red, *aristaParaCiclo);
+    MatrizAdyacencia agm = kruskal(cantCompus, cantEnlaces, *red, *aristaParaCiclo);
     int cantEnlacesEnCamino;
 
     //Aplicar BFS en agm, empezando en algunas de las compus de aristaParaCiclo
@@ -31,7 +31,7 @@ bool esMayorEnlace(const Enlace& a, const Enlace& b)
  
 // Devuelve la matriz de adyacencia del árbol mínimo.
 // Debe recibir la red ordenada por peso de menor a mayor.
-MatrizAdyacencia kruskal(int cantCompus, Red& red, Enlace& menorEnlaceExcluido){
+MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido){
     Red redOrdenada = red;
     MatrizAdyacencia agm(cantCompus);
     vector<int> pertenece(cantCompus); // indica a que árbol pertenece el nodo
@@ -46,15 +46,17 @@ MatrizAdyacencia kruskal(int cantCompus, Red& red, Enlace& menorEnlaceExcluido){
     int costo;
     int cantAristas = 1;
     int posicionEnRed = 0;
+    int cantAristasVisitadas = 0;
 
 //    Enlace menorEnlaceExcluido;
     bool noEncontreEnlaceExcluido = true;
 
-    while(cantAristas < cantCompus){
+    while(cantAristas < cantCompus && cantAristas <= cantTotalAristas){
         compu1 = redOrdenada[posicionEnRed].compu1;
         compu2 = redOrdenada[posicionEnRed].compu2;
         costo = redOrdenada[posicionEnRed].costo;
         posicionEnRed++;
+        cantAristasVisitadas++;
 
         // Si los nodos no pertenecen al mismo árbol agrego la arista al árbol mínimo.
         if(pertenece[compu1] != pertenece[compu2]){
