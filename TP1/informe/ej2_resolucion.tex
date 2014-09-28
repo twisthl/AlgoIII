@@ -3,7 +3,7 @@ Se decidió por esta metodología, ya que al trabajar con un tipo de dato compar
 
 El problema se divide en tres etapas:
 
-\begin{itemize}
+\begin{enumerate}[I]
 	\item Pasar nuestra entrada de N edificios a 2N PuntosCriticos, que coresponden al comienzo y final de cada edificio.
 		\begin{itemize}
 		\item  Se recorre linealmente la colección de edificios y se generan 2 PuntoCritico por cada uno, y \'estos se insertan en una colección de PuntosCriticos.
@@ -19,23 +19,9 @@ El problema se divide en tres etapas:
 		\end{itemize}
 	\item Volver a recorrer nuestro arreglo haciendo una barrida lineal por los elementos y en cada paso tomar la decision de si tengo que agregar algun punto a la soluci\'on.
 	\begin{itemize}
-		\item  Se recorre linealmente la colección de PuntosCriticos; Cuando es un punto de comienzo se inserta en un map 
-		\footnote{C++ reference \url{http://www.cplusplus.com/reference/map/multimap/}}  un elemento con esa altura, cuando es un pundo de finalizaci\'on de un edificio se lo saca del map (esto es para mantener una estructura que nos ayuda a decidir que puntos pertenecen a la soluci\'on de mi problema).
+		\item  Al recorre la colección de PuntosCriticos, Cuando es un punto de comienzo se inserta en un \texttt{multimap} \footnote{C++ reference \url{http://www.cplusplus.com/reference/map/multimap/}}  un elemento con esa altura, cuando es un pundo de finalizaci\'on de un edificio se lo saca del \texttt{multimap} (esto es para mantener una estructura que nos ayuda a decidir que puntos pertenecen a la soluci\'on del problema).
 		\end{itemize}
-\end{itemize}
-
-
-
-\begin{itemize}
-	\item Se analizan todos los puntos que intervienen en el armado de la ciudad
-	\item Se toma la desición correcta al momento de ver si un punto perteneces o no a la solución del problema
-		\begin{itemize}
-		\item Para esto va a ser importante el orden que definí
-		\item Y tambien realizar algunas verificaciones ya que los elementos que comparten alguna posición son interesantes.
-		\end{itemize}
-\end{itemize}
-
-Que todos los puntos estén no requiere ningún análisis especial. Al recorrer la entrada y desdoblar cada edificio en dos PuntoCritico, están todos los puntos que tengo que analizar del problema.
+\end{enumerate}
 
 No está demás aclarar que un edificio se transforma en 2 PuntoCritico:
 	\begin{itemize}
@@ -43,32 +29,32 @@ No está demás aclarar que un edificio se transforma en 2 PuntoCritico:
 		\item Cierre del edificio en la posición x, desde la altura y
 	\end{itemize}
 
-Esto es importante ya que primero establezco un orden en el cual voy a analizar los puntos de apertura y luego los de clausura de edificios. Porque al abrir un edificio, este continúa siendo relevante, ya que al cerrar cualquier edificio tengo que considerar el punto al cual baja la silueta de la ciudad (el edificio más alto abierto en ese momento). La dinámica es ir abriendo y cerrando edificios cada vez que analizo un PuntoCritico de apertura o clausura mientras considero si intervienen en la solución final o no.
+Esto es importante ya que primero establezco un orden en el cual voy a analizar los puntos de apertura y luego los de clausura de edificios. Porque al abrir un edificio, \'este continúa siendo relevante, ya que al cerrar cualquier edificio tengo que considerar el punto al cual baja la silueta de la ciudad (el edificio más alto abierto en ese momento). La dinámica es ir abriendo y cerrando edificios cada vez que analizo un PuntoCritico de apertura o clausura, mientras considero si agrego alg\'un punto a la solución final o no.
 
-Al tener un orden, no solo por posición, sino por tipo de PuntoCritico (Apertura/Clausura) me aseguro siempre \textbf{ABRIR} edificios antes de \textbf{CERRARLOS}. Cuando es un PuntoCritico de Apertura el que analizo lo inserto inmediatamente como edificio abierto, ya que por mas que en ese momento pueda que no sea relevante, por quedar oculto por un edificio más alto, en un próximo paso su altura puede intervenir en la solución final.
+Al tenerlos ordenados, no solo por posición, sino por tipo de PuntoCritico (Apertura/Clausura) me aseguro siempre \textbf{ABRIR} edificios antes de \textbf{CERRARLOS}. Cuando es un PuntoCritico de Apertura el que analizo lo inserto inmediatamente como edificio abierto, ya que por m\'as que en ese momento pueda que no sea relevante, por quedar oculto por un edificio más alto, en un próximo paso su altura puede intervenir en la solución final.
 Y cuando es un PuntoCritico de Clausura lo cierro inmediatamente pues este edificio no interviene más en la resolución del algoritmo.
 
-Voy a analizar en orden creciente por posicion de los PuntoCritico desde el edificio que comienza primero hasta el edificio que termina último.
+Voy a analizar en orden creciente por posici\'on de los PuntoCritico desde el edificio que comienza primero hasta el edificio que termina último.
 En cada iteración tengo referencia al nivel actual de la ciudad, que comienza en 0 y se actualiza aumentando por cada PuntoCritico de apertura que incremente el nivel actual y disminuyendo por cada PuntoCritico de Clausura que corresponda al edificio abierto que estoy cerrando (porque me topé con su punto crítico de clausura) hasta el nivel que corresponda.
 
 PuntoCritico de Apertura
 \begin{itemize}
-		\item Al encontrar un PuntoCrito de apertur agrego un edificio abierto que corresponde a la altura del punto critico
-		\item Se puede dar que varios edificios compartan el origen, con lo cual avanzo hasta el PuntoCritico de igual posicion y tipo, pero mayor altura. Al estar en orden avanzo hasta encontrar uno de distinta posicion y/o tipo
-		\begin{itemize}
-		\item Si la altura del PC de apertura es mayor al nivel actual de la ciudad entonces este punto critico va en la solucion del problema y el nivel actual de la ciudad pasa a ser la altura del mismo
-		\item Si no, no es considerado en la solución, pero si queda como edificio abierto para futuras consideraciones
-		\end{itemize}
+		\item Al encontrar un PuntoCrito de apertura agrego un edificio abierto que corresponde a la altura del punto cr\'itico
+		\item Se puede dar que varios edificios compartan el origen (posicion en donde comienza), con lo cual avanzo hasta el PuntoCritico de igual posicion y tipo, pero mayor altura. Al estar en orden avanzo hasta encontrar uno de distinta posicion y/o tipo(con lo cual el inmediato anterior es el de mayor altura de los que comparte posicion y tipo).
+			\begin{itemize}
+				\item Si la altura del PC de apertura es mayor al nivel actual de la ciudad entonces este punto cr\'itico va en la soluci\'on del problema y el nivel actual de la ciudad pasa a ser la altura del mismo
+				\item Si no, no es considerado en la solución, pero s\'i queda como edificio abierto para futuras consideraciones
+			\end{itemize}
 \end{itemize}
 
 PuntoCritico de Clausura
 \begin{itemize}
-		\item Al encontrar un PuntoCrito de clausura, cierro el edificio abierto que corresponde a la altura del punto critico, con lo cual este valor ya no está en consideración a la hora de saber el máximo edificio abierto
+	\item Al encontrar un PuntoCrito de clausura, cierro un edificio abierto que corresponde a la altura del punto cr\'itico, con lo cual este valor ya no está en consideración a la hora de saber el máximo edificio abierto
 		\begin{itemize}
-		\item Si la altura no es igual al nivel actual de mi ciudad ese punto queda excluido de la solución, ya que es un punto está dentro de algún edificio abierto
+			\item Si la altura no es igual al nivel actual de mi ciudad (es estrictamente menor pues si fuera mayor abr\'ia un edificio abierto de esta altura y el nivel actual ser\'ia ese) ese punto queda excluido de la solución, ya que es un punto está dentro de algún edificio abierto
 			\begin{itemize}
-			\item Si la altura es igual al nivel actual de mi ciudad y el edificio máximo abierto es menor al nivel acual, implica que debo bajar desde el nivel actual hasta el nivel del máximo edificio abierto, con lo cual a la solución se le agrega un punto que tiene la posición de clausura del PC y la altura del máximo edificio abierto.
-			\item De lo contrario quiere decir que hay un edificio de igual altura (mayor nunca podría ser con instancias válidas de entrada) abierto y por lo tanto este PC tampoco se considera parte de la solución.
+				\item Si la altura es igual al nivel actual de mi ciudad y el edificio máximo abierto (no me considero a mi mismo, pues ya cerr\'e el edificio correspondiente a mi) es menor al nivel acual, implica que debo bajar desde el nivel actual hasta el nivel del máximo edificio abierto, con lo cual a la solución se le agrega un punto que tiene la posición de clausura del PuntoCritico y la altura del máximo edificio abierto.
+				\item De lo contrario quiere decir que hay un edificio de la misma altura (mayor nunca podría ser con instancias válidas de entrada) abierto y por lo tanto este PC tampoco se considera parte de la solución.
 			\end{itemize}
 		\end{itemize}
 \end{itemize}

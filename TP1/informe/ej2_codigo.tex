@@ -1,6 +1,6 @@
 No se consideró relevante ni la conversión de estructuras, ni el ordenamiento de los elementos por ser funciones básicas y/o implementadas en librerias de C++.
 
-El código interesante para la resolución de este problema es aquel que recorre los PuntoCriticos en orden y decide si pertenecen o no a la solución del problema.
+El código interesante para la resolución de este problema es aquel que recorre los puntos cr\'iticos en orden y agrega puntos a la solución del problema.
 
 
 \lstset{language=C++,
@@ -13,7 +13,6 @@ El código interesante para la resolución de este problema es aquel que recorre
 }
 \begin{lstlisting}
 typedef std::multimap<int,PuntoCritico> MapAlturas;
-
 typedef std::vector<int> Ciudad;
 
 struct PuntoCritico{
@@ -46,6 +45,9 @@ struct orden_PuntoCritico{
 		}
 	};
 };
+
+std::vector<PuntoCritico> puntos;
+MapAlturas edificiosAbiertos;
 
 std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 	//Recorro los 2N elementos

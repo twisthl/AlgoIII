@@ -1,6 +1,19 @@
-Para demostrar que la solución es correcta, basta ver dos temas:
+Vamos a demostrar por absurdo que nuestro algoritmo devuelve una soluci\'on correcta, suponiendo que no lo hace y llegando a alguna contradicci\'on.
 
+Supongo que la soluci\'on que retorna nuestro algoritmo no es correcta. Con lo cual sucede alguna de las siguietes situaciones.
 
+\begin{enumerate}[I]
+	\item Tengo un punto que no pertenece a la soluci\'on.
+	\begin{enumerate}[(a)]
+		\item Si es la esquina superior izquierda de un edificio (PuntoCritico de apertura) la que agrega nuestro algoritmo (y est\'a de m\'as), significa que hay edificios m\'as altos en esa posici\'on. Es imposible que nuestro algoritmo incluya este punto en la soluci\'on, pues al analizar un punto cr\'itico de apertura, si la altura actual de la ciudad es mayor no lo considera parte de la soluci\'on final, y si hay varios edificios que comienzan en el mismo lugar, solo considera al de mayor altura, con lo cual no lo ingresa en la soluci\'on bajo ning\'un concepto.
+		\item Si es la esquina superior derecha de un edificio (PuntoCritico de clausura), significa que en ese punto tambi\'en hay al menos un edificio que lo contiene que no es el del punto cr\'itico que estoy analizando. Pero siempre que agerga un punto cuando analiza un Puntocritico de clausura es o bien la altura del mismo edificio que est\'a cerrando, o bien la altura del edificio m\'as alto abierto, que es menor a la altura del PuntoCritico. O si el PuntoCritico tiene una altura menor al actual de la ciudad tampoco es considerado. Con lo cual no tengo edificios por ensima de donde agrego puntos al analizar un punto cr\'itico de clausura.
+		\item No analizo (ni agrego) puntos que no esten en al posici\'on de esquinas de edificios. No agrego puntos entremedio de dos esquinas de edificios. Ni fuera de edificios. Ni dentro.
+	\end{enumerate}
+	\item Me falta alg\'un punto que si perteneces a la soluci\'on
+	\begin{enumerate}[(a)]
+		\item Si es la esquina superior izquierda de un edificio (PuntoCritico de apertura), quiere decir que en nuestro algoritmo no lo selecciono\'o a este punto. Imposible pues analiza todos los puntos y la \'unica forma de que no lo elija un punto cr\'itico de apertura es que haya uno m\'as alto en esa misma posici\'on, y si hay uno m\'as alto no va en al soluci\'on final.
+		\item Si es la esquina superior derecha de un edificio (PuntoCritico de clausura), quiere decir que nuestro algoritmo ten\'ia que tomar la esquina de un edificio o el punto en el que se cruzan dos edificios y no lo hizo. Imposible pues analiza todos los puntos de clausura y solo no los considera si son menores a la altura actual del edificio (en cuyo caso estan dentro de alg\'un edificio y no son parte de la soluci\'on), caso contrario agruega o bien la esquina del mismo o el punto en donde se cruza con el edificio de mayor altura.
+	\end{enumerate}
+\end{enumerate}
 
-Puto el que lee!
-
+Como se puede apreciar, nuestro algoritmo tiene todos los puntos que pertenecen a la soluci\'on y no tiene puntos de m\'as que no pertenecen a la soluci\'on. Con lo cual es \texttt{ABSURDO} pensar que nuestro algoritmo no devuelve una soluci\'on correcta.
