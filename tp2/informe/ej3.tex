@@ -74,12 +74,57 @@ La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
 
 \subsubsection{Complejidad de Kruskal}
 
+
 \begin{itemize}
-\item
-\item 
-\item 
+\item $KRUSKAL$
+\item Me creo un grafo, $AGM$, vacio donde ire guardando el arbol generador minimo creado.
+\item Para cada vertice $v$ en $G$
+	\begin{itemize}
+	\item Creo un conjunto de pertenencia
+	\end{itemize}
+\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso)
+	\begin{itemize}
+	\item Si v.a y v.b no pertenecen al mismo conjunto de pertenencia (donde v.a y v.b son los nodos que conecta la arista v)
+		\begin{itemize}
+		\item Agrego la arista a $AGM$
+		\item Actualizo el conjunto de pertenencia de v.b y todos los nodos adyacentes a el.
+		\item Sumo 1 a la cantidad de aristas agregadas.
+		\end{itemize}
+	\item Sino, Si aun no encontre la primer arista excluida del arbol
+		\begin{itemize}
+		\item Me guardo la arista excluida.
+		\end{itemize}
+	\end{itemize}
+\item devuelvo $AGM$
 \end{itemize}
 
+
+\subsubsection{BFS}
+
+\begin{itemize}
+\item Para cada vertice $u$ en $G-{s}$
+	\begin{itemize}
+	\item Seteo $u$ como no visitado, distancia infinito y predecesor nulo.
+	\end{itemize}
+\item Seteo $s$ como visitado, distancia 0 (cero), predecesor nulo.
+\item Creo una cola $Q$ y encolo $s$
+\item Mientras la cola no este vacia
+	\begin{itemize}
+	\item Desencolo un elemento $s'$
+	\item Para cada vertice $v$ adjacente a $s'$
+		\begin{itemize}
+		\item Si no visite $v$:
+			\begin{itemize}
+			\item Marco a $v$ como visitado, distancia de $v$ = distancia de $s' + 1$, predecesor = $s'$
+			\end{itemize}
+		\end{itemize}
+
+	\end{itemize}
+
+\end{itemize}
+
+\begin{itemize}
+\end{itemize}
 
 \subsubsection{Complejidad de BFS}
 \subsubsection{Complejidad del algoritmo}
