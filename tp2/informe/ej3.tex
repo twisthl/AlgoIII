@@ -1,10 +1,10 @@
 \subsection{Descripci\'on del problema}
 
-Somos parte de una empresa que provee soluciones algoritmicas para problemas sobre redes informaticas. Tenemos un cliente que desea implementar un servicio particular en una red de computadoras ya existente.
-Partiendo de una serie de computadoras y conexiones entre ellas, lo que desea es crear una red de computadoras, donde debe haber un backbone de servidores el cual debe tener una topologia de red de tipo anillo, manteniendo conectadas (de forma directa o indirecta) a este backbone a todas las demas computadoras de la red.
-Todo esto debe realizarse minimizando a nivel optimo el costo total de las conexiones de la red.
+Somos parte de una empresa que provee soluciones algorítmicas para problemas sobre redes informáticas. Tenemos un cliente que desea implementar un servicio particular en una red de computadoras ya existente.
+Partiendo de esta, lo que desea es crear una red de computadoras, donde debe haber un backbone de servidores el cuál debe tener una topología de red de tipo anillo, manteniendo conectadas (de forma directa o indirecta) a este backbone a todas las demás computadoras de la red.
+Todo esto debe realizarse minimizando a nivel óptimo el costo total de las conexiones de la red.
 
-Por ejemplo en la siguiente imagen mostramos una posible red de nuestro cliente, y como deberia quedar.
+Por ejemplo en la siguiente imágen mostramos una posible red de nuestro cliente, y como debería quedar.
 
 \begin{figure}[H]
 \begin{center}
@@ -21,10 +21,10 @@ Por ejemplo en la siguiente imagen mostramos una posible red de nuestro cliente,
 \subsection{Resoluci\'on}
 
 Para resolver el problema observamos la gran similitud, o igualdad en todo caso, entre:
-El problema de crear una red de tipo anillo y conectar toda una serie de computadoras a esta de manera de minimizar el costo de conexion, utilizando para esto un conjunto de conexiones entre todas las computadoras, ya existente.
-Y el problema de obtener exactamente una componente conexa con al menos un circuito de un grafo G, de manera de minimizar el peso total de las aristas. Razon por la cual pensamos que la mejor forma de resolver el problema era obtener un arbol generador minimo a partir de las computadoras y sus conexiones, para así llegar a tener todas las computadoras conectadas entre si. Luego agregar la conexion de menor costo que no se haya usado para así crear la red de servidores tipo anillo.
-Una vez obtenido el anillo buscamos y contamos las conexiones que pertenecen a el.
-Para obtener la red de computadoras (el arbol generador minimo) utilizamos el algoritmo de Kruskal, algo modificado, para que tambien devuelva la conexion de menor costo no utilizada, preferimos Kruskal sobre el algoritmo de Prim simplemente por gusto. Para buscar las conexiones pertenecientes al anillo utilizamos el algoritmo BFS, con el cual podemos obtener el camino minimo (en realidad unico ya que se ejecuta sobre un arbol) en un tiempo lineal.
+El problema de crear una red de tipo anillo y conectar toda una serie de computadoras a esta de manera de minimizar el costo de conexión, utilizando para esto un conjunto de conexiones entre todas las computadoras, ya existente.
+Y el problema de obtener de un grafo G, exactamente una componente conexa con al menos un circuito, de manera de minimizar el peso total de las aristas. Razón por la cual pensamos que la mejor forma de resolver el problema era obtener un árbol generador mínimo a partir de las computadoras y sus conexiones, para así llegar a tener todas las computadoras conectadas entre sí. Luego agregar la conexión de menor costo que no se haya usado para así crear la red de servidores tipo anillo.
+Una vez obtenido el anillo buscamos y contamos las conexiones que pertenecen a \'el.
+Para obtener la red de computadoras (el \'arbol generador m\'inimo) utilizamos el algoritmo de Kruskal, algo modificado, para que tambi\'en devuelva la conexi\'on de menor costo no utilizada, preferimos Kruskal sobre el algoritmo de Prim simplemente por gusto. Para buscar las conexiones pertenecientes al anillo utilizamos el algoritmo BFS, con el cu\'al podemos obtener el camino m\'inimo (en realidad \'unico ya que se ejecuta sobre un \'arbol) en un tiempo lineal.
 A modo de ejemplo agregamos un pseudo-código del algoritmo propuesto:
 
 \begin{itemize}
@@ -38,46 +38,46 @@ A modo de ejemplo agregamos un pseudo-código del algoritmo propuesto:
 
 \subsection{Demostraci\'on de la resoluci\'on}
 
-Para demostrar que nuestra resolucion realmente resuelve el problema propuesto haremos una demostracion por partes.
+Para demostrar que nuestra resoluci\'on realmente resuelve el problema propuesto haremos una demostraci\'on por partes.
 
-Como ya dijimos, a grandes razgos la forma que proponemos de resolver el problema es correr el algoritmo de Kruskal para obtener un arbol generador mínimo (AGM) a partir de todas las conexiones ya existentes, y luego agregarle a este la conexión de menor costo que no haya sido utilizada. Con lo cual obtenemos el anillo que pasaría a ser parte del anillo de servidores.
+Como ya dijimos, a grandes razgos la forma que proponemos de resolver el problema es correr el algoritmo de Kruskal para obtener un \'arbol generador mínimo (AGM) a partir de todas las conexiones ya existentes, y luego agregarle a este la conexión de menor costo que no haya sido utilizada. Con lo cual obtenemos el anillo que pasaría a ser parte del anillo de servidores.
 
-Para demostrar que con este procedimiento efectivamente obtenemos una red de servidores de tipo anillo y como efectivamente tratamos a este problema como un problema de grafos, a partir de ahora diremos que las computadoras y servidores son nodos en el grafo, y las conexiones entre ellos serán las aristas, donde el costo de conexión es el peso de estas. Por lo tanto reducimos el problema a obtener un grafo de peso mínimo en el que todos los nodos formen solo una componente conexa y en esta exista un (y solo un) ciclo.
+Para demostrar que con este procedimiento efectivamente obtenemos una red con un backbone de servidores de tipo anillo y como efectivamente tratamos a este problema como un problema de grafos, a part\'ir de ahora diremos que las computadoras y servidores son nodos en el grafo, y las conexiones entre ellos serán las aristas, donde el costo de conexión es el peso de estas. Por lo tanto reducimos el problema a obtener un grafo de peso mínimo en el que todos los nodos formen solo una componente conexa y en esta exista un (y solo un) ciclo.
 
-Ahora para ser mas claros separaremos la demostracion en dos partes:
+Ahora para ser mas claros separaremos la demostraci\'on en dos partes:
 
 \begin{itemize}
-\item Demostraremos que al obtener un AGM y agregarle la menor arista restante del grafo, obtenemos una componente conexa con un ciclo, de peso total óptimo.
-\item Para demostrar lo anterior necesitaremos probar que no existe la posibilidad de que nuestra solucion genere un AGM donde pueda existir otro AGM que deje afuera a una arista de menor peso, siendo finalmente una solucion mejor. Por lo tanto en segundo lugar probaremos que cualquier AGM de un mismo grafo siempre esta formado el mismo multiconjunto de pesos de aristas, por lo tanto la arista de menor peso que quede afuera de nuestro AGM siempre será del mismo peso (aunque pueda no ser la misma arista).
+\item Demostraremos que al obtener un AGM y agregarle la men\'or arista restante del grafo, obtenemos una componente conexa con \'un ciclo, de peso total óptimo.
+\item Para demostrar lo anterior necesitaremos probar que no existe la posibilidad de que nuestra soluci\'on genere un AGM y pueda existir otro AGM que deje afuera a una arista de menor peso, siendo finalmente una soluci\'on mejor. Por lo tanto en segundo lugar probaremos que cualquier AGM de un mismo grafo siempre esta formado el mismo multiconjunto de pesos de aristas, por lo tanto la arista de menor peso que quede afuera de nuestro AGM siempre será del mismo peso (aunque pueda no ser la misma arista).
 \end{itemize}
 
 Por un simple hecho de comodidad comenzaremos demostrando el segundo punto:
 
-Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente. Vamos a suponer que los pesos de las aristas en $M_1$ y $M_2$ son distintos. Sea $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. \forall $x$ \in $W$, ($x$ \in $M_1$ \wedge $x$ \nin $M_2$) \vee ($x$ \in $M_2$ \wedge $x$ \in $M_1$)
-Tomamos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ \in $T_1$ \wedge $e$ \nin $T_2$. Podemos decir entonces que todas las aristas que posean menor peso que el de $e$ estan en $T_1$ y en $T_2$.
-Como $T_2$ es un AGM si le agregamos una arista, se formar\'a un ciclo que la contiene, llamemoslo $C$. Ahora podemos observar que en este ciclo $C$ debe existir al menos una arista $e'$ tal que $e'$ \nin $T_1$, porque sino seria lo mismo que decir que en $T_1$ hay un ciclo, y este es un AGM. Tambien podemos decir que le peso de $e'$ es mayor o igual al peso de $e$ por la observacion hecha anteriormente, y aqui pueden pasar dos cosas:
+Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente. Vamos a suponer que los multiconjuntos que forman los pesos de las aristas en $M_1$ y $M_2$ son distintos. Sea $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. \forall $x$ \in $W$, ($x$ \in $M_1$ \wedge $x$ \nin $M_2$) \vee ($x$ \in $M_2$ \wedge $x$ \in $M_1$)
+Tomamos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ \in $T_1$ \wedge $e$ \nin $T_2$. Podemos decir entonces que todas las aristas que posean menor peso que el de $e$ est\'an en $T_1$ y en $T_2$.
+Como $T_2$ es un AGM si le agregamos una arista, se formar\'a un ciclo que la contiene, llamemoslo $C$. Ahora podemos observar que en este ciclo $C$ debe existir al menos una arista $e'$ tal que $e'$ \nin $T_1$, porque sino ser\'ia lo mismo que decir que en $T_1$ hay un ciclo, y esto no es posible ya que es un AGM. Tambi\'en podemos decir que le peso de $e'$ es mayor o igual al peso de $e$ por la observaci\'on hecha anteriormente, y aqu\'i pueden pasar dos cosas:
 \begin{itemize}
 \item $e'$ \geq $e$
 \end{itemize}
-Si $e'$ \geq $e$ entonces podriamos agregar $e$ a $T_2$ y sacar $e'$, finalmente formando un arbol $T_3$ de peso menor que el de $T_2$. Esto es absurdo ya que $T_2$ era un AGM, y no podria haber una arbol de peso menor.
+Si $e'$ \geq $e$ entonces podr\'iamos agregar $e$ a $T_2$ y sacar $e'$, finalmente formando un \'arbol $T_3$ de peso menor que el de $T_2$. Esto es absurdo ya que $T_2$ era un AGM, y no podr\'ia haber un \'arbol de peso menor.
 
 \begin{itemize}
 \item $e'$ \eq $e$
 \end{itemize}
-Si $e'$ \eq $e$, podriamos agarrar la arista de menor peso en $W$ \setminus ${$ $e$ $}$ y repetir el procedimiento.
-Como supusimos que los pesos de las aristas en $M_1$ y $M_2$ son distintos, en algun momento debemos llegar a formar un ciclo en $T_2$ tal que en el existe una arista $e'$ de peso mayor que el de $e$, de otra forma W estaria formado por pares de aristas de un mismo peso donde una pertenece a $T_1$ y otra a $T_2$, y esto tambien ser\'ia absurdo, ya que supusimos que los pesos de los conjuntos de $M_1$ y $M_2$ son distintos.
+Si $e'$ \eq $e$, podr\'iamos agarrar la arista de menor peso en $W$ \setminus ${$ $e$ $}$ y repetir el procedimiento.
+Como supusimos que los pesos de las aristas en $M_1$ y $M_2$ son distintos, en alg\'un momento debemos llegar a formar un ciclo en $T_2$ tal que en el existe una arista $e'$ de peso mayor que el de $e$, de otra forma W estar\'ia formado por pares de aristas de un mismo peso donde una pertenece a $T_1$ y otra a $T_2$, o dicho de otra forma, los multiconjuntos que forman los pesos de las aristas que est\'an fuera de cada AGM son iguales, lo que implica que los multiconjuntos de pesos de aristas que estos forman tambi\'en son iguales, y esto tambi\'en ser\'ia absurdo, ya que supusimos que estos multiconjuntos de $M_1$ y $M_2$ son distintos.
 
-Ahora que sabemos que un AGM esta formado siempre por un conjunto de aristas de los mismos pesos, podemos decir que al tener el conjunto de aristas total $C_1$ y le sacamos las aristas del AGM $C_2$, $C_1$ tambien estara formado por un conjunto de aristas de los mismos pesos para cualquier AGM. Por lo tanto podemos asegurar que la arista de menor peso que queda afuera puede no ser siempre la misma, pero siempre sera del mismo peso.
+Ahora que sabemos que un AGM est\'a formado siempre por un conjunto de aristas de los mismos pesos, podemos decir que al tener el conjunto de aristas total $C_1$ y le sacamos las aristas del AGM $C_2$, $C_1$ tambi\'en estar\'a formado por un conjunto de aristas de los mismos pesos para cualquier AGM. Por lo tanto podemos asegurar que la arista de menor peso que queda afuera puede no ser siempre la misma, pero siempre ser\'a del mismo peso.
 
-Con esto podemos demostrar la primer parte:
+Con esto podemos demostrar el primer punto:
 
-Como sabemos, por definicion un arbol generador de un grafo $G$ es un arbol que tiene el mismo conjunto de nodos que $G$, y un arbol generador mínimo es un arbol generador tal que el peso total (o longitud) de las aristas es el mínimo posible.
-Por lo tanto si queremos tener todas las computadoras conectadas entre si, es normal pensar que queremos tener todos los nodos en una misma componente conexa.
-Al mismo tiempo pensamos en un AGM, porque no existe otra forma de tener conectados todos los nodos de un grafo minimizando el peso, sin que este sea un arbol, si este no es un arbol es porque este tiene algun ciclo, entonces podriamos sacar cualquier arista de ese ciclo y finalmente obtendriamos un grafo de peso menor.
+Como sabemos, por definici\'on un \'arbol generador de un grafo $G$ es un \'arbol que tiene el mismo conjunto de nodos que $G$, y un \'arbol generador mínimo es un \'arbol generador tal que el peso total (o longitud) de las aristas es el mínimo posible.
+Por lo tanto si queremos tener todas las computadoras conectadas entre s\'i, es normal pensar que queremos tener todos los nodos en una misma componente conexa.
+Al mismo tiempo pensamos en un AGM, porque no existe otra forma de tener conectados todos los nodos de un grafo minimizando el peso, sin que este sea un \'arbol, si este no es un arbol es porque tiene alg\'un ciclo, entonces podr\'iamos sacar cualquier arista de ese ciclo y finalmente obtendr\'iamos un grafo de peso menor.
 
-Finalmente si conectamos todos los nodos mediante un AGM, podemos decir que es la forma de tener a todos conectados minimizando el peso total de las aristas. Si queremos generar un ciclo en este grafo, solo bastaría con agregar la arista de menor peso que haya quedado fuera del arbol y aquí el porque de la demostracion anterior. Ahí confirmamos que sin importar que AGM me genere Kruskal, la arista de menor peso que quede afuera siempre tendra el mismo peso, por lo tanto no podria existir otro AGM que me deje una arista de peso menor afuera y finalmente este forme una solucion mejor.
+Finalmente si conectamos todos los nodos mediante un AGM, podemos decir que es la forma de tener a todos conectados minimizando el peso total de las aristas. Si queremos generar un ciclo en este grafo, solo bastaría con agregar la arista de menor peso que haya quedado fuera del arbol y aquí el porque de la demostracion anterior. Ahí confirmamos que sin importar que AGM me genere Kruskal, la arista de menor peso que quede afuera siempre tendr\'a el mismo peso, por lo tanto no podr\'ia existir otro AGM que me deje una arista de peso menor afuera y finalmente este forme una soluci\'on mejor.
 
-Por lo tanto podemos confirmar que obteniendo un AGM y agregandole la arista de menor peso que haya quedado fuera obtenemos una componente conexa con un (y solo un) ciclo tal que el peso total de las aristas sea minimo.
+Por lo tanto podemos confirmar que obteniendo un AGM y agregandole la arista de menor peso que haya quedado fuera obtenemos una componente conexa con un (y solo un) ciclo tal que el peso total de las aristas sea m\'inimo.
 
 
 \newpage
@@ -99,12 +99,12 @@ La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
 
 \begin{itemize}
 \item $KRUSKAL$
-\item Me creo un grafo, $AGM$, vacio donde ire guardando el arbol generador minimo creado.
-\item Para cada vertice $v$ en $G$. $O(n)$
+\item Me creo un grafo, $AGM$, vacío donde iré guardando el árbol generador mínimo creado.
+\item Para cada vértice $v$ en $G$. $O(n)$
 \begin{itemize}
 	\item Creo un conjunto de pertenencia. $O(1)$
 \end{itemize}
-\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso). $O(m.log(n))$ \footnote{C++ reference $Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 633$}
+\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso). $O(m.log(n))$ \footnote{reference $Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 633$}
 \begin{itemize}
 	\item Si $a$ y $b$ no pertenecen al mismo conjunto de pertenencia (donde $a$ y $b$ son los nodos que conecta la arista $v$). $O(1)$
 	\begin{itemize}
@@ -112,7 +112,7 @@ La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
 		\item Actualizo el conjunto de pertenencia de $b$ y todos los nodos adyacentes a el. $O(n)$ 
 		\item Sumo 1 a la cantidad de aristas agregadas. $O(1)$
 	\end{itemize}
-	\item Sino, Si aun no encontre la primer arista excluida del arbol. $O(1)$
+	\item Sino, Si aun no encontre la primer arista excluida del árbol. $O(1)$
 	\begin{itemize}
 		\item Me guardo la arista excluida. $O(1)$
 	\end{itemize}
@@ -126,16 +126,16 @@ La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
 \begin{itemize}
 
 bfs(agm G, vertice inicio, vertice fin)
-\item Para cada vertice $u$ en $G-{inicio}$. $O(n)$
+\item Para cada vértice $u$ en $G-{inicio}$. $O(n)$
 \begin{itemize}
 	\item Seteo $u$ como no visitado, distancia = infinito y predecesor = nulo. $O(1)$
 \end{itemize}
 \item Seteo $inicio$ como visitado, distancia 0 (cero), predecesor nulo. $O(1)$
 \item Creo una cola $Q$ y encolo $inicio$. $O(1)$
-\item Mientras la cola no este vacia. $O(n)$ 
+\item Mientras la cola no este vacía. $O(n)$ 
 \begin{itemize}
 	\item Desencolo un elemento $s$.
-	\item Para cada vertice $v$ adjacente a $s$. $O(n)$
+	\item Para cada vértice $v$ adjacente a $s$. $O(n)$
 	\begin{itemize}
 		\item Si no visite $v$:
 			\item Marco distancia de $v$ = distancia de $s + 1$, predecesor = $s$.
@@ -147,7 +147,7 @@ bfs(agm G, vertice inicio, vertice fin)
 \end{itemize}
 \end{itemize}
 
-La complejidad real de bfs es $O(n + m)$ \footnote{C++ reference $Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 597$}(m = #aristas, n = #vertices). Pero en este caso decimos que la complejidad de BFS es $O(n)$ porque siempre se ejecutará sobre arboles. 
+La complejidad real de bfs es $O(n + m)$ \footnote{reference $Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 597$}(m = #aristas, n = #vertices). Pero en este caso decimos que la complejidad de BFS es $O(n)$ porque siempre se ejecutará sobre \'arboles. 
 
 
 \subsubsection{Complejidad del algoritmo}
@@ -231,7 +231,7 @@ MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace&
 
 \subsection{Casos de prueba}
 
-En este ejercicio decidimos hacer los casos de prueba con las siguientes caracteristicas:
+En este ejercicio decidimos hacer los casos de prueba con las siguientes caracter\'isticas:
 
 \begin{itemize}
 \item Caso en el que las conexiones todas las conexiones dadas no forman una sola red conjunta. De esta forma el algoritmo no tiene solución, por lo cual debería devolver "no".
@@ -246,10 +246,10 @@ En este ejercicio decidimos hacer los casos de prueba con las siguientes caracte
 
 \subsection{Performance}
 
-Para realizar el testeo de performance de nuestro algoritmo creamos el archivo 'test.cpp' en el cual generamos instancias de prueba variando pseudo-aleatoriamente la cantidad de computadoras y conexiones, y su distribucion.
-En la generación de casos no discriminamos entre aquellos que tienen solucion y los que no, pero por como es nuestro algoritmo, aquellos casos que no tienen solucion terminarán mucho antes, por lo que los tiempos de ejecucion de estos se graficarán apartadamente.
+Para realizar el testeo de performance de nuestro algoritmo creamos el archivo 'test.cpp' en el cu\'al generamos instancias de prueba variando pseudo-aleatoriamente la cantidad de computadoras y conexiones, y su distribuci\'on.
+En la generación de casos no discriminamos entre aquellos que tienen soluci\'on y los que no, pero por como es nuestro algoritmo, aquellos casos que no tienen soluci\'on terminarán mucho antes, por lo que los tiempos de ejecuci\'on de estos se graficarán apartadamente.
 
-Primero modificaremos un poco el archivo test.cpp para que genere varias instancias con el mismo numero de computadoras pero variando la cantidad de conexiones para ver la influencia de esta en el tiempo de ejecucion.
+Primero modificaremos un poco el archivo test.cpp para que genere varias instancias con el mismo n\'umero de computadoras pero variando la cantidad de conexiones para ver la influencia de esta en el tiempo de ejecuci\'on.
 
 ANALISIS DE ESTE CASO
 
