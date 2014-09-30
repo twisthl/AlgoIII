@@ -1,20 +1,40 @@
 \subsection{Descripci\'on del problema}
 
-En el problema somos una empresa que provee soluciones algoritmicas para problemas sobre redes informaticas. Tenemos un cliente que desea implementar un servicio particular en una red de computadoras ya existente.
-Lo que se desea es crear en esta red una especie de red de computadoras donde los servidores deben formar un backbone 
+Somos parte de una empresa que provee soluciones algoritmicas para problemas sobre redes informaticas. Tenemos un cliente que desea implementar un servicio particular en una red de computadoras ya existente.
+Partiendo de una serie de computadoras y conexiones entre ellas, lo que desea es crear una red de computadoras, donde debe haber un backbone de servidores el cual debe tener una topologia de red de tipo anillo, manteniendo conectadas (de forma directa o indirecta) a este backbone a todas las demas computadoras de la red.
+Todo esto debe realizarse minimizando a nivel optimo el costo total de las conexiones de la red.
+
+Por ejemplo en la siguiente imagen mostramos una posible red de nuestro cliente, y como deberia quedar.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.45]{./imagenes/ej3_ejemplo.png}
+\caption{Ejemplo del problema planteado.}
+\end{center}
+\end{figure}
 
 
 \newpage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Resoluci\'on}
 
-Para resolver el problema, primero observamos que este se podia modelar mediante grafos y simplificarlo pensandolo como un ejercicio en el que se pide tener a todos los nodos en una sola componente conexa donde tiene que haber un (y solo un) ciclo, y el peso total de todo el grafo debe ser minimo.
+Para resolver el problema observamos la gran similitud, o igualdad en todo caso, entre:
+El problema de crear una red de tipo anillo y conectar toda una serie de computadoras a esta de manera de minimizar el costo de conexion, utilizando para esto un conjunto de conexiones entre todas las computadoras, ya existente.
+Y el problema de obtener exactamente una componente conexa con al menos un circuito de un grafo G, de manera de minimizar el peso total de las aristas. Razon por la cual pensamos que la mejor forma de resolver el problema era obtener un arbol generador minimo a partir de las computadoras y sus conexiones, para así llegar a tener todas las computadoras conectadas entre si. Luego agregar la conexion de menor costo que no se haya usado para así crear la red de servidores tipo anillo.
+Una vez obtenido el anillo buscamos y contamos las conexiones que pertenecen a el.
+Para obtener la red de computadoras (el arbol generador minimo) utilizamos el algoritmo de Kruskal, algo modificado, para que tambien devuelva la conexion de menor costo no utilizada, preferimos Kruskal sobre el algoritmo de Prim simplemente por gusto. Para buscar las conexiones pertenecientes al anillo utilizamos el algoritmo BFS, con el cual podemos obtener el camino minimo (en realidad unico ya que se ejecuta sobre un arbol) en un tiempo lineal.
+A modo de ejemplo agregamos un pseudo-código del algoritmo propuesto:
+
 \begin{itemize}
 
 \end{itemize}
 
 
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Demostraci\'on de la resoluci\'on}
 
@@ -62,6 +82,8 @@ Por lo tanto podemos confirmar que obteniendo un AGM y agregandole la arista de 
 
 \newpage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Complejidad del algoritmo}
 
 La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
@@ -72,71 +94,140 @@ La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
 \item Complejidad del algoritmo final
 \end{itemize}
 
-\subsubsection{Complejidad de Kruskal}
+\subsubsection{Complejidad Kruskal}
 
 
 \begin{itemize}
 \item $KRUSKAL$
 \item Me creo un grafo, $AGM$, vacio donde ire guardando el arbol generador minimo creado.
-\item Para cada vertice $v$ en $G$
+\item Para cada vertice $v$ en $G$. $O(n)$
+\begin{itemize}
+	\item Creo un conjunto de pertenencia. $O(1)$
+\end{itemize}
+\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso). $O(m.log(n))$ \footnote{C++ reference $Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 633$}
+\begin{itemize}
+	\item Si $a$ y $b$ no pertenecen al mismo conjunto de pertenencia (donde $a$ y $b$ son los nodos que conecta la arista $v$). $O(1)$
 	\begin{itemize}
-	\item Creo un conjunto de pertenencia
+		\item Agrego la arista a $AGM$. $O(1)$
+		\item Actualizo el conjunto de pertenencia de $b$ y todos los nodos adyacentes a el. $O(n)$ 
+		\item Sumo 1 a la cantidad de aristas agregadas. $O(1)$
 	\end{itemize}
-\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso)
+	\item Sino, Si aun no encontre la primer arista excluida del arbol. $O(1)$
 	\begin{itemize}
-	\item Si v.a y v.b no pertenecen al mismo conjunto de pertenencia (donde v.a y v.b son los nodos que conecta la arista v)
-		\begin{itemize}
-		\item Agrego la arista a $AGM$
-		\item Actualizo el conjunto de pertenencia de v.b y todos los nodos adyacentes a el.
-		\item Sumo 1 a la cantidad de aristas agregadas.
-		\end{itemize}
-	\item Sino, Si aun no encontre la primer arista excluida del arbol
-		\begin{itemize}
-		\item Me guardo la arista excluida.
-		\end{itemize}
+		\item Me guardo la arista excluida. $O(1)$
 	\end{itemize}
+\end{itemize}
 \item devuelvo $AGM$
 \end{itemize}
 
 
-\subsubsection{BFS}
+\subsubsection{Complejidad BFS}
 
 \begin{itemize}
-\item Para cada vertice $u$ en $G-{s}$
+
+bfs(agm G, vertice inicio, vertice fin)
+\item Para cada vertice $u$ en $G-{inicio}$. $O(n)$
+\begin{itemize}
+	\item Seteo $u$ como no visitado, distancia = infinito y predecesor = nulo. $O(1)$
+\end{itemize}
+\item Seteo $inicio$ como visitado, distancia 0 (cero), predecesor nulo. $O(1)$
+\item Creo una cola $Q$ y encolo $inicio$. $O(1)$
+\item Mientras la cola no este vacia. $O(n)$ 
+\begin{itemize}
+	\item Desencolo un elemento $s$.
+	\item Para cada vertice $v$ adjacente a $s$. $O(n)$
 	\begin{itemize}
-	\item Seteo $u$ como no visitado, distancia infinito y predecesor nulo.
-	\end{itemize}
-\item Seteo $s$ como visitado, distancia 0 (cero), predecesor nulo.
-\item Creo una cola $Q$ y encolo $s$
-\item Mientras la cola no este vacia
-	\begin{itemize}
-	\item Desencolo un elemento $s'$
-	\item Para cada vertice $v$ adjacente a $s'$
-		\begin{itemize}
 		\item Si no visite $v$:
-			\begin{itemize}
-			\item Marco a $v$ como visitado, distancia de $v$ = distancia de $s' + 1$, predecesor = $s'$
-			\end{itemize}
+			\item Marco distancia de $v$ = distancia de $s + 1$, predecesor = $s$.
+			\item Encolo $v$.
+			\item Si $v$ = $fin$, termino.
 		\end{itemize}
-
 	\end{itemize}
-
+	\item Marco $s'$ como visitado
+\end{itemize}
 \end{itemize}
 
-\begin{itemize}
-\end{itemize}
+La complejidad real de bfs es $O(n + m)$ \footnote{C++ reference $Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 597$}(m = #aristas, n = #vertices). Pero en este caso decimos que la complejidad de BFS es $O(n)$ porque siempre se ejecutará sobre arboles. 
 
-\subsubsection{Complejidad de BFS}
+
 \subsubsection{Complejidad del algoritmo}
 
+\begin{itemize}
+\end{itemize}
 
 
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{C\'odigo fuente}
 
+\lstset{language=C++,
+                basicstyle=\ttfamily\footnotesize,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                breaklines=true
+}
+\begin{lstlisting}
+
+MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido){
+    Red redOrdenada = red;
+    MatrizAdyacencia agm(cantCompus);
+    vector<int> pertenece(cantCompus); // indica a que árbol pertenece el nodo
+ 
+    for(int i = 0; i < cantCompus; i++){
+        agm[i] = vector<int> (cantCompus, 0);
+        pertenece[i] = i;
+    }
+ 
+    int compu1, compu2, costo;
+    int cantAristas = 1;
+    int posicionEnRed = 0;
+    int cantAristasVisitadas = 0;
+
+    bool noEncontreEnlaceExcluido = true;
+
+    while(cantAristas < cantCompus && cantAristas <= cantTotalAristas){
+        compu1 = redOrdenada[posicionEnRed].compu1;
+        compu2 = redOrdenada[posicionEnRed].compu2;
+        costo = redOrdenada[posicionEnRed].costo;
+        posicionEnRed++;
+        cantAristasVisitadas++;
+
+        if(pertenece[compu1] != pertenece[compu2]){
+            agm[compu1][compu2] = costo;
+            agm[compu2][compu1] = costo;
+ 
+        	int temp = pertenece[compu2];
+        	pertenece[compu2] = pertenece[compu1];
+        	for(int k = 0; k < cantCompus; k++)
+        		if(pertenece[k] == temp)
+        			pertenece[k] = pertenece[compu1]; 
+            cantAristas++;
+        }else{
+            if(noEncontreEnlaceExcluido){
+                menorEnlaceExcluido.compu1 = compu1;
+                menorEnlaceExcluido.compu2 = compu2;
+                menorEnlaceExcluido.costo = costo;
+                noEncontreEnlaceExcluido = false;
+            }
+        }
+    }
+    return agm;
+}
+
+
+
+
+
+\end{lstlisting}
+
 
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Casos de prueba}
 
@@ -151,5 +242,17 @@ En este ejercicio decidimos hacer los casos de prueba con las siguientes caracte
 
 \newpage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Performance}
+
+Para realizar el testeo de performance de nuestro algoritmo creamos el archivo 'test.cpp' en el cual generamos instancias de prueba variando pseudo-aleatoriamente la cantidad de computadoras y conexiones, y su distribucion.
+En la generación de casos no discriminamos entre aquellos que tienen solucion y los que no, pero por como es nuestro algoritmo, aquellos casos que no tienen solucion terminarán mucho antes, por lo que los tiempos de ejecucion de estos se graficarán apartadamente.
+
+Primero modificaremos un poco el archivo test.cpp para que genere varias instancias con el mismo numero de computadoras pero variando la cantidad de conexiones para ver la influencia de esta en el tiempo de ejecucion.
+
+ANALISIS DE ESTE CASO
+
+
+
 
