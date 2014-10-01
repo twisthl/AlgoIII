@@ -31,16 +31,10 @@ class Opciones{
 		// Mini metodo que imprime el titulo del tp.
 		void imprimirTitulo();
 
-		enum numero_ejercicio {
-			ej1,
-			ej2,
-			ej3
-		} exercise;
-
 		bool help;
 		bool archivo;
 		bool poda_habilitada;
-		bool mejora_habilitada;
+		bool mostrar_info;
 
 		string archivo_entrada;
 		string archivo_salida;

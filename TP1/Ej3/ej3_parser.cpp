@@ -2,67 +2,91 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <stdio.h>
 #include "ej3_parser.h"
 
 using namespace std;
 
-void Ej3Parser::cargar(string path){
+Ej3Parser::Ej3Parser(Opciones opt){
+
+	this->archivo_entrada = opt.archivo_entrada;
+	this->archivo_salida = opt.archivo_salida;
+	this->poda_habilitada = opt.poda_habilitada;
+	this->mostrar_info = opt.mostrar_info;
+
+	if (this->archivo_salida.empty()){
+		cout << "No se especificó archivo de salida, se usa: " << endl;
+		cout << "recursos/output" << endl << endl;
+		this->archivo_salida = "recursos/output";
+	}
+
+	fstream output(archivo_salida, ios::trunc);
+
+	/*if( remove( archivo_salida.c_str() ) != 0 )
+    	cout << "Error deleting file" << endl;
+  	else
+    	cout <<  "File successfully deleted" << endl;*/
+
+}
+
+
+void Ej3Parser::resolver(){
 
 	// Se carga el archivo
-	ifstream file(path);
+	ifstream file(this->archivo_entrada);
 	string line;
-	cout << "# Carga archivo : " << path << endl << endl;
+	cout << "# Carga archivo : " << this->archivo_entrada << endl << endl;
 
-	// Primera Linea: n M
-	while(getline(file, line)){
-		if(line.find("#") != line.npos || line.empty()) continue;
+	int n;
+	int M;
 
-		istringstream iss(line);
-		iss >> this->n;
-		iss >> this->M;
+	getline(file, line);
+	istringstream iss(line);
+	iss >> n;
 
-		cout << "n: " << this->n << " M: " << this->M  << endl;
+	while (n != 0){
+		iss >> M;
+		if (this->mostrar_info) cout << "n: " << n << " M: " << M  << endl;
 
-		break;
-	}
+		vector<int> aux(n, 0);
+    	vector<vector<int> > peligrosidad(n, aux);
 
-
-	vector<int> aux(this->n, 0);
-    this->peligrosidad.resize(this->n, aux);
-
-	//this->peligrosidad.resize(this->n);
-	//for (int i=0; i <= n; i ++){
-	//	this->peligrosidad[i].resize(this->n, 0);
-	//}
-
-	// Datos
-	int i = 0;
-	while(getline(file, line)){
-		if(line.find("#") != line.npos || line.empty()) continue;
-
-		istringstream iss(line);
-
-		for (int j = i+1; j < this->n; j++){
-			iss >> this->peligrosidad[i][j];
-			this->peligrosidad[j][i] = this->peligrosidad[i][j];
-			cout << "h" << i  << j << ": " <<this->peligrosidad[i][j] << ";  ";
+		for (int i = 0; i < n-1; ++i){
+			getline(file, line);
+			istringstream iss(line);
+			for (int j = i+1; j < n; j++){
+				iss >> peligrosidad[i][j];
+				peligrosidad[j][i] = peligrosidad[i][j];
+				if (this->mostrar_info) cout << "h" << i  << j << ": " <<peligrosidad[i][j] << ";  ";
+			}
+			if (this->mostrar_info) cout << endl;
 		}
-		i++;
-		cout << endl;
-	}
-	cout << endl;
+		if (this->mostrar_info) cout << endl;
 
-	//// Se cierra el archivo
+		Ej3 ej3 = Ej3(n, M, peligrosidad, this->poda_habilitada, this->mostrar_info);
+		double time = ej3.resolverBiohazard();
+		ej3.mostrarSolucion();
+		
+		guardarTiempoEjecucion(n, time);
+		guardarSolucion(ej3.dameSolucion());
+
+		getline(file, line);
+		istringstream iss(line);
+		iss >> n;
+	}
+
 	file.close();
 }
 
-void Ej3Parser::guardarTiempoEjecucion(int n, double time){
-	if (archivo_salida.empty()){
-		cout << "No se especificó archivo de salida, se usa: " << endl;
-		cout << "../recursos/ej3/output" << endl << endl;
-	}
-	archivo_salida = "../recursos/ej3/output";
+void Ej3Parser::guardarSolucion(string solucion){
 	fstream output(archivo_salida, ios::out | ios::app);
+	output << solucion << endl;
+	output.close();
+}
+
+void Ej3Parser::guardarTiempoEjecucion(int n, double time){
+	string path = "recursos/timeOutput";
+	fstream output(path, ios::out | ios::app);
 	output << n << " " << time << endl;
 	output.close();
 }

@@ -6,26 +6,26 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
+#include "opciones.h"
+#include "ej3.h"
 
 using namespace std;
 
 class Ej3Parser {
 	public:
-		Ej3Parser(){};
+		Ej3Parser(Opciones opt);
 		~Ej3Parser(){};
-		void cargar(string path);
-		int getN(){return this->n;}
-		int getM(){return this->M;}
-		vector<vector<int> > getPeligrosidad(){return this->peligrosidad;}
+		void resolver();
 
-		void setOutputFile(string archivo){archivo_salida = archivo;}
 		void guardarTiempoEjecucion(int n, double time);
+		void guardarSolucion(string solucion);
+
 
 	private:
-		int n;
-		int M;
-		vector<vector<int> > peligrosidad;
+		string archivo_entrada;
 		string archivo_salida;
+		bool mostrar_info;
+		bool poda_habilitada;
 };
 
 #endif

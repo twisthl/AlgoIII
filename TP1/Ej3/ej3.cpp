@@ -1,34 +1,37 @@
 #include "ej3.h"
-#include "aux.h"
+#include "clock.h"
 #include <algorithm>
 #include <time.h>
 #include <iostream>
 
-Ej3::Ej3(Opciones opt){
+Ej3::Ej3(int n, int M, vector<vector<int> > peligrosidad, bool podaHabilitada, bool mostrarInfo){
 
-	parser.cargar(opt.archivo_entrada);
+	this->n = n;
+	this->M = M;
+	this->peligrosidad = peligrosidad;
 
-	parser.setOutputFile(opt.archivo_salida);
-
-	this->n = parser.getN();
-	this->M = parser.getM();
-	this->peligrosidad = parser.getPeligrosidad();
+	this->podaHabilitada = podaHabilitada;
+	this->mostrarInfo = mostrarInfo;
 
 	this->minCamiones = INF;
 }
 
-void Ej3::resolverBiohazard(){
+double Ej3::resolverBiohazard(){
 	timespec ts_beg, ts_end;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_beg);
 
-	vector<Camion> carga;
+
+	// BEGIN BIOHAZARD
+	vector<unsigned int> carga;
 	for (int i = 0; i < n; i++){
 		carga.push_back(-1);
 	} 
-
-	// BEGIN BIOHAZARD
-	carga[0] = 0;
-	combinar(0, 0, 0, carga, this->n-1);
+	list<Camion> camiones;
+	Quimico primerQuimico = 0;
+	Camion camionNuevo(0, primerQuimico);
+	camiones.push_back(camionNuevo);
+	carga[primerQuimico] = camionNuevo.nro;
+	combinar2(camiones, primerQuimico+1, carga);
 	// END BIOHAZARD
 
 	cout << "Tiempo de ejecucion: " << endl;
@@ -37,10 +40,80 @@ void Ej3::resolverBiohazard(){
 	cout << time << " sec" << endl;
 	cout << endl;
 
-	parser.guardarTiempoEjecucion(this->n, time);
+	return time;
 }
 
-void Ej3::combinar(Camion camion, Quimico ultimaCarga, int peligrosidad, vector<Camion> &carga, int noCargados){
+void Ej3::combinar2(list<Camion> &camiones, Quimico quimicoACargar, vector<unsigned int> &carga){
+
+	//Lo siguiente equipara a decir: Si no hay mas quimicos para cargar..
+	if (quimicoACargar == this->n) {
+		if (minCamiones > camiones.size()){
+			if (this->mostrarInfo) mostrarSolucion(carga, camiones.size());
+			this->minCamiones = camiones.size();
+			this->cargaMinima = carga;	
+		}
+		return;
+	}
+
+	list<Camion>::iterator itCamion;
+	for (itCamion = camiones.begin(); itCamion != camiones.end(); itCamion++){
+		int peligrosidadAgregada = calcularPeligrosidadAgregada(*itCamion, quimicoACargar);
+		if (this->M >= (itCamion->peligrosidad + peligrosidadAgregada)){
+
+			itCamion->quimicos.push_back(quimicoACargar);
+			itCamion->peligrosidad += peligrosidadAgregada;
+			carga[quimicoACargar] = itCamion->nro;
+			combinar2(camiones, quimicoACargar+1, carga);
+			carga[quimicoACargar] = -1;
+			itCamion->peligrosidad -= peligrosidadAgregada;
+			itCamion->quimicos.pop_back();
+		}
+	}
+	
+	// Podamos las combinaciones de carga de quimicos que ya no pueden superar a la mejor solucion obtenida hasta ahora
+	if (!podaHabilitada || camiones.size() + 1 < this->minCamiones) {
+		Camion camionNuevo(camiones.size(), quimicoACargar);
+		camiones.push_back(camionNuevo);
+		carga[quimicoACargar] = camionNuevo.nro;
+		combinar2(camiones, quimicoACargar+1, carga);
+		carga[quimicoACargar] = -1;
+		camiones.pop_back();
+	}
+}
+
+// Calcula la peligrosidad que agrega el combinar un nuevo quimico a un camion con una cierta distribucion.
+int Ej3::calcularPeligrosidadAgregada(Camion &camion, Quimico quimico){
+	int peligrosidadAgregada = 0;
+	list<Quimico>::iterator it;
+	for (it = camion.quimicos.begin(); it != camion.quimicos.end(); it++){
+		peligrosidadAgregada += this->peligrosidad[quimico][*it];
+	}
+	return peligrosidadAgregada;
+}
+
+void Ej3::mostrarSolucion(){
+	cout << "Mejor solucion: " << endl;
+	mostrarSolucion(this->cargaMinima, this->minCamiones);
+}
+
+void Ej3::mostrarSolucion(vector<unsigned int> &carga, unsigned int cantCamiones){
+	cout << cantCamiones << " ";
+	for (int i = 0; i < this->n; i++){
+		cout << carga[i] << " ";
+	}
+	cout << endl << endl;
+}
+
+string Ej3::dameSolucion(){
+	string solucion = std::to_string(this->minCamiones) + " ";
+	for (int i = 0; i < this->n; i++){
+		solucion += std::to_string(this->cargaMinima[i]) + " ";
+	}
+	return solucion;
+}
+
+
+/*void Ej3::combinar(Camion camion, Quimico ultimaCarga, int peligrosidad, vector<Camion> &carga, int noCargados){
 
 	if (noCargados == 0) {
 		if (minCamiones > camion + 1){
@@ -79,27 +152,4 @@ void Ej3::combinar(Camion camion, Quimico ultimaCarga, int peligrosidad, vector<
 		}
 	}
 	
-}
-
-// Calcula la peligrosidad que agrega el combinar un nuevo quimico a un camion con una cierta distribucion.
-int Ej3::calcularPeligrosidadAgregada(vector<Camion> &carga, Camion camion, Quimico quimicoA){
-	int peligrosidadAgregada = 0;
-	for (Quimico quimicoB = 0; quimicoB < this->n; quimicoB++){
-		if (carga[quimicoB] == camion)
-			peligrosidadAgregada += peligrosidad[quimicoA][quimicoB];
-	}
-	return peligrosidadAgregada;
-}
-
-void Ej3::mostrarMejorSolucion(){
-	cout << "Mejor solucion: " << endl;
-	mostrarSolucion(cargaMinima, minCamiones);
-}
-
-void Ej3::mostrarSolucion(vector<Camion> &carga, int cantCamiones){
-	cout << cantCamiones << " ";
-	for (int i = 0; i < this->n; i++){
-		cout << carga[i] << " ";
-	}
-	cout << endl << endl;
-}
+}*/

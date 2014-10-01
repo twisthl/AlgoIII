@@ -8,7 +8,7 @@ Opciones::Opciones(){
 	archivo = false;
 	help = false;
 	poda_habilitada = false;
-	mejora_habilitada = false;
+	mostrar_info = false;
 }
 
 bool Opciones::cargarArgumentos(int argc, const char* argv[]){
@@ -32,18 +32,14 @@ bool Opciones::cargarArgumentos(int argc, const char* argv[]){
 				faltaArgumento(argv[i]);
 				return false;
 			}
+		}else if ((string(argv[i]) == "-ph") || (string(argv[i]) == "--podar")) {
+			poda_habilitada = true;
 		}
-		else if ((string(argv[i]) == "-1") || (string(argv[i]) == "--ej1")) {
-			exercise = ej1;
-		}
-		else if ((string(argv[i]) == "-2") || (string(argv[i]) == "--ej2")) {
-			exercise = ej2;
-		}
-		else if ((string(argv[i]) == "-3") || (string(argv[i]) == "--ej3")) {
-			exercise = ej3;
+		else if ((string(argv[i]) == "-i") || (string(argv[i]) == "--info")) {
+			mostrar_info = true;
 		}
 		else if ((string(argv[i]) == "-h") || (string(argv[i]) == "--help")) {
-			help = true;
+			help = true;	
 		}
 	}
 
@@ -74,17 +70,16 @@ void Opciones::mostrarUso() {
 	cerr << "Uso: " << nombre_programa << " <opcion(es)>\n"
 		<< "Opciones:\n"
 		<< "\t-h, --help\t\t\tMuestra este mensaje\n"
-		<< "\t-1, --ej1\t\t\tSe ejecuta el ejercicio 1\n"
-		<< "\t-2, --ej2\t\t\tSe ejecuta el ejercicio 2\n"
-		<< "\t-3, --ej3\t\t\tSe ejecuta el ejercicio 3\n"
 		<< "\t-p, --path\t\t[PATH]\tCarga el archivo de [PATH]\n"
 		<< "\t-o, --ouput\t\t[PATH]\tArchivo de salida\n"
+		<< "\t-ph, --podar\t\tUtiliza poda basica\n"
+		<< "\t-i, --info\t\tMuestra informacion adicional\n"
 		<< endl;
 }
 
 void Opciones::imprimirTitulo(){
-	cout << "########################\n";
-	cout << "# ALGORITMOS III - TP1 #\n";
-	cout << "########################\n";
+	cout << "###########################\n";
+	cout << "# ALGORITMOS III - TP1EJ3 #\n";
+	cout << "###########################\n";
 	cout << endl;
 }

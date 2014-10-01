@@ -1,20 +1,20 @@
 CXXFLAGS=-std=c++0x -lrt -pthread -Wall -O2
 
-OBJ=algo3tp1.o ej3_parser.o ej3.o opciones.o aux.o
+OBJ=tp1ej3.o ej3_parser.o ej3.o opciones.o clock.o
 
-all: algo3tp1
+all: tp1ej3
 
 dbg: $(OBJ)
-	g++ -g $(OBJ) -o algo3tp1 $(CXXFLAGS)
+	g++ -g $(OBJ) -o tp1ej3 $(CXXFLAGS)
 
-algo3tp1: $(OBJ)
-	g++ -g $(OBJ) -o algo3tp1 $(CXXFLAGS)
+tp1ej3: $(OBJ)
+	g++ -g $(OBJ) -o tp1ej3 $(CXXFLAGS)
 
-aux.o: aux.cpp
-	g++ -g -c $(CXXFLAGS) aux.cpp
+clock.o: clock.cpp
+	g++ -g -c $(CXXFLAGS) clock.cpp
 
-algo3tp1.o: algo3tp1.cpp
-	g++ -g -c $(CXXFLAGS) algo3tp1.cpp
+tp1ej3.o: tp1ej3.cpp
+	g++ -g -c $(CXXFLAGS) tp1ej3.cpp
 
 ej3_parser.o: ej3_parser.cpp
 	g++ -g -c $(CXXFLAGS) ej3_parser.cpp
@@ -26,5 +26,5 @@ opciones.o: opciones.cpp
 	g++ -g -c $(CXXFLAGS) opciones.cpp
 
 clean:
-	rm -rf *o algo3tp1
+	rm -rf *o tp1ej3
 
