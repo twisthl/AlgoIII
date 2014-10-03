@@ -1,1 +1,10 @@
-COMPLEJIDAD
+El algoritmo tiene 3 etapas bien definidas, las cuales vamos a detallar y calcular su complejidad.
+
+\begin{enumerate}[I]
+	\item Generar los 2N PuntoCritico a partir de los N edificios. Esto se realiza en $O(n)$ haciendo una recorrida de los edificios de entrada.
+	\item Ordenar el arreglo de los 2N PuntoCritico para luego recorrer en orden. Gracias al sort\footnote{C++ reference \url{http://www.cplusplus.com/reference/algorithm/sort/}}, se obtiene en $O(nlogn)$ \footnote{$O(2n log(2n)) = O(2n (log(2)+log(n))) = O(2n+2n log(n)) = O(2n log(n)) = O(n log(n)) $}
+	\item Pro último recorrer la colección de los 2N PuntoCritico para ir generando la silueta de la siudad utilizando operaciones básicas. $O(n log(n))$
+	\begin{itemize}
+		\item Se recorre la colección de 2N PuntoCritico; cuando es un punto de comienzo se inserta en un multimap\footnote{C++ reference \url{http://www.cplusplus.com/reference/map/multimap/}} (nos permite obtener el maximo en $O(1)$ y agregar en $O(log(n))$) un elemento con esa altura, y al analizar un punto de clausura, se lo saca del mismo. $O(log(n)$
+	\end{itemize}
+\end{enumerate}

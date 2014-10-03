@@ -1,0 +1,22 @@
+
+El Jefe de Desarrollo del módulo de Edificios 2D del sistema desarrollado, nos ha pedido una nueva funcionalidad para nuestro dibujador de contornos. Ahora se requiere que el algoritmo identifique aquellos edificios que no figuran en el contorno final de la ciudad y aquellos que figuran por completo en el mismo, es decir, aquellos cuya altura es la máxima altura entre todos los edificios a lo largo de todo su ancho.
+
+\subsubsection*{Como afecta nuestro algoritmo}
+\addcontentsline{toc}{subsubsection}{Como afecta nuestro algoritmo}
+
+En nuestro algoritmo para poder identificar aquellos edificios que sobresalen de la ciudad, o sea aquellos en los cuales sus dos esquinas superiores pertenecen a la solución final, es necesario marcarlos cuando abro y cierro los edificios.
+No es complejo, ya que en nuestros PuntoCritico tengo una referencia al Edificio. Con lo cual lo único que habria que agregar es algun tipo de identificación de edificio (por ejemplo un número como idEdificio, que va a ser el número de orden en la entrada de edificios) y agregar la lógica necesaria para marcar al edificio cuando corresponde.
+
+A la hora de decidir que un punto pertenece a nuestra solución:
+\begin{itemize}
+	\item Si es un punto de apertura, dejo una marca de que ese edificio tiene su esquina inicial dentro de la solución final
+	\item Si es uno de clausura, marco que su esquina final está en la silueta de la solución final. Y en este instante puedo verificar si ya tiene la marca de que su otra esquina también está en la solución y agregarlo en una colección de edificios que van a ser aquellos que figuran en el controno final.
+\end{itemize}
+
+Al momento de descartar algun punto no actualizo el edificio asociado con lo cual alguno de los dos puntos de su esquina no quedó marcado y por lo tanto no va a pertenecer a la colección de edificios. Más aún, puedo tener otra colección fácilmente en la cual tengo el resto de los edificios. O sea dos colecciones, Una con los que pretendo, y otra con los edificios que quedan ocultos por la silueta de la ciudad.
+
+
+\subsubsection*{Que impacto tiene en la complejidad}
+\addcontentsline{toc}{subsubsection}{Que impacto tiene en la complejidad}
+
+La complejidad del algoritmo no se ve afectada ya que se realizan un par de operaciones más en $O(1)$ para decidir si queda oculto en la silueta de la ciudad o no.
