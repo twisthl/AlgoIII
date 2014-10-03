@@ -396,14 +396,31 @@ Tambi\'en hay un archivo test llamado CasoMultplie.test, el mismo contiene m\'as
 \noindent 
 Se realiz\'o tambi\'en comparaciones de correr los tests con o sin poda (escribiendo -ph). Verificando que el resultado sea viable y no mejor ni peor que sin la poda. Se vieron claras mejor\'ias en usar la poda a no usarlo en muchos casos. 
 
+
+\subsection{Performance}
+
 \noindent 
-Escribimos un pequenio script llamado graficar.py (en. De hecho este no grafica (disculpen por el nombre), m\'as bien lo que hace es correr tp1ej3 con $x$(parametro de entrada) instancias de un mismo $n$, y una vez terminadas esas ejecuciones sumarle 1 a $n$. Por cada ejecuci\'on randomiza M de 0 a 1000 y las peligrosidades de 0 a 100. Si detecta que el tiempo que tarda la ejecuci\'on promedio de un $n$ es muy grande disminuye las repeticiones para el pr\'oximo $n$. \\
+Escribimos un pequenio script llamado graficar.py. De hecho no grafica (disculpen por el nombre), m\'as bien lo que hace es correr tp1ej3 con $x$(parametro de entrada) instancias de un mismo $n$, y una vez terminadas esas ejecuciones sumarle 1 a $n$. Por cada ejecuci\'on randomiza M de 0 a 1000 y las peligrosidades de 0 a 100. Si detecta que el tiempo que tarda la ejecuci\'on promedio de un $n$ es muy grande disminuye las repeticiones para el pr\'oximo $n$. \\
 El resultado de los tiempos promedios para cada $n$ se guarda en un archivo llamado graficarPromedio.dat que contiene por cada l\'inea un valor de $n$ y otro del tiempo promedio que tard\'o en completar la ejecuci\'on de los casos aleatorios para ese n.
 
 \noindent 
-Finalmente usamos estos datos para los gr\'aficos de complejidad practica contra te\'orica. Y comparando la diferencia de performance entre utilizar la poda, a la que antes nos referimos como nro 2, y no utilizarla.
+Usamos estos datos para los gr\'aficos de complejidad pr\'actica contra te\'orica. Y comparando la diferencia de performance entre utilizar la poda, a la que antes nos referimos como nro 2, y no utilizarla.
+El siguiente grafico representa una comparación utilizando escala logaritmica. No utilizamos escala lineal dado que los valores del tiempo para el algoritmo sin poda en los \'ultimos valores de eran tan grandes que hacían practicamente indistingibles los valores mas chicos.
 
-\subsection{Performance}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.30]{./imagenes/ej3_chartComplejidad.png}
+\caption{Gr\'afico comparacion de rendimiento del Algoritmo con o sin poda.}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.30]{./imagenes/ej3_chartRendimiento.png}
+\caption{Gr\'afico complejidad teorica vs practica.}
+\end{center}
+\end{figure}
+
 
 
 \subsection{Extras}
@@ -417,13 +434,20 @@ La empresa est\'a a punto de contratar nuevos camiones y esta nueva flota no ser
 \noindent 
 En primer lugar deber\'ia cambiar la entrada del algoritmo. Habr\'ia que agregar como entrada un n\'umero de peligrosidad por cada cami\'on disponible. Lo que llega a considerar lo siguiente: \\
 Antes contabamos con todos los camiones que quisieramos, dado que ahora los camiones son algo que recibimos con una cantidad especificas, esto podr\'ia no seguir siendo as\'i. De todas maneras suponemos por el bien del problema y nuestra salud mental, dado que no est\'a especificado, que hay tantos camiones como qu\'imicos, de esta manera nunca me podr\'ia quedar sin camiones para ubicar alg\'un qu\'imico. \\
-En segundo lugar el algoritmo que hicimos deber\'ia ser despedazado completamente. Dado que el umbral depende de cada cami\'on. Est\'a mal considerar que no importa en qu\'e cami\'on va un set de qu\'imicos agrupado. Ahora el cami\'on si importa. Se deber\'ia reemplazar el backtracking para que itere por cada quimico probando en todos los camiones. No s\'olo los camiones que ya tienen qu\'imicos, ni tampoco poniendo el qu\'imico en s\'olo el proximo cami\'on vac\'io. \\
+En segundo lugar el algoritmo que hicimos deber\'ia ser despedazado completamente. Dado que el umbral depende de cada cami\'on, est\'a mal considerar que no importa en qu\'e cami\'on va un set de qu\'imicos agrupado. En este caso, el cami\'on si importa. Se deber\'ia reemplazar el backtracking para que itere por cada quimico probando en todos los camiones. No s\'olo los camiones que ya tienen qu\'imicos, ni tampoco poniendo el qu\'imico en s\'olo el proximo cami\'on vac\'io. \\
 
 \noindent 
 2. ¿Qu\'e cosas se pod\'ıan hacer con el problema anterior para acelerar los tiempos de ejecuci\'on que ahora ya no se pueden? (es posible que la respuesta del item anterior responda esta pregunta).
 
 \noindent 
-Si efectivamente creo que de alguna manera respond\'i esa pregunta. La primer poda es obsoleta. No se puede eliminar soluciones (con el nombre que nos referimos anteriormente en este informe) \textbf{practicamente iguales}. 
+S\'i, efectivamente creemos que de alguna manera respondimos esa pregunta. La primer poda es obsoleta. No se puede eliminar soluciones (con el nombre que nos referimos anteriormente en este informe) \textbf{practicamente iguales}. 
+
+\subsection{Cambios}
+
+Se refactorizó completamente el algoritmo que resolvía el problema. También se rehizo todo el parser. 
+El informe está hecho de 0 con los nuevos cambios.
+
+
  
 
 
