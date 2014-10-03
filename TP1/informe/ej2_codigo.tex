@@ -1,6 +1,6 @@
 No se consideró relevante ni la conversión de estructuras, ni el ordenamiento de los elementos por ser funciones básicas y/o implementadas en librerias de C++.
 
-El código interesante para la resolución de este problema es aquel que recorre los puntos cr\'iticos en orden y agrega puntos a la solución del problema.
+El código interesante para la resolución de este problema es aquel que recorre los puntos críticos en orden y agrega puntos a la solución del problema.
 
 
 \lstset{language=C++,
@@ -31,7 +31,7 @@ struct PuntoCritico{
 	Edificio* edificio;
 };
 
-//El orden est\'a establecido por: Posicion,Sube o Baja, Altura
+//El orden esta establecido por: Posicion,Sube o Baja, Altura
 struct orden_PuntoCritico{
 	bool operator()(const PuntoCritico& a, const PuntoCritico& b) const{
 		if(a.posicion == b.posicion){
@@ -58,11 +58,11 @@ std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 			edificiosAbiertos.insert(make_pair(itPuntos->altura,*itPuntos));
 			std::vector<PuntoCritico>::iterator itCopy = itPuntos;
  			if(*(++itCopy) == *itPuntos){
- 			//Si no es el m\'as alto de los edificios que empiezan en la misma posici\'on.	
+ 			//Si no es el mas alto de los edificios que empiezan en la misma posicion.	
 				continue;
 			} else if (itPuntos->altura > nivelActual){
 			//Si el nivel de este edificio supera al nivel actual del recorrido
-				//Lo inserto en la soluci\'on
+				//Lo inserto en la solucion
 				ciudad->push_back(itPuntos->posicion);
 				ciudad->push_back(itPuntos->altura);
 				//Actualizo el nivel actual
@@ -73,12 +73,12 @@ std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 			//Sacar del mapa el edificio que estoy cerrando
 			MapAlturas::iterator it = edificiosAbiertos.find(itPuntos->altura);
 			edificiosAbiertos.erase (it);
-			//Consigo el m\'aximo edificio abierto
+			//Consigo el maximo edificio abierto
 			MapAlturas::iterator itEdificiosAbiertos = --edificiosAbiertos.end();
 			int alturaMaximoEdificio = (*itEdificiosAbiertos).first;
 			if(itPuntos->altura == nivelActual && alturaMaximoEdificio < itPuntos->altura){
-			//Si estoy bajando desde el edificio que est\'a abierto y no hay ninguno del mismo tama\'no
-				//Inserto el punto de bajada hasta la posicion del m\'aximo abierto
+			//Si estoy bajando desde el edificio que esta abierto y no hay ninguno del mismo tamano
+				//Inserto el punto de bajada hasta la posicion del maximo abierto
 				ciudad->push_back(itPuntos->posicion);
 				ciudad->push_back(alturaMaximoEdificio);
 				//Actualizo el nivel actual

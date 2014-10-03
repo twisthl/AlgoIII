@@ -20,3 +20,114 @@ Al momento de descartar algun punto no actualizo el edificio asociado con lo cua
 \addcontentsline{toc}{subsubsection}{Que impacto tiene en la complejidad}
 
 La complejidad del algoritmo no se ve afectada ya que se realizan un par de operaciones más en $O(1)$ para decidir si queda oculto en la silueta de la ciudad o no.
+
+
+\lstset{language=C++,
+                basicstyle=\ttfamily\footnotesize,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                breaklines=true
+}
+\begin{lstlisting}
+
+struct PuntoCritico{
+	PuntoCritico(bool s, Edificio& e){
+		edificio = &e;
+		sube = s;
+		altura = e.altura;
+		if (s){
+			posicion = e.comienzo;
+		} else {
+			posicion = e.fin;
+		}
+	}
+	bool sube;
+	int altura, posicion;
+	Edificio* edificio;
+};
+
+std::vector<PuntoCritico> puntos;
+MapAlturas edificiosAbiertos;
+
+std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
+	//Recorro los 2N elementos
+	for(;itPuntos!=puntos.end();++itPuntos){
+		if (itPuntos->sube){
+		//Si es un punto de comienzo de un edificio
+			//agregar al mapa el edificio abierto
+			edificiosAbiertos.insert(make_pair(itPuntos->altura,*itPuntos));
+			std::vector<PuntoCritico>::iterator itCopy = itPuntos;
+ 			if(*(++itCopy) == *itPuntos){
+ 			//Si no es el mas alto de los edificios que empiezan en la misma posicion.	
+
+ 				/*
+ 				*
+ 				*
+ 					No marco la esquina del edificio, con lo cual, marque o no su otra esquina ya no pertenece a los edificios marcados.
+ 				*
+ 				*
+ 				*/
+
+				continue;
+			} else if (itPuntos->altura > nivelActual){
+			//Si el nivel de este edificio supera al nivel actual del recorrido
+				//Lo inserto en la solucion
+				ciudad->push_back(itPuntos->posicion);
+				ciudad->push_back(itPuntos->altura);
+				//Actualizo el nivel actual
+				nivelActual = itPuntos->altura;
+
+				/*
+ 				*
+ 				*
+ 					Marco la esquina del edificio.
+ 				*
+ 				*
+ 				*/
+ 				marcar(itPuntos->edificio);
+			}
+		} else {
+		//Si es un punto de cierre de un edificio
+			//Sacar del mapa el edificio que estoy cerrando
+			MapAlturas::iterator it = edificiosAbiertos.find(itPuntos->altura);
+			edificiosAbiertos.erase (it);
+			//Consigo el maximo edificio abierto
+			MapAlturas::iterator itEdificiosAbiertos = --edificiosAbiertos.end();
+			int alturaMaximoEdificio = (*itEdificiosAbiertos).first;
+			if(itPuntos->altura == nivelActual && alturaMaximoEdificio < itPuntos->altura){
+			//Si estoy bajando desde el edificio que esta abierto y no hay ninguno del mismo tamano
+				//Inserto el punto de bajada hasta la posicion del maximo abierto
+				ciudad->push_back(itPuntos->posicion);
+				ciudad->push_back(alturaMaximoEdificio);
+				//Actualizo el nivel actual
+				nivelActual = alturaMaximoEdificio;
+				
+				/*
+ 				*
+ 				*
+ 					Marco la esquina del edificio. Y agrego a los edificios destacados
+ 				*
+ 				*
+ 				*/
+				marcar(itPuntos->edificio);
+				if (itPuntos->edificio->primerEsquinaMarcada){
+				edificiosDestacados.add(itPuntos->edificio);
+				} else{
+					edificiosRestantes.add(itPuntos->edificio);
+				}
+			} else {
+				/*
+ 				*
+ 				*
+ 					Agrego a los edificios que no quedan en la solucion
+ 				*
+ 				*
+ 				*/
+				edificiosRestantes.add(itPuntos->edificio);
+			}
+
+		}
+	}
+\end{lstlisting}
