@@ -85,8 +85,8 @@ void Ej3Parser::guardarSolucion(string solucion){
 }
 
 void Ej3Parser::guardarTiempoEjecucion(int n, double time){
-	string path = "recursos/timeOutput";
+	string path = "recursos/times";
 	fstream output(path, ios::out | ios::app);
-	output << n << " " << time << endl;
+	output << time << endl;
 	output.close();
 }
