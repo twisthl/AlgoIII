@@ -40,6 +40,8 @@ Para realizar el análisis de performance generamos instancias de test pseudoale
 
 Esto genera 200 instancias de edificios pseudoaleatorios acotados en altura y longitud, siempre con comienzo $<$ fin del edificio.
 
+Dividimos nuestro resultado empírico por el teórico para conseguir la relación entre los dos y nos dios de 0.16.
+
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.35]{./imagenes/ej2_chartRendimiento.png}
@@ -47,5 +49,13 @@ Esto genera 200 instancias de edificios pseudoaleatorios acotados en altura y lo
 \end{center}
 \end{figure}
 
-Para evidenciar que la complejidad es la que propusimos en el análisis teórico en el gráfico agregamos dos funciones para acotar superior e inferiormente. Una O(nlog(n)) y la otra O(n).
-Y también dividimos a nuestros resultados por n log(n) para poder verla como una recta.
+Para evidenciar que la complejidad es la que propusimos en el análisis teórico en el gráfico agregamos dos funciones para acotar superior e inferiormente. Una O(nlog(n)) y la otra O(n). Y también aproximamos a nuestros datos con una curva 0.16*nlog(n).
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.35]{./imagenes/ej2_chartRendimiento2.png}
+\caption{Gráfico de relación entre el tiempo empírico en función del tiempo teórico.}
+\end{center}
+\end{figure}
+
+Como podemos apreciar también en nuestro segundo gráfico, la relación entre los tiempos empíricos y teóricos se puede aproximar bastante bien por una línea rectacon pendiente 0.16.
