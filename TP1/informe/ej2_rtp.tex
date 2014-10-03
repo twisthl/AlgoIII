@@ -19,8 +19,9 @@ Al momento de descartar algun punto no actualizo el edificio asociado con lo cua
 \subsubsection*{Que impacto tiene en la complejidad}
 \addcontentsline{toc}{subsubsection}{Que impacto tiene en la complejidad}
 
-La complejidad del algoritmo no se ve afectada ya que se realizan un par de operaciones más en $O(1)$ para decidir si queda oculto en la silueta de la ciudad o no.
+La complejidad del algoritmo no se ve afectada ya que se realizan un par de operaciones más, al momento de decidir si un PuntoCritico agrega o no un punto a la solución, en $O(1)$ para decidir si un Edificio queda oculto en la silueta de la ciudad o no.
 
+Y si lo quiero a la salida del algoritmo lo inserto en una lista lo cual también es $O(1)$
 
 \lstset{language=C++,
                 basicstyle=\ttfamily\footnotesize,
@@ -131,3 +132,6 @@ std::vector<PuntoCritico>::iterator itPuntos = puntos.begin();
 		}
 	}
 \end{lstlisting}
+
+
+Como podemos ver en el código lo único que se agrega es el método para \texttt{marcar} un edificio y al cerrarlo se verifica que si ya está marcado o no, lo inserta en la colección correspondiente.
