@@ -144,7 +144,7 @@ Esto lleva a que, una vez detectada las soluciones no mejores, estas se desechen
 
 
 \noindent
-Como aclaramos antes, el algoritmo descubre un arbol. Donde cada nodo lo identificamos como una configuraci\'on de qu\'imicos en camiones. A vez como interpretamos el c\'odigo que se ejecuta para llegar de un estado a otro. Luego cualquier nodo es el resultado de ejecutar cierto c\'odigo a partir del c\'odigo ejecutado por su padre.
+Debemos aclarar en primer lugar que el algoritmo de backtracking genera un arbol de posibilidades con una rama nueva por cada llamada a la funci\'on recursiva. En particular, en nuestro algoritmo cada nodo lo identificamos como una configuraci\'on de qu\'imicos en camiones especificos. A su vez tambi\'en es el c\'odigo que se ejecuta para llegar de una configuraci\'on de quimicos a otra.
 
 \noindent
 Cierto c\'odigo \textbf{combinar2} se ejecuta una vez por cada nodo en el arbol y var\'ia dependiendo del estado anterior. \\
@@ -197,7 +197,7 @@ for (itCamion = camiones.begin(); itCamion != camiones.end(); itCamion++){
 \end{lstlisting}
 
 \noindent 
-Identificamos varias operaciones simples de asignaci\'on y comparaci\'on de enteros y un push y pop en una lista de enteros, todas despreciaremos a \textbf{O(1)}.
+Identificamos varias operaciones simples de asignaci\'on y comparaci\'on de enteros y un push y pop en una lista de enteros, todas despreciaremos a \textbf{O(1)}. \\
 identificamos la funci\'on llamada calcularPeligrosidad cuyo c\'odigo es:
 
 \begin{lstlisting}
@@ -250,7 +250,7 @@ Es decir que dada una cantidad Q de quimicos, el Q-esimo numero de Bell es la ca
 (Corroboramos esta relacion con un algoritmo que hicimos en haskell ubicado en ej3/recursos/nodos.hs que dado un determinado n, calcula la cantidad de nodos totales del arbol --(cambiar el archivo para probar distintos valores de n)--. En ambas deducimos la misma secuencia).\\
 
 \noindent 
-Luego la complejidad del algoritmo es:
+Luego la complejidad del algoritmo es: \\
 $\sum\limits_{i{{=}}1}^n B_{i}*i$
 
 \noindent 
@@ -387,17 +387,17 @@ Para correr la implementaci\'on del algoritmo, se debe ejecutar ej3/tp1ej3. Se d
 \noindent 
 Todas las pruebas realizadas se encuentran en la carpeta \textbf{ej3/recursos/*.test}.\\
 Estos son archivos de entrada que el ejecutable ej3/tp1ej3 puede tomar como parametro. Los archivos cumplen con las especificaciones dadas por la c\'atedra. Especificamente cada uno de estos archivos contiene un test particular. \\
-Con el nombre Caso1, Caso2, Caso3 se testearon valores de n no mayor a 5, para verificar simple vista que el algoritmo respondiera lo deseado, en cantidad y calidad de correctitud.
-Caso4 es un test de donde $n=par$ $M=1$ y toda combinaci\'on de qu\'imicos tiene peligrosidad 1. Luego El resultado se corrobora en ser n/2 camiones.
+Con el nombre Caso1, Caso2, Caso3 se testearon valores de n no mayor a 5, para verificar simple vista que el algoritmo respondiera lo deseado, en cantidad y calidad de correctitud. \\
+Caso4 es un test de donde $n=par$ $M=1$ y toda combinaci\'on de qu\'imicos tiene peligrosidad 1. Luego El resultado se corrobora en ser n/2 camiones. \\
 Caso5 $M=0$ y combinacionens de qu\'imicos son mayores a 0. Luego se corrobora que haya 1 qu\'imico por cami\'on.
-Y as'i tests probando diferentes casos facilmente observables.
+Y as'i tests probando diferentes casos facilmente observables. \\
 Tambi\'en hay un archivo test llamado CasoMultplie.test, el mismo contiene m\'as de una entrada para que resuelva Biohazard. 
 
 \noindent 
 Se realiz\'o tambi\'en comparaciones de correr los tests con o sin poda (escribiendo -ph). Verificando que el resultado sea viable y no mejor ni peor que sin la poda. Se vieron claras mejor\'ias en usar la poda a no usarlo en muchos casos. 
 
 \noindent 
-Escribimos un pequenio script llamado graficar.py. De hecho este no grafica (disculpen por el nombre), m\'as bien lo que hace es correr tp1ej3 con $x$(parametro de entrada) instancias de un mismo $n$, y una vez terminadas esas ejecuciones sumarle 1 a $n$. Por cada ejecuci\'on randomiza M de 0 a 1000 y las peligrosidades de 0 a 100. Si detecta que el tiempo que tarda la ejecuci\'on promedio de un $n$ es muy grande disminuye las repeticiones para el pr\'oximo $n$.
+Escribimos un pequenio script llamado graficar.py (en. De hecho este no grafica (disculpen por el nombre), m\'as bien lo que hace es correr tp1ej3 con $x$(parametro de entrada) instancias de un mismo $n$, y una vez terminadas esas ejecuciones sumarle 1 a $n$. Por cada ejecuci\'on randomiza M de 0 a 1000 y las peligrosidades de 0 a 100. Si detecta que el tiempo que tarda la ejecuci\'on promedio de un $n$ es muy grande disminuye las repeticiones para el pr\'oximo $n$. \\
 El resultado de los tiempos promedios para cada $n$ se guarda en un archivo llamado graficarPromedio.dat que contiene por cada l\'inea un valor de $n$ y otro del tiempo promedio que tard\'o en completar la ejecuci\'on de los casos aleatorios para ese n.
 
 \noindent 
@@ -415,13 +415,14 @@ La empresa est\'a a punto de contratar nuevos camiones y esta nueva flota no ser
 1. ¿C\'omo afecta eso a su algoritmo?
 
 \noindent 
-En primer lugar deber\'ia cambiar la entrada del algoritmo. Habr\'ia que agregar como entrada un n\'umero de peligrosidad por cada cami\'on disponible. Lo que llega a considerar lo siguiente: 
-Antes contabamos con todos los camiones que quisieramos, dado que ahora los camiones son algo que recibimos con una cantidad especificas, esto podr\'ia no seguir siendo as\'i. De todas maneras suponemos por el bien del problema y nuestra salud mental, dado que no est\'a especificado, que hay tantos camiones como qu\'imicos, de esta manera nunca me podr\'ia quedar sin camiones para ubicar alg\'un qu\'imico.
-En segundo lugar el algoritmo que hicimos deber\'ia ser despedazado completamente. Dado que el umbral depende de cada cami\'on. Est\'a mal considerar que no importa en qu\'e cami\'on va un set de qu\'imicos agrupado. Ahora el cami\'on si importa. Se deber\'ia reemplazar el backtracking para que itere por cada quimico probando en todos los camiones. No s\'olo los camiones que ya tienen qu\'imicos, ni tampoco poniendo el qu\'imico en s\'olo el proximo cami\'on vac\'io.
+En primer lugar deber\'ia cambiar la entrada del algoritmo. Habr\'ia que agregar como entrada un n\'umero de peligrosidad por cada cami\'on disponible. Lo que llega a considerar lo siguiente: \\
+Antes contabamos con todos los camiones que quisieramos, dado que ahora los camiones son algo que recibimos con una cantidad especificas, esto podr\'ia no seguir siendo as\'i. De todas maneras suponemos por el bien del problema y nuestra salud mental, dado que no est\'a especificado, que hay tantos camiones como qu\'imicos, de esta manera nunca me podr\'ia quedar sin camiones para ubicar alg\'un qu\'imico. \\
+En segundo lugar el algoritmo que hicimos deber\'ia ser despedazado completamente. Dado que el umbral depende de cada cami\'on. Est\'a mal considerar que no importa en qu\'e cami\'on va un set de qu\'imicos agrupado. Ahora el cami\'on si importa. Se deber\'ia reemplazar el backtracking para que itere por cada quimico probando en todos los camiones. No s\'olo los camiones que ya tienen qu\'imicos, ni tampoco poniendo el qu\'imico en s\'olo el proximo cami\'on vac\'io. \\
 
 \noindent 
 2. ¿Qu\'e cosas se pod\'ıan hacer con el problema anterior para acelerar los tiempos de ejecuci\'on que ahora ya no se pueden? (es posible que la respuesta del item anterior responda esta pregunta).
 
+\noindent 
 Si efectivamente creo que de alguna manera respond\'i esa pregunta. La primer poda es obsoleta. No se puede eliminar soluciones (con el nombre que nos referimos anteriormente en este informe) \textbf{practicamente iguales}. 
  
 

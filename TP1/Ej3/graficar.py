@@ -4,12 +4,12 @@ def main(argv):
     import os
     
     if argv == []:
-        repeticiones = 24
+        repeticiones = 128
     else:
         repeticiones = int(argv[0])    
 
     if not repeticiones:
-        repeticiones = 24
+        repeticiones = 128
 
     f = open('recursos/testComplex.dat', 'wb+')
     f.write(str(0))
@@ -18,7 +18,7 @@ def main(argv):
     s = open('recursos/graficarPromedio.dat', 'wb+')
     s.close()
 
-    n=2
+    n=1
     while (n <= 200000):
         
         f = open('recursos/times', 'wb+')
@@ -42,8 +42,8 @@ def main(argv):
         promedio = suma / cant
         print (promedio)
 
-        if (promedio > 1 and repeticiones != 1):
-            repeticiones = repeticiones/2
+        if (promedio*repeticiones > 20 and repeticiones != 1):
+            repeticiones = repeticiones/4
 
         s = open('recursos/graficarPromedio.dat', 'a+')
         s.write(str(n)+"   "+str(promedio)+"   "+str(repeticiones)+'\n')
