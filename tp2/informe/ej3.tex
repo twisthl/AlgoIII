@@ -36,7 +36,11 @@ Para obtener la red de computadoras (el \'arbol generador m\'inimo) utilizamos e
 A modo de ejemplo agregamos un pseudo-código del algoritmo propuesto:
 
 \begin{itemize}
-\item asd
+\item resolver($conexiones$)
+\item Obtengo un AGM $agm$ y la menor conexion $c$ que queda fuera con Kruskal de $conexiones$.
+\item Busco el anillo $A$ con bfs desde una computadora de $c$ a la otra.
+\item Busco el conjunto de conexiones $C$ que pertenecen a $agm$ pero no a $A$.
+\item Imprimo $A$ y luego $C$.
 \end{itemize}
 
 
@@ -61,9 +65,9 @@ Ahora para ser mas claros separaremos la demostraci\'on en dos partes:
 
 Por un simple hecho de comodidad comenzaremos demostrando el segundo punto:
 
-Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente. Vamos a suponer que los multiconjuntos que forman los pesos de las aristas en $M_1$ y $M_2$ son distintos. Sea $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. \forall $x$ \in $W$, ($x$ \in $M_1$ \wedge $x$ \nin $M_2$) \vee ($x$ \in $M_2$ \wedge $x$ \in $M_1$)
-Tomamos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ \in $T_1$ \wedge $e$ \nin $T_2$. Podemos decir entonces que todas las aristas que posean menor peso que el de $e$ est\'an en $T_1$ y en $T_2$.
-Como $T_2$ es un AGM si le agregamos una arista, se formar\'a un ciclo que la contiene, llamemoslo $C$. Ahora podemos observar que en este ciclo $C$ debe existir al menos una arista $e'$ tal que $e'$ \nin $T_1$, porque sino ser\'ia lo mismo que decir que en $T_1$ hay un ciclo, y esto no es posible ya que es un AGM. Tambi\'en podemos decir que le peso de $e'$ es mayor o igual al peso de $e$ por la observaci\'on hecha anteriormente, y aqu\'i pueden pasar dos cosas:
+Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente. Vamos a suponer que los multiconjuntos que forman los pesos de las aristas en $M_1$ y $M_2$ son distintos. Sea $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. \forall $x$ \in $W$, ($x$ \in $M_1$ \wedge $x$ \notin $M_2$) \vee ($x$ \in $M_2$ \wedge $x$ \in $M_1$)
+Tomamos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ \in $T_1$ \wedge $e$ \notin $T_2$. Podemos decir entonces que todas las aristas que posean menor peso que el de $e$ est\'an en $T_1$ y en $T_2$.
+Como $T_2$ es un AGM si le agregamos una arista, se formar\'a un ciclo que la contiene, llamemoslo $C$. Ahora podemos observar que en este ciclo $C$ debe existir al menos una arista $e'$ tal que $e'$ \notin $T_1$, porque sino ser\'ia lo mismo que decir que en $T_1$ hay un ciclo, y esto no es posible ya que es un AGM. Tambi\'en podemos decir que le peso de $e'$ es mayor o igual al peso de $e$ por la observaci\'on hecha anteriormente, y aqu\'i pueden pasar dos cosas:
 \begin{itemize}
 \item $e'$ \geq $e$
 \end{itemize}
@@ -112,7 +116,7 @@ La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
 \begin{itemize}
 	\item Creo un conjunto de pertenencia. $O(1)$
 \end{itemize}
-\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso). $O(m.log(n))$ \footnote{reference $Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 633$}
+\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso). $O(m.log(n))$ \footnote{reference: Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 633}
 \begin{itemize}
 	\item Si $a$ y $b$ no pertenecen al mismo conjunto de pertenencia (donde $a$ y $b$ son los nodos que conecta la arista $v$). $O(1)$
 	\begin{itemize}
@@ -155,18 +159,23 @@ bfs(agm G, vertice inicio, vertice fin)
 \end{itemize}
 \end{itemize}
 
-La complejidad real de bfs es $O(n + m)$ \footnote{reference $Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 597$}(m = #aristas, n = #vertices). Pero en este caso decimos que la complejidad de BFS es $O(n)$ porque siempre se ejecutará sobre \'arboles. 
+La complejidad real de bfs es $O(n + m)$ \footnote{reference Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 597}(m = #aristas, n = #vertices). Pero en este caso decimos que la complejidad de BFS es $O(n)$ porque siempre se ejecutará sobre \'arboles. 
 
 
 \subsubsection{Complejidad del algoritmo}
 
+
 \begin{itemize}
-\item Resolver
-\item  
-\begin{itemize}
-    \item
+\item resolver($conexiones$)
+\item Obtengo un AGM $agm$ y la menor conexion $c$ que queda fuera con Kruskal de $conexiones$. $O(m.log(n))$
+\item Busco el anillo $A$ con bfs desde una computadora de $c$ a la otra. $O(n)$
+\item Busco el conjunto de conexiones $C$ que pertenecen a $agm$ pero no a $A$. $O(n)$ (*)
+\item Imprimo $A$ y luego $C$.
 \end{itemize}
-\end{itemize}
+
+(*) Aquí podemos decir que la complejidad es $O(n)$ porque solo recorremos las conexiones del árbol que son $n$.
+
+Como se puede observar el algoritmo tiene una complejidad acotada por $O(m.log(n))$
 
 
 \newpage

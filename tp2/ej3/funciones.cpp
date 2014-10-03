@@ -4,7 +4,11 @@
 void resolver(int cantCompus, int cantEnlaces, Red& red){
 
 
-    Enlace aristaParaCiclo = new Enlace();
+    Enlace conexionAnillo = new Enlace();
+    ListaAdyacencia agmL = new ListaAdyacencia();
+    MatrizAdyacencia agmM;
+    Red conexionesAnillo;
+    Red conexionesRestantes = new Red();
     
     //Primero ordeno la red por peso en O(n*log(n))
     // http://www.cplusplus.com/reference/algorithm/sort/?kw=sort
@@ -12,12 +16,18 @@ void resolver(int cantCompus, int cantEnlaces, Red& red){
 
 
     //Obtengo el AGM a partir de la red.
-    MatrizAdyacencia agm = kruskal(cantCompus, cantEnlaces, *red, *aristaParaCiclo);
-    int cantEnlacesEnCamino;
+    agmM = kruskal(cantCompus, cantEnlaces, *red, *conexionAnillo, *agmL);
+    if (agmM == null){
+        cout << "no";
+        return 0;
+    }
 
-    //Aplicar BFS en agm, empezando en algunas de las compus de aristaParaCiclo
-    //este BFS debe ir guardando el antecesor para despues reconstruir el camino de una compu a la otra
-    //A medida que reconstruimos el camino, guardarlo en un vector para mostrarlo
+    conexionesAnillo = bfs(agmL, conexionAnillo.compu1, conexionAnillo.compu2, *conexionesRestantes);
+
+    int cantEnlacesEnCamino = conexionesAnillo.size();
+
+    imprimirResultado(costoTotal, int cantEnlacesEnCamino, int cantEnlacesFuera, Red anilloServidores, Red compusEnRed)
+
 
 }
 
@@ -31,10 +41,11 @@ bool esMayorEnlace(const Enlace& a, const Enlace& b)
  
 // Devuelve la matriz de adyacencia del árbol mínimo.
 // Debe recibir la red ordenada por peso de menor a mayor.
-MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido){
+MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido, ListaAdyacencia& agmL){
     Red redOrdenada = red;
     MatrizAdyacencia agm(cantCompus);
     vector<int> pertenece(cantCompus); // indica a que árbol pertenece el nodo
+//    ListaAdyacencia agmL(cantCompus);
  
     for(int i = 0; i < cantCompus; i++){
         agm[i] = vector<int> (cantCompus, 0);
@@ -51,7 +62,7 @@ MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace&
 //    Enlace menorEnlaceExcluido;
     bool noEncontreEnlaceExcluido = true;
 
-    while(cantAristas < cantCompus && cantAristas <= cantTotalAristas){
+    while(cantAristas < cantCompus || cantAristas <= cantTotalAristas){
         compu1 = redOrdenada[posicionEnRed].compu1;
         compu2 = redOrdenada[posicionEnRed].compu2;
         costo = redOrdenada[posicionEnRed].costo;
@@ -62,6 +73,9 @@ MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace&
         if(pertenece[compu1] != pertenece[compu2]){
             agm[compu1][compu2] = costo;
             agm[compu2][compu1] = costo;
+
+            agmL[compu1].push_back(compu2);
+            agmL[compu2].push_back(compu1);
  
             // Todos los nodos del árbol del compu2 ahora pertenecen al árbol del compu1.
         	int temp = pertenece[compu2];
@@ -80,53 +94,46 @@ MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace&
             }
         }
     }
+    if(cantAristas < cantCompus - 1)
+        return MatrizAdyacencia agmVacio = null;
     return agm;
 }
 
 
-void imprimirResultado(int costoTotal, int cantEnlacesEnCamino, int canEnlacesFuera, Red anilloServidores, Red compusEnRed){
+void imprimirResultado(int costoTotal, int cantEnlacesEnCamino, int cantEnlacesFuera, Red anilloServidores, Red compusEnRed){
 
     if(costoTotal == 0){
         cout << "no";// << endl;
     }else{
-        cout << costoTotal << " " << cantEnlacesEnCamino << " " << canEnlacesFuera << endl;
+        cout << costoTotal << " " << cantEnlacesEnCamino << " " << cantEnlacesFuera << endl;
 
         for (int i = 0; i < cantEnlacesEnCamino; ++i){
             cout << anilloServidores[i].compu1 << " " << anilloServidores[i].compu2 << endl;
         }
 
-        for (int i = 0; i < canEnlacesFuera; ++i){
+        for (int i = 0; i < cantEnlacesFuera; ++i){
             cout << compusEnRed[i].compu1 << " " << compusEnRed[i].compu2 << endl;
         }
     }
     cout << endl;    
 }
 
-
-void bfs(Enlace desde, Enlace hasta){
-
-}
-
+Red conexionesAnillo = bfs(agmL, conexionAnillo.compu1, conexionAnillo.compu2, *conexionesRestantes);
 
 
 //MODIFICAR TODO EL BFS
-void bfs(int s, Red red, int cantAristas)
+void bfs(ListaAdyacencia agm, int desde, int hasta, int cantAristas)
 {
-    // Mark all the vertices as not visited
-    bool *visited = new bool[cantAristas];
+    std::vector<bool> visitado;
     for(int i = 0; i < cantAristas; i++)
-        visited[i] = false;
+        visitado[i] = false;
  
-    // Create a queue for BFS
+    visitado[desde] = true;
     vector<int> cola;
+    cola.push_back(desde);
  
-    // Mark the current node as visited and enqueue it
-    visited[s] = true;
-    cola.push_back(s);
- 
-    // 'i' will be used to get all adjacent vertices of a vertex
     vector<int>::iterator i;
- 
+    int s;
     while(!cola.empty())
     {
         // Dequeue a vertex from cola and print it
@@ -139,9 +146,9 @@ void bfs(int s, Red red, int cantAristas)
         // and enqueue it
         for(i = adj[s].begin(); i != adj[s].end(); ++i)
         {
-            if(!visited[*i])
+            if(!visitado[*i])
             {
-                visited[*i] = true;
+                visitado[*i] = true;
                 cola.push_back(*i);
             }
         }

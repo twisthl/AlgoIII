@@ -15,6 +15,7 @@ using namespace std;
 
 typedef std::vector< vector<int> > MatrizAdyacencia;
 typedef std::vector<Enlace> Red;
+typedef std::vector< vector<int> > ListaAdyacencia;
 
 struct Enlace {
 		int compu1;
