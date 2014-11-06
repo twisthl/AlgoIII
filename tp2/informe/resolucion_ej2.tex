@@ -1,1 +1,35 @@
 \subsection{Resoluci\'on}
+
+La idea es encontrar una casilla a la cual puedan llegar todos los caballos, y que esta sea aquella en cual la sumatoria de todos los movimientos de caballo utilizados sea m\'inima.
+De esta manera podemos atacarlo modelandolo como un problema de grafos. Al necesitar alg\'un tipo de distancia m\'inima, hay varios algoritmos conocidos que resuelven esta problm\'atica sobre grafos. Es altamente f\'actible que encontremos una soluci\'on utilizando los m\'etodos conocidos y consigamos la complejidad pretendidas.
+
+De esta forma podemos separar a la soluci\'on en dos etapas:
+\begin{itemized}
+	\item El modelado del problema, para poder representar la situaci\'on con un grafo.
+	\item La resoluci\'on propiamente dicha, en donde se aplica alg\'un tipo de algoritmo de camino m\'inimo y se llega a la soluci\'on final.
+\end{itemized}
+
+\subsection{Modelado del Problema}
+
+Pensemos en el tablero. Vamos a necesitar ubicar los caballos en sus respectivas posiciones, para luego buscar un punto en el caul coincidan todos. Y de todos los puntos en los cuales puedan llegar a coincidir todos los caballaos, quedarme con aquel que nececite la menor cantidad de movimientos de caballos para llegar al mismo.
+
+Podemos pensar a cada casilla del tablero como un nodo del grafo. Con lo cual si tengo un tablero de \texttt{N} $x$ \texttt{N} casillas, voy a tener un grafo de \texttt{N} $x$ \texttt{N} nodos. De ahora en m\'as hablaremos indistintamente de nodo del grafo o casillero del tablero ya que son lo mismo.
+
+Por otro lado, el costo de problema va a ser la cantidad de movimientos de caballos. Y un caballo solo se puede mover de una forma particular (2 en una direccio + 1 en perpendicular a la que se movio en un principio), con lo cual dos casillas contiguas no se pueden alcanzar en un movimiento com\'un de caballo.
+De esta manera podemos pensar que las conexiones en el tablero est\'an dadas por los movimientos del caballo. Con lo cual, cada nodo de nuestro grafo esta conectado con otro si y solo si se puede llegar de ese casillero al otro en un movimiento con un caballo.
+Esto se ajusta perfectamente a la idea que vamos formando del problema y su resoluci\'on, ya que dos nodos que est\'an conectados en nuestro grafo, si un caballo pasa de uno al otro implica un movimiento de caballo, que es factible realizar pues las conexiones se rigen por esta regla, y el costo de este movimiento es 1. Con lo cual si un caballo paso de un casillero a otro en busca de la configuraci\'on pretendida, esto consumi\'o un movimiento de caballo y por lo tanto la sumatoria total se increment\'o en una unidad.
+
+Por \'ultimo, hay que tener mucho cuidado con los casos bordes. Al modelar el grafo hay que tener presente que no desde todos los casilleros est\'a la posibilidad de moverse a las 8 casillas que podr\'ia alcanzar un caballo. Por ejemplo las esquinas del tablero solo tienen dos posibilidades de movimiento.
+
+Como podemos apreciar es una propuesta factible que se ajusta al problema y f\'acil de modelar. Tiene l\'ogica tener un nodo por cada casillero y que cada conexi\'on entre casilleros est\'e dada por el movimiento de un caballo con costo 1 por el mismo. Con lo cual faltar\'ia encontrar en que casillero se encuentran todos los caballos y cual es su costo para ver si es m\'inimo.
+
+
+\subsection{Resoluci\'on del Problema}
+
+Ya tenemos la estructura del grafo, con lo cual ahora necesitamos encontrar el casillero al cual todos est\'en a distancia m\'inima.
+Primero pensemos como se mueve un caballo y como son las dinstancias a los casilleros.
+Como vimos el caballo y su movimiento particular (2 + 1) estan representados en las conexiones de los casilleros. Con lo cual si estoy parado en un casillero la distancia a cualquiera de los que tengan una conexi\'on inmediata es 1. Y la distancia a cualquier otro casillero es el camino m\'inimo entre los dos nodos pretendidos, el de partida y el de llegada.
+
+Dadas estas caracter\'isticas podemos afirmar que el algoritmo BFS, para grafos sin pesos o pesos iguales, nos da la distancia m\'inima entre un nodo y el resto de los nodos del grafo como es sabido y tambi\'en vimos en clase. Con lo cual, correr un BFS desde el nodo en el que se encuentra un caballo al comenzar, nos d\'a la distancia m\'inima de este caballo a todos los casilleros del tablero. Esta es una propiedad muy fuerte que nos sirve para la resoluci\'on del problema y es garantizada por BFS ya que no se da siempre, como por ejemplo, con el algoritmo de DFS.
+
+Sigamos pensando en el algoritmo. Podemos ver que si ejecuto un BFS desde la posici\'on en la que comienza cada caballo, cada uno de esos va a calcular la distancia m\'inima de ese caballo a todos los casilleros del tablero. Por lo tanto puedo acumular estas distancias en cada casillero, y luego de correr un BFS con por cada caballo, obtengo en esa posici\'on, los movimientos que fueron necesarios para que todos los caballos que alcanzan ese casillero lleguen hasta ah\'i. Por \'ultimo tengo que buscar un casillero (si es que existe) por el cual pasaron todos los caballos y sea el m\'inimo.
