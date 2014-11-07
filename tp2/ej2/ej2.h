@@ -1,4 +1,4 @@
-ifndef EJ2_H
+#ifndef EJ2_H
 #define EJ2_H
 
 #include <list>
@@ -11,35 +11,40 @@ ifndef EJ2_H
 #include "iterator"
 #include <math.h>
 
-using namespace std
-
-typedef std::vector< vector<Nodo> > MatrizDeNodos;
-typedef std::vector<Casillero> ListaAdyacencia;
-
-typedef std::vector<Casillero> Caballos;
-
+using namespace std;
 
 struct Casillero{
 	Casillero(int a, int b){
 		x = a;
 		y = b;
+	};
+	Casillero(){};
+	int x;
+	int y;
+};
+
+typedef std::vector<Casillero> ListaAdyacencia;
+typedef std::vector<Casillero> Caballos;
+
+struct Nodo{
+	Nodo(){};
+	Nodo(int a, int b){
+		x = a;
+		y = b;
+		movimientosNecesarios = 0;
+		caballosLlegaron = 0;
+		adyacentes = new ListaAdyacencia();
+		distancia = 0;
 	}
 	int x;
 	int y;
-}
-
-struct Nodo{
-	Nodo(int x, int y){
-		casillero = new Casillero(x,y);
-		movimientosNecesarios = 0;
-		caballosLlegaron = 0;
-		adyacentes = new ListaAdyacencia;
-	}
-	Casillero casillero;
 	int movimientosNecesarios;
 	int caballosLlegaron;
-	ListaAdyacencia adyacentes;
-}
+	ListaAdyacencia* adyacentes;
+	int distancia;
+};
+
+typedef std::vector< vector<Nodo> > MatrizDeNodos;
 
 struct Solucion{
 	Solucion(int a, int b, int c){
@@ -50,11 +55,12 @@ struct Solucion{
 	int x;
 	int y;
 	int movimientos;
-}
+};
+
 
 MatrizDeNodos modelar(int n);
 
-int resolver(MatrizDeNodos matriz, Caballos caballos);
+Nodo resolver(MatrizDeNodos matriz, Caballos caballos);
 
 
 #endif
