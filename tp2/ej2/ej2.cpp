@@ -1,15 +1,11 @@
 #include "ej2.h"
 
-using namespace std;
-
 int main(){
 	int n = 0;
 	int k = 0;
 
 	int x = 0;
 	int y = 0;
-
-
 
 	while(true){
 		//Si termina de leer el archivo, fin.
@@ -30,10 +26,18 @@ int main(){
 
 			Casillero casilla = new Casillero(x,y);
 
-			caballos.push_back(casilla);
+			caballos->push_back(casilla);
 		}
 
 		MatrizDeNodos matriz = modelar(n);
+
+		Nodo solucion = resolver(matriz, caballos);
+
+		if(soluccion != NULL){
+			cout << solucion.x << solucion.y << solucion.movimientosnecesarios << endl;
+		} else {
+			cout << no << enld;
+		}
 	}
 	return 0;
 }
