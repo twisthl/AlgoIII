@@ -16,6 +16,9 @@ using namespace std
 typedef std::vector< vector<Nodo> > MatrizDeNodos;
 typedef std::vector<Casillero> ListaAdyacencia;
 
+typedef std::vector<Casillero> Caballos;
+
+
 struct Casillero{
 	Casillero(int a, int b){
 		x = a;
@@ -38,12 +41,20 @@ struct Nodo{
 	ListaAdyacencia adyacentes;
 }
 
+struct Solucion{
+	Solucion(int a, int b, int c){
+		x = a;
+		y = b;
+		movimientos = c;
+	}
+	int x;
+	int y;
+	int movimientos;
+}
 
+MatrizDeNodos modelar(int n);
 
-
-
-
-
+int resolver(MatrizDeNodos matriz, Caballos caballos);
 
 
 #endif

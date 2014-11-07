@@ -8,3 +8,5 @@ El algoritmo tiene 3 etapas bien definidas, las cuales vamos a detallar y calcul
 		\item Se recorre la colección de 2N PuntoCritico; cuando es un punto de comienzo se inserta en un multimap\footnote{C++ reference \url{http://www.cplusplus.com/reference/map/multimap/}} (nos permite obtener el maximo en $O(1)$ y agregar en $O(log(n))$) un elemento con esa altura, y al analizar un punto de clausura, se lo saca del mismo. $O(log(n)$
 	\end{itemize}
 \end{enumerate}
+
+Con lo cual podemos apreciar que en ningún momento se supera el orden de $O (n log(n))$, y al ser tres etapas consecutivas e independientes se puede afirmar que la complejidad es InfracCuadrática como se pide en el enunciado.
