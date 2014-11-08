@@ -44,7 +44,7 @@ struct Nodo{
 	int distancia;
 };
 
-typedef std::vector< vector<Nodo> > MatrizDeNodos;
+typedef std::vector< vector<Nodo*> > MatrizDeNodos;
 
 struct Solucion{
 	Solucion(int a, int b, int c){
@@ -58,9 +58,10 @@ struct Solucion{
 };
 
 
-MatrizDeNodos modelar(int n);
+MatrizDeNodos* modelar(int n);
 
-Nodo resolver(MatrizDeNodos matriz, Caballos caballos);
+Nodo* resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k);
 
+void bfs(MatrizDeNodos& matriz, int n, Casillero& c);
 
 #endif
