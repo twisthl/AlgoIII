@@ -83,7 +83,7 @@ void bfs(MatrizDeNodos& matriz, int n, Casillero& c){
 	nodo->caballosLlegaron++;
 	nodo->distancia = 0;
 
-	std::vector<Nodo> cola;
+	std::queue<Nodo> cola;
 
 	ListaAdyacencia::iterator itPrimeros = nodo->adyacentes->begin();
 	for(; itPrimeros != nodo->adyacentes->end(); ++itPrimeros){
@@ -96,12 +96,12 @@ void bfs(MatrizDeNodos& matriz, int n, Casillero& c){
 		adyacente->caballosLlegaron++;
 		adyacente->movimientosNecesarios += 1;
 
-		cola.push_back(*adyacente);
+		cola.push(*adyacente);
 	}
 
 	while(!cola.empty()){
 		nodo = &(cola.front());
-		cola.pop_front();
+		cola.pop();
 
 		ListaAdyacencia::iterator itAdyacentes = nodo->adyacentes->begin();
 		for(; itAdyacentes != nodo->adyacentes->end(); ++itAdyacentes){
@@ -115,7 +115,7 @@ void bfs(MatrizDeNodos& matriz, int n, Casillero& c){
 				adyacente->caballosLlegaron++;
 				adyacente->movimientosNecesarios += adyacente->distancia;
 
-				cola.push_back(*adyacente);
+				cola.push(*adyacente);
 			}
 		}
 	}

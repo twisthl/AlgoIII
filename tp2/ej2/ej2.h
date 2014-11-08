@@ -9,6 +9,8 @@
 #include <fstream>
 #include "vector"
 #include "iterator"
+#include <queue>
+#include <list>
 #include <math.h>
 
 using namespace std;
@@ -23,7 +25,7 @@ struct Casillero{
 	int y;
 };
 
-typedef std::vector<Casillero> ListaAdyacencia;
+typedef std::list<Casillero> ListaAdyacencia;
 typedef std::vector<Casillero> Caballos;
 
 struct Nodo{
