@@ -37,7 +37,7 @@ MatrizDeNodos* modelar(int n){
 					nodo->adyacentes->push_back(*(new Casillero(i-1,j-2)));
 				}
 			}
-			matriz[i][j] = nodo;
+			(*matriz)[i][j] = nodo;
 		}
 	}
 
