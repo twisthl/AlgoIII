@@ -32,9 +32,10 @@ int main(){
 			caballos.push_back(casilla);
 		}
 
-		MatrizDeNodos matriz = modelar(n);
+		MatrizDeNodos* matriz;
+		matriz = modelar(n);
 
-		Nodo solucion = resolver(matriz, n, caballos, k);
+		Nodo solucion = resolver(*matriz, n, caballos, k);
 
 		if(solucion.movimientosNecesarios != -1){
 			cout << solucion.x << solucion.y << solucion.movimientosNecesarios << endl;

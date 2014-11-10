@@ -61,7 +61,7 @@ struct Solucion{
 };
 
 
-MatrizDeNodos modelar(int n);
+MatrizDeNodos* modelar(int n);
 
 Nodo resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k);
 
