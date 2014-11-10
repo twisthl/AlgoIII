@@ -1,6 +1,6 @@
 #include "ej2.h"
 
-MatrizDeNodos modelar(int n){
+MatrizDeNodos* modelar(int n){
 	MatrizDeNodos* matriz = new MatrizDeNodos();
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < n; j++){
@@ -68,7 +68,7 @@ MatrizDeNodos modelar(int n){
 
 	cout << "Modelado" << endl;
 
-	return *matriz;
+	return matriz;
 }
 
 Nodo resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k){
