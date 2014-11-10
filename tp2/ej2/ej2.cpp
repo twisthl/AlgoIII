@@ -30,6 +30,8 @@ int main(){
 			Casillero casilla(x,y);
 
 			caballos.push_back(casilla);
+
+			//cout << "CabalosSize() " << caballos.size() << endl;
 		}
 
 		MatrizDeNodos* matriz = modelar(n);
@@ -37,7 +39,7 @@ int main(){
 		Nodo solucion = resolver(*matriz, n, caballos, k);
 
 		if(solucion.movimientosNecesarios != -1){
-			cout << solucion.x << solucion.y << solucion.movimientosNecesarios << endl;
+			cout << solucion.x << " " << solucion.y << " " << solucion.movimientosNecesarios << endl;
 		} else {
 			cout << "no" << endl;
 		}
