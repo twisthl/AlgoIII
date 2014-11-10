@@ -47,7 +47,7 @@ struct Nodo{
 	int distancia;
 };
 
-typedef std::vector< vector<Nodo> > MatrizDeNodos;
+typedef std::vector< vector<Nodo*> > MatrizDeNodos;
 
 struct Solucion{
 	Solucion(int a, int b, int c){

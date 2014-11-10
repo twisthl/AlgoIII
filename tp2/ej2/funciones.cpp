@@ -60,7 +60,7 @@ MatrizDeNodos modelar(int n){
 				}
 			}
 			cout << "matriz" << endl;
-			matriz[i][j] = nodo;
+			matriz[i][j] = &nodo;
 			cout << "matriz" << endl;
 		}
 	}
@@ -80,11 +80,11 @@ Nodo resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k){
 	Nodo nodo;
 	for (int i = 0; i < n; ++i){
 		for (int j = 0; j < n; ++j){
-			if(matriz[i][j].caballosLlegaron == k){
+			if((*matriz[i][j]).caballosLlegaron == k){
 				if(nodo.movimientosNecesarios == -1){
-					nodo = matriz[i][j];
-				} else if(nodo.movimientosNecesarios > matriz[i][j].movimientosNecesarios) {
-					nodo = matriz[i][j];
+					nodo = (*matriz[i][j]);
+				} else if(nodo.movimientosNecesarios > (*matriz[i][j]).movimientosNecesarios) {
+					nodo = (*matriz[i][j]);
 				}
 			}
 			
@@ -105,7 +105,7 @@ void bfs(MatrizDeNodos& matriz, int n, Casillero& c){
 	x = c.x -1;
 	y = c.y -1;
 	visitado[x][y] = true;
-	Nodo nodo = matriz[x][y];
+	Nodo nodo = (*matriz[x][y]);
 	nodo.caballosLlegaron++;
 	nodo.distancia = 0;
 
@@ -117,7 +117,7 @@ void bfs(MatrizDeNodos& matriz, int n, Casillero& c){
 		x = casillero.x - 1;
 		y = casillero.y -1;
 		visitado[x][y] = true;
-		Nodo adyacente = matriz[x][y];
+		Nodo adyacente = (*matriz[x][y]);
 		adyacente.distancia = 1;
 		adyacente.caballosLlegaron++;
 		adyacente.movimientosNecesarios += 1;
@@ -136,7 +136,7 @@ void bfs(MatrizDeNodos& matriz, int n, Casillero& c){
 			y = casillero.y -1;
 			if(!visitado[x][y]){
 				visitado[x][y] = true;
-				Nodo adyacente = matriz[x][y];
+				Nodo adyacente = (*matriz[x][y]);
 				adyacente.distancia = nodo.distancia + 1;
 				adyacente.caballosLlegaron++;
 				adyacente.movimientosNecesarios += adyacente.distancia;
