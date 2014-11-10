@@ -1,7 +1,7 @@
 #include "ej2.h"
 
 MatrizDeNodos modelar(int n){
-	MatrizDeNodos matriz();
+	MatrizDeNodos matriz;
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < n; j++){
 			Nodo nodo(i,j);
@@ -17,6 +17,7 @@ MatrizDeNodos modelar(int n){
 					cout << "si2" << endl;
 				}
 			}
+
 			if(0 < i-2 && i-2 < n){
 				if (0 < j+1 && j+1 < n){
 					cout << "si3" << endl;
@@ -24,26 +25,43 @@ MatrizDeNodos modelar(int n){
 					cout << "si3" << endl;
 				}
 				if (0 < j-1 && j-1 < n){
+
+					cout << "si4" << endl;
 					nodo.adyacentes.push_back(Casillero(i-2,j-1));
+					cout << "si4" << endl;
 				}
 			}
+
 			if(0 < j+2 && j+2 < n){
 				if (0 < i+1 && i+1 < n){
+					cout << "si5" << endl;
 					nodo.adyacentes.push_back(Casillero(i+1,j+2));
+					cout << "si5" << endl;
 				}
 				if (0 < i-1 && i-1 < n){
+
+					cout << "si6" << endl;
 					nodo.adyacentes.push_back(Casillero(i-1,j+2));
+					cout << "si6" << endl;
 				}
 			}
+
 			if(0 < j-2 && j-2 < n){
 				if (0 < i+1 && i+1 < n){
+					cout << "si7" << endl;
 					nodo.adyacentes.push_back(Casillero(i+1,j-2));
+					cout << "si7" << endl;
 				}
 				if (0 < i-1 && i-1 < n){
+
+					cout << "si8" << endl;
 					nodo.adyacentes.push_back(Casillero(i-1,j-2));
+					cout << "si8" << endl;
 				}
 			}
-			(matriz[i][j]) = nodo;
+			cout << "matriz" << endl;
+			matriz[i][j] = nodo;
+			cout << "matriz" << endl;
 		}
 	}
 
