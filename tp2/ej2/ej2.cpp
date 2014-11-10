@@ -32,8 +32,7 @@ int main(){
 			caballos.push_back(casilla);
 		}
 
-		MatrizDeNodos* matriz;
-		matriz = modelar(n);
+		MatrizDeNodos* matriz = modelar(n);
 
 		Nodo solucion = resolver(*matriz, n, caballos, k);
 

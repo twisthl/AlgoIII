@@ -1,7 +1,9 @@
 #include "ej2.h"
 
 MatrizDeNodos* modelar(int n){
-	MatrizDeNodos* matriz = new MatrizDeNodos();
+	vector<Nodo*> aux(n, NULL);
+    MatrizDeNodos* matriz = new MatrizDeNodos(n, aux);
+
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < n; j++){
 			Nodo nodo(i,j);
