@@ -14,9 +14,7 @@ int main(){
 		}
 
 		cin >> n;
-		cout << "N: " << n << endl;
 		cin >> k;
-		cout << "K: " << k << endl;
 		if (n < 1 || k < 1) {
 			break;
 		}
@@ -25,13 +23,9 @@ int main(){
 		for(int i=0; i<k; i++){
 			cin >> x;
 			cin >> y;
-			cout << "Caballo " << i << ": " << x << " " << y << endl;
 
 			Casillero casilla(x,y);
-
 			caballos.push_back(casilla);
-
-			//cout << "CabalosSize() " << caballos.size() << endl;
 		}
 
 		MatrizDeNodos* matriz = modelar(n);
