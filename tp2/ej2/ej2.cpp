@@ -39,7 +39,7 @@ int main(){
 		Nodo solucion = resolver(*matriz, n, caballos, k);
 
 		if(solucion.movimientosNecesarios != -1){
-			cout << solucion.x << " " << solucion.y << " " << solucion.movimientosNecesarios << endl;
+			cout << solucion.x + 1 << " " << solucion.y + 1 << " " << solucion.movimientosNecesarios << endl;
 		} else {
 			cout << "no" << endl;
 		}

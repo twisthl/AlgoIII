@@ -8,26 +8,26 @@ MatrizDeNodos* modelar(int n){
 		for(int j = 0; j < n; j++){
 			//ListaAdyacencia lista;
 			Nodo nodo(i,j);
-			if( 0< i+2 && i+2 < n){
-				if ( 0 < j+1 && j+1 < n){
+			if( 0<= i+2 && i+2 < n){
+				if ( 0 <= j+1 && j+1 < n){
 					cout << "si1" << endl;
 					nodo.adyacentes.push_back(Casillero(i+2,j+1));
 					cout << "si1" << endl;
 				}
-				if (0 < j-1 && j-1 < n){
+				if (0 <= j-1 && j-1 < n){
 					cout << "si2" << endl;
 					nodo.adyacentes.push_back(Casillero(i+2,j-1));
 					cout << "si2" << endl;
 				}
 			}
 
-			if(0 < i-2 && i-2 < n){
-				if (0 < j+1 && j+1 < n){
+			if(0 <= i-2 && i-2 < n){
+				if (0 <= j+1 && j+1 < n){
 					cout << "si3" << endl;
 					nodo.adyacentes.push_back(Casillero(i-2,j+1));
 					cout << "si3" << endl;
 				}
-				if (0 < j-1 && j-1 < n){
+				if (0 <= j-1 && j-1 < n){
 
 					cout << "si4" << endl;
 					nodo.adyacentes.push_back(Casillero(i-2,j-1));
@@ -35,13 +35,13 @@ MatrizDeNodos* modelar(int n){
 				}
 			}
 
-			if(0 < j+2 && j+2 < n){
-				if (0 < i+1 && i+1 < n){
+			if(0 <= j+2 && j+2 < n){
+				if (0 <= i+1 && i+1 < n){
 					cout << "si5" << endl;
 					nodo.adyacentes.push_back(Casillero(i+1,j+2));
 					cout << "si5" << endl;
 				}
-				if (0 < i-1 && i-1 < n){
+				if (0 <= i-1 && i-1 < n){
 
 					cout << "si6" << endl;
 					nodo.adyacentes.push_back(Casillero(i-1,j+2));
@@ -49,13 +49,13 @@ MatrizDeNodos* modelar(int n){
 				}
 			}
 
-			if(0 < j-2 && j-2 < n){
-				if (0 < i+1 && i+1 < n){
+			if(0 <= j-2 && j-2 < n){
+				if (0 <= i+1 && i+1 < n){
 					cout << "si7" << endl;
 					nodo.adyacentes.push_back(Casillero(i+1,j-2));
 					cout << "si7" << endl;
 				}
-				if (0 < i-1 && i-1 < n){
+				if (0 <= i-1 && i-1 < n){
 
 					cout << "si8" << endl;
 					nodo.adyacentes.push_back(Casillero(i-1,j-2));
@@ -77,17 +77,18 @@ Nodo resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k){
 
 	int i = 1;
 	Caballos::iterator itCaballos = caballos.begin();
+
 	for (; itCaballos != caballos.end(); ++itCaballos){
-		cout << "Resolver " << i << endl;	
+		cout << "Resolver " << i << endl;
+		imprimirMatriz(matriz,n);	
 		bfs(matriz, n, *itCaballos);
+		imprimirMatriz(matriz,n);
 		++i;
 	}
 
 	Nodo nodo;
 	for (int i = 0; i < n; ++i){
-		cout << "MATRIZ ";
 		for (int j = 0; j < n; ++j){
-			cout << matriz[i][j].caballosLlegaron << " " << matriz[i][j].movimientosNecesarios << " ; ";
 			if(matriz[i][j].caballosLlegaron == k){
 				if(nodo.movimientosNecesarios == -1){
 					nodo = matriz[i][j];
@@ -95,10 +96,10 @@ Nodo resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k){
 					nodo = matriz[i][j];
 				}
 			}
-			
 		}
-		cout << endl;
 	}
+
+	imprimirMatriz(matriz,n);
 
 	return nodo;
 }
@@ -174,5 +175,15 @@ void bfs(MatrizDeNodos& matriz, int n, Casillero& c){
 				cola.push(matriz[a][b]);
 			}
 		}
+	}
+}
+
+void imprimirMatriz(MatrizDeNodos& matriz, int n){
+	for (int i = 0; i < n; ++i){
+		cout << "MATRIZ ";
+		for (int j = 0; j < n; ++j){
+			cout << matriz[i][j].caballosLlegaron << " " << matriz[i][j].movimientosNecesarios << " ; ";			
+		}
+		cout << endl;
 	}
 }

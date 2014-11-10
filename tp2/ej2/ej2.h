@@ -68,4 +68,6 @@ Nodo resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k);
 
 void bfs(MatrizDeNodos& matriz, int n, Casillero& c);
 
+void imprimirMatriz(MatrizDeNodos& matriz, int n);
+
 #endif
