@@ -1,1 +1,8 @@
 \subsection{Performance}
+
+El algoritmo que dise\'niamos se comporta exactamente igual para cualquier tipo de instancia v\'alida que tenga como entrada. Al no aplicar ninguna m\'inima heur\'isticano reducimos ning\'un calculo ni aprobechamos alguna informaci\'on particular de la entrada.
+
+Con lo cual el desempe\'no del algoritmo depende pura y exclusivamente de las dos variables que se manejan en la instancio. El tama\'no del tablero que repercute en el modelado del grafo y la cantidad de nodos totales y nodos en la lista de adyacencia de los nodos, y la cantidad de caballos que impl\'ica la cantidad de BFS que se corren.
+
+Un optimizaci\'on sencilla que se podr\'ia realizar y no se hizo por falta de tiempo es que en vez de tener una lista de caballos, utilizar un mapa<Caballo,Cantidad>, que representa la cantidad de caballos que hay en una misma casilla al comienzo.
+Con lo cual en el BFS en vez de contemplar el movimiento de un solo caballo lo hago con la cantidad de caballos que comiencen en esa casilla. Lo cual me reduce cantidad de caballos BFS a la hora de computarlos.

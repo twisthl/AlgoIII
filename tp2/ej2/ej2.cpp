@@ -14,9 +14,7 @@ int main(){
 		}
 
 		cin >> n;
-		cout << "N: " << n << endl;
 		cin >> k;
-		cout << "K: " << k << endl;
 		if (n < 1 || k < 1) {
 			break;
 		}
@@ -25,10 +23,8 @@ int main(){
 		for(int i=0; i<k; i++){
 			cin >> x;
 			cin >> y;
-			cout << "Caballo " << i << ": " << x << " " << y << endl;
 
 			Casillero casilla(x,y);
-
 			caballos.push_back(casilla);
 		}
 
@@ -37,7 +33,7 @@ int main(){
 		Nodo solucion = resolver(*matriz, n, caballos, k);
 
 		if(solucion.movimientosNecesarios != -1){
-			cout << solucion.x << solucion.y << solucion.movimientosNecesarios << endl;
+			cout << solucion.x + 1 << " " << solucion.y + 1 << " " << solucion.movimientosNecesarios << endl;
 		} else {
 			cout << "no" << endl;
 		}
