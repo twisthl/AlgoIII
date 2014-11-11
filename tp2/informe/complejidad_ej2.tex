@@ -1,1 +1,41 @@
 \subsection{Complejidad del algoritmo}
+La complejidad de este algoritmo depende de las tres etapas de las cuales venimos hablando desde un principio:
+
+\begin{itemize}
+	\item Modelado
+	\item BFS
+	\item Encontrar el m\'inimo
+\end{itemize}
+
+\subsubsection{Complejidad del Modelado}
+
+Como se puede apreciar en el c\'odigo, el modelado se encarga de inicializar la matriz y la lista de adyacentes de cada nodo.
+Inicializar la matriz al ser de $NxN$ tengo un costo m\'inimo de $O(n^2)$.
+Al ser acotada la cantidad de nodos adyacentes posibles (8) a cada casillero,crear la lista de adyacentes es acotado, y por lo tanto cada Nodo cuesta $O(1)$.
+
+Resumiendo cuentas la complejidad del modelado es $O(n^2) + n 8 O(1) = O(n^2)$
+
+
+\subsubsection{Complejidad del BFS}
+
+El BFS al principio inicializa una matriz de booleanos de $NxN$ elementos lo cual es $O(n^2)$.
+Luego se puede considerar que recorre la cola de Nodos en la cual a lo sumo consume $O(n^2)$ ya que no pasa dos veces por el mismo nodo. Y por cada nodo verificar sus adyacentes para saber si alguno no fue visitado est\'a acotado, ya que el mismo solo tiene 8 posibles conexiones como mucho. Las operaciones que realiza fuera de esto son $O(1)$, pues el acceso a la matriz es $O(1)$, recorrer linealmente la Lista de adyacentes es $O(1)$ porcada nodo agregar y sacar de la cola es $O(1)$.
+
+Luego si pensamos que se corre un BFS por cada uno de los caballos que tengo se puede decir que obtener los datos de la cantidad de movimientos necesarios de caballo es $O(k n^2)$
+
+
+\subsubsection{Complejidad para encontrar el resultado}
+
+Desp\'ues de calcular todos los movimientos de los caballos se recorre una \'ultima vez la matriz completa para quedarme con el casillero que cumpla que fue alcanzado por todos los caballos y que sea el que tenga m\'inima cantidad de movimientos necesarios.
+
+Esto \'ultimo es $O(n^2)$
+
+\subsubsection{Complejidad Final}
+
+Como podemos ver todas estas etapas independientes no superan el $O(k n^2)$. Con lo cual se puede determinar que la complejidad total del algoritmo es :
+
+\begin{center}
+	$O(n^2) + O(k n^2) + O(n^2) = O(k n^2)$
+\end{center}
+
+La complejidad pretendida por el enunciado.
