@@ -48,6 +48,8 @@ void Ej1::calcularSolucion(int idDestino){
 		for (list<int>::iterator it = vuelosTomados.begin(); it != vuelosTomados.end(); it++){
 			this->solucion += " " + std::to_string(*it);
 		}
+	}else{
+		this->solucion = "no";
 	}
 
 }

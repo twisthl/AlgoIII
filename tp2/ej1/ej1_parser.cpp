@@ -91,7 +91,6 @@ void Ej1Parser::resolver(){
 
 	Ej1 ej1 = Ej1(0, cantEnlaces, enlaces);
 	double time = ej1.resolverPlanDeVuelos(1);
-	ej1.mostrarSolucion();
 		
 	guardarTiempoEjecucion(n, time);
 	guardarSolucion(ej1.dameSolucion());

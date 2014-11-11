@@ -7,6 +7,7 @@ using namespace std;
 
 Dijkstra::Dijkstra(unsigned int cantVertices, Vertice v, vector<Enlace> *enlaces){
 	
+	this->enlaces = enlaces;
 	this->n = cantVertices;
 
 	generarGrafoSinAristas();
@@ -97,15 +98,20 @@ void Dijkstra::completarAristas(Vertice v, Horario horarioLlegada){
 
 	for (list<Vuelo>::iterator it = (*this->enlaces)[v].vuelos.begin(); it != (*this->enlaces)[v].vuelos.end(); it++){
 		Vuelo vuelo = *it;
-		if (horarioLlegada + 2 <= vuelo.inicio){
+		if (horarioLlegada + 2 <= vuelo.inicio || horarioLlegada == 0){
 
 			G[v][vuelo.idEnlaceDestino].completa = true;
+			cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].completa <- true" << endl;
+
 
 			int costo = vuelo.fin - horarioLlegada;
 			if (costo < G[v][vuelo.idEnlaceDestino].costo){
 				G[v][vuelo.idEnlaceDestino].id = vuelo.id;
 				G[v][vuelo.idEnlaceDestino].costo = costo;
+				cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].id <-" << vuelo.id << endl;
+				cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].costo <-" << costo << endl;
 			}
+			cout << endl;
 		}
 
 	}
