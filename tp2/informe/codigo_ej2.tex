@@ -6,12 +6,12 @@ El siguiente es el c\'odigo relevante del ejercicio. Se omiten varias partes que
 Los siguientes son los tipos utilizados para facilitar la manipulaci\'on de datos en el problema.
 
 \lstset{language=C++,
-                basicstyle=\ttfamily\footnotesize,
-                keywordstyle=\color{blue}\ttfamily,
-                stringstyle=\color{red}\ttfamily,
-                commentstyle=\color{green}\ttfamily,
-                morecomment=[l][\color{magenta}]{\#},
-                breaklines=true
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    breaklines=true
 }
 \begin{lstlisting}
 
@@ -49,16 +49,16 @@ Los nodos se inicializan con su posicion, 0 movimientos necesarios, 0 caballos q
 
 \subsubsection{Modelado}
 
-En este m\'etodo' es donde se crea la matriz de \texttt(N) $x$ \texttt(N) nodos inicializados y se comienzan a cargar los casilleros adyacentes que les correspondan.
-De las 8 posibilidades de vecinos que tiene cualquier casillero, solo se agregan aquellas que repesenten un casillero v\'alido dentro de la matriz, esto quiere decir que sus coordenadas \texttt(X) e \texttt(Y) sean $<= 0$ y $< N$.
+En este m\'etodo es donde se crea la matriz de \texttt{N} $x$ \texttt{N} nodos inicializados y se comienzan a cargar los casilleros adyacentes que les correspondan.
+De las 8 posibilidades de vecinos que tiene cualquier casillero, solo se agregan aquellas que repesenten un casillero v\'alido dentro de la matriz, esto quiere decir que sus coordenadas \texttt{X} e \texttt{Y} sean $>= 0$ y $< N$.
 
 \lstset{language=C++,
-                basicstyle=\ttfamily\footnotesize,
-                keywordstyle=\color{blue}\ttfamily,
-                stringstyle=\color{red}\ttfamily,
-                commentstyle=\color{green}\ttfamily,
-                morecomment=[l][\color{magenta}]{\#},
-                breaklines=true
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    breaklines=true
 }
 \begin{lstlisting}
 
@@ -112,12 +112,12 @@ MatrizDeNodos* modelar(int n){
 \subsubsection{BFS}
 
 \lstset{language=C++,
-                basicstyle=\ttfamily\footnotesize,
-                keywordstyle=\color{blue}\ttfamily,
-                stringstyle=\color{red}\ttfamily,
-                commentstyle=\color{green}\ttfamily,
-                morecomment=[l][\color{magenta}]{\#},
-                breaklines=true
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    breaklines=true
 }
 \begin{lstlisting}
 
