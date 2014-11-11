@@ -13,22 +13,34 @@
 
 using namespace std;
 
-typedef std::vector< vector<int> > MatrizAdyacencia;
-typedef std::vector<Enlace> Red;
-typedef std::vector< vector<int> > ListaAdyacencia;
-
 struct Enlace {
 		int compu1;
 		int compu2;
 		int costo;
 };
 
-struct Vertice{
+
+typedef std::vector< vector<int> > MatrizAdyacencia;
+typedef std::vector<Enlace> Red;
+typedef std::vector< vector<int> > ListaAdyacencia;
+
+/*struct Vertice{
 	bool visitado;
-	int distancia = INF;
+	int distancia = INFINITY;
 	Vertice predecesor;
 };
+*/
+void resolver(int cantCompus, int cantEnlaces, Red& red);
 
+bool esMayorEnlace(const Enlace& a, const Enlace& b);
+
+MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido, ListaAdyacencia& agmL, int* costoTotal);
+
+void imprimirResultado(int costoTotal, int cantEnlacesEnCamino, int cantEnlacesFuera, Red anilloServidores, Red compusEnRed);
+
+vector<int> bfs(ListaAdyacencia agm, int desde, int cantAristas);
+
+void obtenerServidoresYRed(Red& anilloServidores, Red& compusEnRed, vector<int> conexionesAnillo, int desde, int hasta);
 
 // class RedAnillo{
 

@@ -6,9 +6,9 @@ int main(){
 	int cantCompus;	
 	int cantEnlaces;
 
-	int compu1;
-	int compu2;
-	int costoEnlace;
+//	int compu1;
+//	int compu2;
+//	int costoEnlace;
 
 	int endEntry;
 
@@ -26,7 +26,7 @@ int main(){
 		cout << "cantidad de computadoras en red: " << cantCompus << endl;
 		cout << "cantidad de enlaces: " << cantEnlaces << endl;
 
-		Red red = new Red();
+		Red* red = new Red();
 		Enlace enlace;
 
 		//Armo la lista de estado de Tablas del puente
@@ -42,14 +42,14 @@ int main(){
 		cin >> endEntry;
 
 
-		res = resolver(cantCompus, cantEnlaces, *red);
+		resolver(cantCompus, cantEnlaces, *red);
 
 // 		cout << "termino algoritmo, imprimo resultados" << endl;
 
-		imprimirResultado(res);
+//		imprimirResultado(res);
 
 // 		cout << "termino de imprimir resultado" << endl;
 
-		delete(tablones);
+		delete(red);
 	}
 }
