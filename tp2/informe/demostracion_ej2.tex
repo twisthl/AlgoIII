@@ -1,1 +1,5 @@
 \subsection{Demostraci\'on de la resoluci\'on}
+
+B\'asicamente no hay mucho para demostrar. Por un lado como est\'a explicado en la resoluci\'on del problema, el modelado del grafo representa a los nodos y la conexi\'on entre ellos a travez de movimientos de caballo. Con lo cual solo se puede pasar de un casillero a otro con un movimiento de caballo y al estar conectados por una arista su costo es de una unidad.
+
+Luego teniendo el grafo modelado de esta manera el algoritmo de BFS hecho con lista de adyacencias garantiza que calculo la distancia m\'inima de cada caballo al resto de los nodos del casillero. Entonces al sumar las distancias minimas de todos los caballos a todos los nodos de los casilleros tengo la cantidad de movimientos necesarios para llegar a cualquier casillero con todos los caballos que lo alcancen. Por \'ultimo cualquier nodo que sea alcanzado por todos los caballos y sea menor o igual a cualquier otro que tambien sea alcanzado por todos, es soluci\'on del problema, y este lo consigo realizando una busqueda lineal.

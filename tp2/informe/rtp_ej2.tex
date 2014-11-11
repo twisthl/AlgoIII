@@ -1,0 +1,10 @@
+\subsection{Pregunta del RTP 2}
+
+La nueva versi\'on de este juego, utiliza alfiles en lugar de caballos. Es decir, los movimientos de las piezas cambian y s\'olo se permiten los movimientos permitidos a los alfiles.
+¿Qu\'e impacto tiene este cambio en su algoritmo?
+
+B\'asicamente en nuestro algoritmo, la \'unica modificaci\'on necesaria para poder realizar el mismo c\'aculo, con alfiles en vez de caballos, es el modelado del grafo. Ahora una casilla puede tener como mucho 4 opciones de adyacentes que serian las 4 casillas que tocan con sus esquinas.
+
+Luego si se corre el mismo algortimo se llega a una solución correcta.
+
+Por otro lado se podrían realizar algunas heuristicas para reducir los cálculos, como por ejemplo si hay alfiles en posiciones negras y blancas no hay solución posible ya que los alfiles en sus movimientos mantienen el color. Con lo cual un alfil que comenzó en una posición con casillero blanco, no tiene forma de llegar a un casillero negro y viceversa.

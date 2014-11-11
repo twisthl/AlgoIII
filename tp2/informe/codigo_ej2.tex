@@ -1,1 +1,189 @@
 \subsection{C\'odigo fuente}
+
+El siguiente es el c\'odigo relevante del ejercicio. Se omiten varias partes que no hacen a la resoluci\'on general. Se pueden conciderar importantes el modelado del grafo y el BFS.
+
+\subsubsection{Tipos}
+Los siguientes son los tipos utilizados para facilitar la manipulaci\'on de datos en el problema.
+
+\lstset{language=C++,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    breaklines=true
+}
+\begin{lstlisting}
+
+
+struct Casillero{
+	int x;
+	int y;
+};
+
+typedef std::list<Casillero> ListaAdyacencia;
+typedef std::vector<Casillero> Caballos;
+
+struct Nodo{
+	int x;
+	int y;
+	int movimientosNecesarios;
+	int caballosLlegaron;
+	ListaAdyacencia adyacentes;
+	int distancia;
+};
+
+typedef std::vector< vector<Nodo> > MatrizDeNodos;
+
+struct Solucion{
+	int x;
+	int y;
+	int movimientos;
+};
+
+\end{lstlisting}
+
+Los Casillero se utilizan tanto para representar caballos, como casilleros en la lista de adyacentes de cada nodo.
+
+Los nodos se inicializan con su posicion, 0 movimientos necesarios, 0 caballos que lo alcanzan y con su lista de adyacentes vacia, la cual va a ser calculada en el modelado. El atributo distancia de Nodo se utiliza en cada BFS para llevar la cantidad de movimientos que necesita un caballo para llegar a ese nodo (la cantidad de movimientos de su antecesor + 1).
+
+\subsubsection{Modelado}
+
+En este m\'etodo es donde se crea la matriz de \texttt{N} $x$ \texttt{N} nodos inicializados y se comienzan a cargar los casilleros adyacentes que les correspondan.
+De las 8 posibilidades de vecinos que tiene cualquier casillero, solo se agregan aquellas que repesenten un casillero v\'alido dentro de la matriz, esto quiere decir que sus coordenadas \texttt{X} e \texttt{Y} sean $>= 0$ y $< N$.
+
+\lstset{language=C++,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    breaklines=true
+}
+\begin{lstlisting}
+
+MatrizDeNodos* modelar(int n){
+  vector<Nodo> aux(n);
+  MatrizDeNodos* matriz = new MatrizDeNodos(n, aux);
+
+  for(int i = 0; i < n; i++){
+    for(int j = 0; j < n; j++){
+      Nodo nodo(i,j);
+      if( 0<= i+2 && i+2 < n){
+        if ( 0 <= j+1 && j+1 < n){
+          nodo.adyacentes.push_back(Casillero(i+2,j+1));
+        }
+        if (0 <= j-1 && j-1 < n){
+          nodo.adyacentes.push_back(Casillero(i+2,j-1));
+        }
+      }
+      if(0 <= i-2 && i-2 < n){
+        if (0 <= j+1 && j+1 < n){
+          nodo.adyacentes.push_back(Casillero(i-2,j+1));
+        }
+        if (0 <= j-1 && j-1 < n){
+          nodo.adyacentes.push_back(Casillero(i-2,j-1));
+        }
+      }
+      if(0 <= j+2 && j+2 < n){
+        if (0 <= i+1 && i+1 < n){
+          nodo.adyacentes.push_back(Casillero(i+1,j+2));
+        }
+        if (0 <= i-1 && i-1 < n){
+          nodo.adyacentes.push_back(Casillero(i-1,j+2));
+        }
+      }
+      if(0 <= j-2 && j-2 < n){
+        if (0 <= i+1 && i+1 < n){
+          nodo.adyacentes.push_back(Casillero(i+1,j-2));
+        }
+        if (0 <= i-1 && i-1 < n){
+          nodo.adyacentes.push_back(Casillero(i-1,j-2));
+        }
+      }
+      (*matriz)[i][j] = nodo;
+    }
+  }
+  return matriz;
+}
+
+\end{lstlisting}
+
+\subsubsection{BFS}
+
+\lstset{language=C++,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    breaklines=true
+}
+\begin{lstlisting}
+
+void bfs(MatrizDeNodos& matriz, int n, Casillero& c){
+	\\ Para no repetir nodos me guardo otra matriz de visitados
+	std::vector<bool> aux(n,false);
+	std::vector< vector<bool> > visitado(n,aux);
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+		visitado[i][j] = false;
+		}
+	}
+
+	\\ - 1 pues la matiz va del (0,0) y los caballos (1,1)
+	int x, y;
+	x = c.x -1;
+	y = c.y -1;
+
+	\\La posicion de donde parte el caballo
+	\\Lo visite
+	visitado[x][y] = true;
+	\\A este nodo lo alcanzo este caballo
+	matriz[x][y].caballosLlegaron++;
+	\\La distancia para el BFS de este caballo al nodo origen es 0
+	matriz[x][y].distancia = 0;
+
+	std::queue<Nodo> cola;
+
+	\\Recorro sus adyacentes inmediatos
+	ListaAdyacencia::iterator itPrimeros = matriz[x][y].adyacentes.begin();
+	for(; itPrimeros != matriz[x][y].adyacentes.end(); ++itPrimeros){
+		Casillero casillero = *itPrimeros;
+		int a = casillero.x;
+		int b = casillero.y;
+		visitado[a][b] = true;
+		matriz[a][b].distancia = 1;
+		matriz[a][b].caballosLlegaron++;
+		matriz[a][b].movimientosNecesarios += 1;
+
+		\\Los meto en un cola para recorreluego sus hijos
+		cola.push(matriz[a][b]);
+	}
+
+	\\Recorro los elementos encolados y al mismo tiempo agrego elementos que no visite
+	while(!cola.empty()){
+		\\Saco el primero
+		Nodo nodo = cola.front();
+		cola.pop();
+
+		\\Recorro sus adyacentes
+		ListaAdyacencia::iterator itAdyacentes = nodo.adyacentes.begin();
+		for(; itAdyacentes != nodo.adyacentes.end(); ++itAdyacentes){
+			Casillero casillero = *itAdyacentes;
+			int a = casillero.x;
+			int b = casillero.y;
+			\\Si no lo visite lo marco, seteo sus valores y lo agrego a la cola
+			if(!visitado[a][b]){
+				visitado[a][b] = true;
+				matriz[a][b].distancia = nodo.distancia + 1;
+				matriz[a][b].caballosLlegaron++;
+				matriz[a][b].movimientosNecesarios += matriz[a][b].distancia;
+
+				cola.push(matriz[a][b]);
+			}
+		}
+	}
+}
+
+\end{lstlisting}
