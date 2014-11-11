@@ -29,24 +29,26 @@ typedef std::list<Casillero> ListaAdyacencia;
 typedef std::vector<Casillero> Caballos;
 
 struct Nodo{
-	Nodo(){};
+	Nodo(){
+		movimientosNecesarios = -1;
+	};
 	Nodo(int a, int b){
 		x = a;
 		y = b;
 		movimientosNecesarios = 0;
 		caballosLlegaron = 0;
-		adyacentes = new ListaAdyacencia();
 		distancia = 0;
 	}
 	int x;
 	int y;
 	int movimientosNecesarios;
 	int caballosLlegaron;
-	ListaAdyacencia* adyacentes;
+	ListaAdyacencia adyacentes;
 	int distancia;
 };
 
-typedef std::vector< vector<Nodo*> > MatrizDeNodos;
+typedef std::vector< vector<Nodo> > MatrizDeNodos;
+//typedef std::map<Casillero,Nodo> MapNodos;
 
 struct Solucion{
 	Solucion(int a, int b, int c){
@@ -62,8 +64,10 @@ struct Solucion{
 
 MatrizDeNodos* modelar(int n);
 
-Nodo* resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k);
+Nodo resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k);
 
 void bfs(MatrizDeNodos& matriz, int n, Casillero& c);
+
+void imprimirMatriz(MatrizDeNodos& matriz, int n);
 
 #endif

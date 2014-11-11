@@ -19,23 +19,21 @@ int main(){
 			break;
 		}
 
-		Caballos* caballos = new Caballos();
-		Casillero* casilla;
+		Caballos caballos;
 		for(int i=0; i<k; i++){
 			cin >> x;
 			cin >> y;
 
-			casilla = new Casillero(x,y);
-
-			caballos->push_back(*casilla);
+			Casillero casilla(x,y);
+			caballos.push_back(casilla);
 		}
 
 		MatrizDeNodos* matriz = modelar(n);
 
-		Nodo* solucion = resolver(*matriz, n, *caballos, k);
+		Nodo solucion = resolver(*matriz, n, caballos, k);
 
-		if(solucion != NULL){
-			cout << solucion->x << solucion->y << solucion->movimientosNecesarios << endl;
+		if(solucion.movimientosNecesarios != -1){
+			cout << solucion.x + 1 << " " << solucion.y + 1 << " " << solucion.movimientosNecesarios << endl;
 		} else {
 			cout << "no" << endl;
 		}
