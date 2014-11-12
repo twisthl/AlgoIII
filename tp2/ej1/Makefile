@@ -8,7 +8,7 @@ dbg: $(OBJ)
 	g++ -g $(OBJ) -o tp2ej1 $(CXXFLAGS)
 
 tp2ej1: $(OBJ)
-	g++ -g $(OBJ) -o tp2ej1 $(CXXFLAGS)
+	g++ $(OBJ) -o tp2ej1 $(CXXFLAGS)
 
 tp2ej1.o: tp2ej1.cpp
 	g++ -g -c $(CXXFLAGS) tp2ej1.cpp
@@ -29,5 +29,5 @@ opciones.o: opciones.cpp
 	g++ -g -c $(CXXFLAGS) opciones.cpp
 
 clean:
-	rm -rf *o tp1ej3
+	rm -rf *o tp2ej1
 
