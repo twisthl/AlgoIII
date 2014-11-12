@@ -13,20 +13,20 @@ int main(int argc, char *argv[]){
 	int seed = (int) *argv[1]; // Semilla para los rand()
 	
 
-	int n = 100;
-	//int k;
+	int n = 70;
+	int k = 100;
 	
 	if(seed>0){
-		ofstream fileTiempos("tiemposN100.out");
+		ofstream fileTiempos("tiemposN70.out");
 
 		// Tests aleatorios	
-		//for(int i=1;i<150;i++){				
-			srand(seed );
+		for(int i=1;i< k;i++){				
+			srand(seed + i);
 
 			clock_t t = clock();
 
 			Caballos caballos;
-			for(int j=0; j<150; j++){
+			for(int j=0; j<i; j++){
 				int x = (rand() % n) + 1;
 				int y = (rand() % n) + 1;
 				Casillero casilla(x,y);
@@ -35,13 +35,20 @@ int main(int argc, char *argv[]){
 
 			MatrizDeNodos* matriz = modelar(n);
 
-			Nodo solucion = resolver(*matriz, n, caballos, 150);
-
+			Nodo solucion = resolver(*matriz, n, caballos, i);
+		
+			if(solucion.movimientosNecesarios != -1){
+				cout << solucion.x + 1 << " " << solucion.y + 1 << " " << solucion.movimientosNecesarios << endl;
+			} else {
+				cout << "no" << endl;
+			}
+		
 			t = clock() - t;
 
 			fileTiempos << i << "\t" << t << endl;
+
 			cout << i << "\t" << t << endl;
-		//}
+		}
 	
 	return 0;
 	}
