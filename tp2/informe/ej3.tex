@@ -199,7 +199,7 @@ Como se puede observar el algoritmo tiene una complejidad acotada por $O(m.log(n
 MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido, ListaAdyacencia& agmL, int* costoTotal){
     Red redOrdenada = red;
     MatrizAdyacencia agm(cantCompus);
-    vector<int> pertenece(cantCompus); // indica a que árbol pertenece el nodo
+    vector<int> pertenece(cantCompus); // indica a que arbol pertenece el nodo
 //    ListaAdyacencia agmL(cantCompus);
  
     for(int i = 0; i < cantCompus; i++){
@@ -225,7 +225,7 @@ MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace&
         posicionEnRed++;
         cantAristasVisitadas++;
 
-        // Si los nodos no pertenecen al mismo árbol agrego la arista al árbol mínimo.
+        // Si los nodos no pertenecen al mismo arbol agrego la arista al arbol minimo.
         if(pertenece[compu1] != pertenece[compu2]){
             agm[compu1][compu2] = costo;
             agm[compu2][compu1] = costo;
@@ -234,7 +234,7 @@ MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace&
             agmL[compu1].push_back(compu2);
             agmL[compu2].push_back(compu1);
  
-            // Todos los nodos del árbol del compu2 ahora pertenecen al árbol del compu1.
+            // Todos los nodos del arbol del compu2 ahora pertenecen al arbol del compu1.
         	int temp = pertenece[compu2];
         	pertenece[compu2] = pertenece[compu1];
         	for(int k = 0; k < cantCompus; k++)

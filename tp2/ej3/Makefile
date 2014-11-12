@@ -13,4 +13,4 @@ test: test.o funciones.o
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 clean:
-	rm -f *.o 
+	rm -f *.o ej3
