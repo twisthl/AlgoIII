@@ -72,7 +72,7 @@ Nodo resolver(MatrizDeNodos& matriz, int n, Caballos& caballos, int k){
 			}
 		}
 	}
-	imprimirMatriz(matriz,n);
+	//imprimirMatriz(matriz,n);
 	return nodo;
 }
 
