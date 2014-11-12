@@ -65,18 +65,18 @@ Ahora para ser mas claros separaremos la demostraci\'on en dos partes:
 
 Por un simple hecho de comodidad comenzaremos demostrando el segundo punto:
 
-Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente. Vamos a suponer que los multiconjuntos que forman los pesos de las aristas en $M_1$ y $M_2$ son distintos. Sea $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. \forall $x$ \in $W$, ($x$ \in $M_1$ \wedge $x$ \notin $M_2$) \vee ($x$ \in $M_2$ \wedge $x$ \in $M_1$).
-Tomamos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ \in $T_1$ \wedge $e$ \notin $T_2$. Podemos decir entonces que todas las aristas que posean menor peso que el de $e$ est\'an en $T_1$ y en $T_2$.
-Como $T_2$ es un AGM si le agregamos una arista, se formar\'a un ciclo que la contiene, llamemoslo $C$. Ahora podemos observar que en este ciclo $C$ debe existir al menos una arista $e'$ tal que $e'$ \notin $T_1$, porque sino ser\'ia lo mismo que decir que en $T_1$ hay un ciclo, y esto no es posible ya que es un AGM. Tambi\'en podemos decir que le peso de $e'$ es mayor o igual al peso de $e$ por la observaci\'on hecha anteriormente, y aqu\'i pueden pasar dos cosas:
+Sean $T_1$ y $T_2$ dos AGM del grafo $G$, sean $M_1$ y $M_2$ los conjuntos de aristas que forman $T_1$ y $T_2$ respectivamente. Vamos a suponer que los multiconjuntos que forman los pesos de las aristas en $M_1$ y $M_2$ son distintos. Sea $W$ el conjunto de aristas que pertenece a $M_1$ y no a $M_2$, y viceversa. $\forall$ $x$ $\in$ $W$, ($x$ $\in$ $M_1$ $\wedge$ $x$ $\notin$ $M_2$) $\vee$ ($x$ $\in $$M_2$ $\wedge$ $x$ $\in$ $M_1$).
+Tomamos de $W$ la arista de menor peso, la llamaremos $e$, y sin perdida de generalidad diremos que $e$ $\in$ $T_1$ $\wedge$ $e$ $\notin$ $T_2$. Podemos decir entonces que todas las aristas que posean menor peso que el de $e$ est\'an en $T_1$ y en $T_2$.
+Como $T_2$ es un AGM si le agregamos una arista, se formar\'a un ciclo que la contiene, llamemoslo $C$. Ahora podemos observar que en este ciclo $C$ debe existir al menos una arista $e'$ tal que $e'$ $\notin$ $T_1$, porque sino ser\'ia lo mismo que decir que en $T_1$ hay un ciclo, y esto no es posible ya que es un AGM. Tambi\'en podemos decir que le peso de $e'$ es mayor o igual al peso de $e$ por la observaci\'on hecha anteriormente, y aqu\'i pueden pasar dos cosas:
 \begin{itemize}
-\item $e'$ \geq $e$
+\item $e'$ $\geq$ $e$
 \end{itemize}
-Si $e'$ \geq $e$  entonces podr\'iamos agregar $e$ a $T_2$ y sacar $e'$, finalmente formando un \'arbol $T_3$ de peso menor que el de $T_2$. Esto es absurdo ya que $T_2$ era un AGM, y no podr\'ia haber un \'arbol de peso menor.
+Si $e'$ $\geq$ $e$  entonces podr\'iamos agregar $e$ a $T_2$ y sacar $e'$, finalmente formando un \'arbol $T_3$ de peso menor que el de $T_2$. Esto es absurdo ya que $T_2$ era un AGM, y no podr\'ia haber un \'arbol de peso menor.
 
 \begin{itemize}
-\item $e'$ \eq $e$
+\item $e'$ $=$ $e$
 \end{itemize}
-Si $e'$ \eq $e$, podr\'iamos agarrar la arista de menor peso en $W$ \setminus $e$  y repetir el procedimiento.
+Si $e'$ $=$ $e$, podr\'iamos agarrar la arista de menor peso en $W$ $\setminus$ $e$  y repetir el procedimiento.
 
 Como supusimos que los pesos de las aristas en $M_1$ y $M_2$ son distintos, en alg\'un momento debemos llegar a formar un ciclo en $T_2$ tal que en el existe una arista $e'$ de peso mayor que el de $e$, de otra forma W estar\'ia formado por pares de aristas de un mismo peso donde una pertenece a $T_1$ y otra a $T_2$, o dicho de otra forma, los multiconjuntos que forman los pesos de las aristas que est\'an fuera de cada AGM son iguales, lo que implica que los multiconjuntos de pesos de aristas que estos forman tambi\'en son iguales, y esto tambi\'en ser\'ia absurdo, ya que supusimos que estos multiconjuntos de $M_1$ y $M_2$ son distintos.
 
@@ -117,7 +117,7 @@ La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
 \begin{itemize}
 	\item Creo un conjunto de pertenencia. $O(1)$
 \end{itemize}
-\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso). $O(m.log(n))$ \footnote{reference: Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 633}
+\item Mientras no haya agregado $n-1$ aristas y no revise todas las aristas (recorriendo las aristas en orden ascendente segun su peso). $O(m.log(n))$ $\footnote{reference: Introduction to Algorithms 3er ed. - Cormen, Leiserson, Rivest, Stein - pag. 633}$
 \begin{itemize}
 	\item Si $a$ y $b$ no pertenecen al mismo conjunto de pertenencia (donde $a$ y $b$ son los nodos que conecta la arista $v$). $O(1)$
 	\begin{itemize}
@@ -138,7 +138,7 @@ La complejidad del algoritmo la plantearemos a partir de varios pseudo-códigos:
 
 \begin{itemize}
 
-bfs(agm G, vertice inicio, vertice fin)
+\item bfs(agm G, vertice inicio, vertice fin)
 \item Para cada vértice $u$ en $G-{inicio}$. $O(n)$
 \begin{itemize}
 	\item Seteo $u$ como no visitado, distancia = infinito y predecesor = nulo. $O(1)$
@@ -151,16 +151,17 @@ bfs(agm G, vertice inicio, vertice fin)
 	\item Para cada vértice $v$ adjacente a $s$. $O(n)$
 	\begin{itemize}
 		\item Si no visite $v$:
+        \begin{itemize}
 			\item Marco distancia de $v$ = distancia de $s + 1$, predecesor = $s$.
 			\item Encolo $v$.
 			\item Si $v$ = $fin$, termino.
-		\end{itemize}
+        \end{itemize}
 	\end{itemize}
 	\item Marco $s'$ como visitado
 \end{itemize}
 \end{itemize}
 
-La complejidad real de bfs es $O(n + m)$ \footnote{reference Introduction to Algorithms 3° ed. - Cormen, Leiserson, Rivest, Stein - pag. 597}(m = #aristas, n = #vertices). Pero en este caso decimos que la complejidad de BFS es $O(n)$ porque siempre se ejecutará sobre \'arboles. 
+La complejidad real de bfs es $O(n + m)$ $\footnote{reference Introduction to Algorithms 3er ed. - Cormen, Leiserson, Rivest, Stein - pag. 597}$ (m = $\#$aristas, n = $\#$vertices). Pero en este caso decimos que la complejidad de BFS es $O(n)$ porque siempre se ejecutará sobre \'arboles. 
 
 
 \subsubsection{Complejidad del algoritmo}
@@ -198,7 +199,7 @@ Como se puede observar el algoritmo tiene una complejidad acotada por $O(m.log(n
 MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido){
     Red redOrdenada = red;
     MatrizAdyacencia agm(cantCompus);
-    vector<int> pertenece(cantCompus); // indica a que árbol pertenece el nodo
+    vector<int> pertenece(cantCompus); // indica a que arbol pertenece el nodo
  
     for(int i = 0; i < cantCompus; i++){
         agm[i] = vector<int> (cantCompus, 0);
