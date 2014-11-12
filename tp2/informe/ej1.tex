@@ -438,7 +438,11 @@ Vertice Dijkstra::damePredecesor(Vertice v){
 
 \subsection{Casos de prueba}
 
-Para este ejercicio escogimos algunos casos de prueba que tienen las siguientes características:
+\noindent 
+Para ejecutar la implementacion del algoritmo con una entrada especifica ejecutamos $ej2/ej2 -p archivoEntrada$
+
+\noindent 
+Escogimos particularmente casos de prueba con las siguientes características:
 
 \begin{itemize}
 
@@ -472,3 +476,16 @@ El resultado de los tiempos promedios para cada $n$ se guarda en un archivo llam
 \noindent 
 Usamos estos datos para los gr\'aficos de complejidad pr\'actica contra te\'orica.  \\
 El siguiente grafico representa una comparación utilizando escala lineal. \\
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.35]{./imagenes/ej1_chartComplejidad.png}
+\caption{n variable de 1 a 1400}
+\end{center}
+\end{figure}
+
+\subsection{Pregunta del RTP 2}
+
+La nueva versi\'on implicar\'ia modificar los parametros de entrada, en cada opcion de vuelo agregar un string que indique la aerolinea del vuelo. Al struct Vuelo entonces le agregariamos por lo tanto el campo string aerolinea que contiene esa informaci\'on. \\
+En dijkstraAutofill se debe modificar el c\'odigo de la funci\'on completarAristas. En la misma se debe averiguar cual es el vuelo anteriormente tomado, para esto se chequea el vertice predecesor al recien agregado, y utilizando ambos vertices se averigua el id del vuelo tomado entre ellos. Con el id por supuesto se encuentra la aerolinea utilizada. \\
+Luego para cada opci\'on de vuelo desde el vertice recien agregado se chequea la aerolinea utilizada y se realizan los calculos de costo de acuerdo a si coinciden o no. Finalmente que vuelos fueron agregados como aristas depender\'a en parte de las aerolineas a las que pertenece cada vuelo.
