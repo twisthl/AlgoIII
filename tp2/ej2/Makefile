@@ -13,7 +13,7 @@ test2: test2.o funciones.o
 	$(CXX) $(CXXFLAGS) test2.o funciones.o -o test2
 
 test2: test3.o funciones.o
-	$(CXX) $(CXXFLAGS) test2.o funciones.o -o test3
+	$(CXX) $(CXXFLAGS) test3.o funciones.o -o test3
 
 %.o: %.cpp
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
