@@ -196,21 +196,26 @@ Como se puede observar el algoritmo tiene una complejidad acotada por $O(m.log(n
 }
 \begin{lstlisting}
 
-MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido){
+MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace& menorEnlaceExcluido, ListaAdyacencia& agmL, int* costoTotal){
     Red redOrdenada = red;
     MatrizAdyacencia agm(cantCompus);
-    vector<int> pertenece(cantCompus); // indica a que arbol pertenece el nodo
+    vector<int> pertenece(cantCompus); // indica a que árbol pertenece el nodo
+//    ListaAdyacencia agmL(cantCompus);
  
     for(int i = 0; i < cantCompus; i++){
         agm[i] = vector<int> (cantCompus, 0);
         pertenece[i] = i;
     }
  
-    int compu1, compu2, costo;
+    int compu1;
+    int compu2;
+    int costo;
     int cantAristas = 1;
     int posicionEnRed = 0;
     int cantAristasVisitadas = 0;
+    costoTotal = 0;
 
+//    Enlace menorEnlaceExcluido;
     bool noEncontreEnlaceExcluido = true;
 
     while(cantAristas < cantCompus && cantAristas <= cantTotalAristas){
@@ -220,15 +225,22 @@ MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace&
         posicionEnRed++;
         cantAristasVisitadas++;
 
+        // Si los nodos no pertenecen al mismo árbol agrego la arista al árbol mínimo.
         if(pertenece[compu1] != pertenece[compu2]){
             agm[compu1][compu2] = costo;
             agm[compu2][compu1] = costo;
+            costoTotal = costoTotal + costo;
+
+            agmL[compu1].push_back(compu2);
+            agmL[compu2].push_back(compu1);
  
+            // Todos los nodos del árbol del compu2 ahora pertenecen al árbol del compu1.
         	int temp = pertenece[compu2];
         	pertenece[compu2] = pertenece[compu1];
         	for(int k = 0; k < cantCompus; k++)
         		if(pertenece[k] == temp)
-        			pertenece[k] = pertenece[compu1]; 
+        			pertenece[k] = pertenece[compu1];
+ 
             cantAristas++;
         }else{
             if(noEncontreEnlaceExcluido){
@@ -239,9 +251,46 @@ MatrizAdyacencia kruskal(int cantCompus, int cantTotalAristas, Red& red, Enlace&
             }
         }
     }
+    if(cantAristas < cantCompus - 1){
+        costoTotal=0;
+        return agm;
+    }
     return agm;
 }
 
+
+
+vector<int> bfs(ListaAdyacencia agm, int desde, int cantAristas)
+{
+    std::vector<bool> visitado(cantAristas);
+    std::vector<int> lPadres(cantAristas+1);
+    for(int i = 0; i < cantAristas; i++)
+        visitado[i] = false;
+ 
+    visitado[desde] = true;
+
+    list<int> cola;
+    cola.push_back(desde);
+ 
+    vector<int>::iterator i;
+    int s;
+    while(!cola.empty())
+    {
+        s = cola.front();
+        cola.pop_front();
+
+        for(i = agm[s].begin(); i != agm[s].end(); ++i)
+        {
+            if(!visitado[*i])
+            {
+                lPadres[*i] = s;
+                visitado[*i] = true;
+                cola.push_back(*i);
+            }
+        }
+    }
+    return lPadres;
+}
 
 
 
@@ -270,10 +319,19 @@ En este ejercicio decidimos hacer los casos de prueba con las siguientes caracte
 
 \subsection{Performance}
 
-Para realizar el testeo de performance de nuestro algoritmo creamos el archivo 'test.cpp' en el cu\'al generamos instancias de prueba variando pseudo-aleatoriamente la cantidad de computadoras y conexiones, y su distribuci\'on.
-En la generación de casos no discriminamos entre aquellos que tienen soluci\'on y los que no, pero por como es nuestro algoritmo, aquellos casos que no tienen soluci\'on terminarán mucho antes, por lo que los tiempos de ejecuci\'on de estos se graficarán apartadamente.
+Para realizar el testeo de performance de nuestro algoritmo creamos el archivo 'test.cpp' en el cu\'al generamos instancias de prueba variando pseudo-aleatoriamente la cantidad de computadoras y conexiones, y su distribuci\'on. Siempre trabajamos con redes validas. Osea, redes que tiene solución, ya que las que no la tienen afectaban la performance de forma positiva, ya que siempre finalizaban antes. Por lo que decidimos no agregarlas.
 
-Primero modificaremos un poco el archivo test.cpp para que genere varias instancias con el mismo n\'umero de computadoras pero variando la cantidad de conexiones para ver la influencia de esta en el tiempo de ejecuci\'on.
+Realizando una corrida de 100 casos pseudo-aleatorios obtuvimos los datos que se muestran en el siguiente grafo, donde comparamos los datos obtenidos con n*log(n) multiplicado por una constante para aproximar ambas pendientes y asi facilitar su visualización.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.45]{./imagenes/ej3_chartRendimiento.png}
+\caption{Complejidad practica.}
+\end{center}
+\end{figure}
+
+Como se puede observar graficamente la complejidad es la deseada.
+
 
 %ANALISIS DE ESTE CASO
 
