@@ -108,7 +108,7 @@ pseudoc\'odigo de dijkstraAutofill: \\
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
-\item devuelvo pred
+\item $\textbf{devuelvo}$ pred
 \end{itemize}
 \bigskip
 
@@ -139,7 +139,7 @@ void Dijkstra::completarAristas(Vertice v, int horarioLlegada){
 \end{lstlisting}
 
 \noindent
-Como explicado anteriormente completa las aristas siendo estas posibles y la de menor costo posible entre varias a elegir. El horarioLlegada corresponde al costo del camino al nodo $v$.
+Tal como explicamos anteriormente completa el grafo incluyendo las aristas de un vertice especifico, iterando sobre los vuelos de la ciudad correspondiente y eligiendo aquellos que representen menor costo y sean posibles de realizar. El horarioLlegada es el costo de llegar al vertice $v$, es decir la hora a la que se arriba a la ciudad que representa el vertice $v$.
 \bigskip
 
 \subsection{Complejidad del algoritmo}
@@ -190,25 +190,26 @@ $\proc{DijkstraAutofill}$ \\
 La Complejidad de dijkstraAutofill es la complejidad del algoritmo defecto de dijkstra m\'as la complejidad de completar las aristas. \\
 
 \noindent
-La complejidad de b\'usqueda de cami\'inimo m\'inimo de dijkstra es por supuesto O($m^2$) donde m es la cantidad de ciudades. Dado que la cantidad de ciudades est\'a acotada como dijimos anteriormente por 2n+2. La complejidad resulta O($(2n+2)^2$) = O($n^2$) \\
+La complejidad de b\'usqueda de cami\'ino m\'inimo de dijkstra es por supuesto O($m^2$) donde m es la cantidad de ciudades. Dado que la cantidad de ciudades est\'a acotada como dijimos anteriormente por 2n+2. La complejidad resulta O($(2n+2)^2$) = O($n^2$) \\
 
 \noindent
-La complejidad de completar las aristas es, por cada llamada, recorrer los vuelos del vertice con el que se llama. Siempre se llama con un vertice distinto y se hace 1 vez por cada vertice. Entonces la complejidad de esto es O(n).
+La complejidad de completar las aristas es, por cada llamada, recorrer los vuelos del vertice con el que se llama y realizar operaciones O(1) por cada uno. Siempre se llama con un vertice distinto y se hace 1 vez por cada vertice. Entonces la complejidad de esto es O(n).
 
 \noindent
 La complejidad total es O($n^2$) +  O($n$) =  O($n^2$)
+\bigskip
 \bigskip
 
 \noindent
 $\proc{Obtener Solucion}$ \\
 
 \noindent
-La complejidad total es la de recorrer los predecesores de la ciudad destino hasta llegar al origen. C\'omo m\'aximo debe recorrer todas las m ciudades.  \\
+La complejidad es la de recorrer los predecesores de la ciudad destino hasta llegar al origen. C\'omo m\'aximo debe recorrer todas las m ciudades.  \\
 Teniendo en cuenta como acotamos m anteriormente, el resultado es una complejidad es O(m) = O(n). 
 \bigskip
 
 \noindent
-Finalmente la complejidad es O($n^2$). 
+Finalmente la complejidad de todas las partes del algoritmo es O($n^2$). 
 
 
 
@@ -441,17 +442,33 @@ Para este ejercicio escogimos algunos casos de prueba que tienen las siguientes 
 
 \begin{itemize}
 
-\item Caso sin vuelos hacia la ciudad de destino. En este caso el algoritmo no tiene solucion.
-\item Caso con un vuelo directo de origen a destino.
-\item Caso con un vuelo directo de origen a destino, pero donde la hora de llegada del vuelo directo es mayor a la hora de llegada tomando una via alternativa.
-\item 
-\item 
+\item Caso sin vuelos hacia la ciudad de destino. En este caso el algoritmo no tiene solucion. ($ej1/recursos/sinVuelosAOrigen1.in$ y $ej1/recursos/sinVuelosAOrigen2.in$)
+\item Caso con un vuelo directo de origen a destino. ($ej1/recursos/vueloDirecto1.in$)
+\item Caso con un vuelo directo de origen a destino, pero donde la hora de llegada del vuelo directo es mayor a la hora de llegada tomando una via alternativa. ($ej1/recursos/vueloDirecto2.in$)
+\item Caso donde hay un vuelo de una ciudad intermedia hasta el destino, pero el vuelo no puede ser alcanzado. ($ej1/recursos/noAlcanzable1.in$ y $ej1/recursos/noAlcanzable2.in$)
+\item Caso donde haya 3 o mas vuelos desde una ciudad intermedia al destino y tal que desde el origen pueda volarse a la ciudad intermedia y el primer vuelo no pueda ser alcanzado mientras que el resto si. Debe tomar la mejor opcion de las que queden. ($ej1/recursos/multiplesVuelos.in$)
+\item Otros ($ej1/recursos/otro1.in$, $ej1/recursos/otro2.in$ y $ej1/recursos/otro3.in$)
 
 \end{itemize}
 
 
 \subsection{Performance}
 
+\noindent 
+Escribimos un pequenio script llamado graficar.py ($ej1/graficar.py$) cuyo funcionamiento es el de ejecutar tp1ej3 con entradas pseudoaletaorias de $n$ vuelos con $n$ desde 1 hasta 200.000, 300 veces por cada $n$ y con entradas aleatorias por cada repetici\'on. Los parametros de entrada a excepci\'on de $n$ se generan aleatoriamente. Se defini\'o arbitrariamente que las ciudades tienen nombre de numeros y que hay una cantidad de ciudades $m$ igual a un n\'umero aleatorio entre 2 y 2n. Luego las ciudades tienen como nombre 0, 1, 2, 3, ... , $m$. \\
+Los horarios de los vuelos se definen tambi\'en de una manera pseudoaleatoria, con horarios de partida directamente proporcional a $n$. \\
+(Si para un determinado valor de $n$ las ejecuciones demoran relativamente mucho, el script disminuye las repeticiones para el proximo valor de $n$.) \\
 
+\noindent 
+Entendemos que nuestro algoritmo esta acotado por O($n^2$), sin embargo mirando m\'as de cerca la complejidad se parece m\'as a O($m^2+n!$) donde $m$ es la cantidad de ciudades. Tambi\'en a tener en cuenta, que en realidad dijkstra se ejecuta hasta que deje de encontrar vertices conectados al vertice origen. Llamamos M a las ciudades conexas al nodo origen y decimos que entonces la complejidad es todav\'ia m\'as chica a la anteriormente propuesta O($M^2+n!$). \\
+Aclaramos esto porque queremos dejar en claro que los tiempos de ejecuci\'on de la implementaci\'on del algoritmo est\'an muy sujetos a parametros de entrada distintos a $n$. Por este motivo existen familias de entradas que pueden mostrar al algoritmo ser parecido a O($n!$), otras a O($n^2$) y otras a complejidades intermedias. \\
 
+\noindent 
+Nuestro vamos a corroborar no tanto que el algoritmo propuesto se parezca a O($n^2$) sino que est\'e acotado por esta complejidad. \\
 
+\noindent 
+El resultado de los tiempos promedios para cada $n$ se guarda en un archivo llamado resultadosNVariado.dat que contiene por cada l\'inea un valor de $n$ y otro del tiempo promedio que tard\'o en completar la ejecuci\'on de los casos aleatorios para ese n. \\
+
+\noindent 
+Usamos estos datos para los gr\'aficos de complejidad pr\'actica contra te\'orica.  \\
+El siguiente grafico representa una comparación utilizando escala lineal. \\

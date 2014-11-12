@@ -1,0 +1,5 @@
+origen destino 4
+origen ciudad1 0 3
+ciudad1 ciudad2 6 8
+ciudad2 destino  12 15
+origen destino 5 16
