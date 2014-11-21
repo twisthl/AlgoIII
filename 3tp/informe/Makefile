@@ -1,5 +1,5 @@
 SHELL=/bin/bash -O extglob
-PREF=tp2_informe
+PREF=tp3_informe
 
 tp2_informe.pdf: $(PREF).tex
 	pdflatex $(PREF).tex
