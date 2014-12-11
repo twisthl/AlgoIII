@@ -1,5 +1,5 @@
 
-CXXFLAGS=-g -std=c++0x -lrt -Wall
+CXXFLAGS=-std=c++0x -lrt -pthread -Wall
 
 OBJ=main.o clock.o tipos.o 
 #exacto.o busqueda_local.o dijkstra_class.o greed.o grasp.o
