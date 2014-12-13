@@ -3,10 +3,15 @@
 #include <algorithm>
 #include <time.h>
 
-k_particion greed(Grafo &G, int k){
+Greed(Grafo *G, int k, bool mostrarInfo){
+	this.G = G;
+	this->k = k;
+	this->mostrarInfo = mostrarInfo;
+}
 
+
+vector<int> resolver(){
 	vector<Arista*> aristasPesoDesc = getVectorDeAristasOrdenadoPorPesoDesc(G.getAristas());
-	
 }
 
 
