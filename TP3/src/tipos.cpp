@@ -1,6 +1,7 @@
 #include "tipos.h"
 #include <string.h>
 
+
 Arista::Arista(Arista &arista){
 	this->v = arista.getVertice1();
 	this->w = arista.getVertice2();
@@ -37,6 +38,7 @@ Grafo::Grafo(int n, list<Arista> aristas){
     this->n = n;
 
     this->ady = new Arista**[n];
+    this->aristaList = new list<Arista*>;
 	for (int i = 0; i < n ; i++) {
 		this->ady[i] = new Arista*[n];
 		for (int j = 0; j < n; j++) {
@@ -50,6 +52,7 @@ Grafo::Grafo(int n, list<Arista> aristas){
 		Vertice w = pArista->getVertice2();
 		this->ady[v][w] = pArista;
 		this->ady[w][v] = pArista;
+		this->aristaList->push_back(pArista);
 	}
 
 }
@@ -60,6 +63,10 @@ Arista* Grafo::getArista(Vertice v, Vertice w){
 
 Arista** Grafo::getAristas(Vertice v){
 	return this->ady[v];
+}
+
+list<Arista*>* Grafo::getAristas(){
+	return this->aristaList;
 }
 
 int Grafo::getCantVertices(){
@@ -119,4 +126,67 @@ Opciones::Opciones(int argc, char * argv[]){
 
 	}
 
+}
+
+
+Particion::Particion(int nro){
+	this->nro = nro;
+	this->peso = 0;
+	this->verticeX = -1;
+}
+
+int Particion::cuantoPesariaCon(Grafo &G, Vertice vertice){
+	int pesaria = this->getPeso();
+	for (list<Vertice>::iterator it = this->vertices.begin(); it != this->vertices.end(); it++){
+		Arista* pArista =  G.getArista(vertice, *it);
+		if (pArista != NULL) 
+			pesaria += pArista->getPeso();
+	}
+	this->verticeX = vertice;
+	this->pesoConVerticeX = pesaria;
+	return pesaria;
+}
+
+int Particion::cuantoPesariaSin(Grafo &G, Vertice vertice){
+	int pesaria = this->getPeso();
+	for (list<Vertice>::iterator it = this->vertices.begin(); it != this->vertices.end(); it++){
+		Arista* pArista =  G.getArista(vertice, *it);
+		if (pArista != NULL) 
+			pesaria -= pArista->getPeso();
+	}
+	return pesaria;
+}
+
+void Particion::agregar(Grafo &G, Vertice vertice){
+	this->vertices.push_back(vertice);
+	if (vertice == verticeX){
+		peso = pesoConVerticeX;
+	}else{
+		this->peso = this->cuantoPesariaCon(G, vertice);
+	}
+	verticeX = -1;
+}
+
+void Particion::quitarUltimo(Grafo &G){
+	Vertice vertice = this->vertices.back();
+	int nuevoPeso = cuantoPesariaSin(G, vertice);
+	this->quitarUltimoSinActualizarPeso();
+	this->peso = nuevoPeso;
+}
+
+void Particion::quitarUltimoSinActualizarPeso(){
+	this->vertices.pop_back();
+	this->verticeX = -1;
+}
+
+int Particion::getNro(){
+	return this->nro;
+}
+
+int Particion::getPeso(){
+	return this->peso;
+}
+
+int Particion::setPeso(int peso){
+	return this->peso = peso;
 }

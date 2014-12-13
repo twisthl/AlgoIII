@@ -3,6 +3,6 @@
 
 #include "tipos.h"
 
-KParticion exacto(Grafo &G, ????);
+vector<int> exacto(Grafo &G, int k, bool podaHabilitada, bool mostrarInfo);
 
 #endif

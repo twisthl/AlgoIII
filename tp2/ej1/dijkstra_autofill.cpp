@@ -101,17 +101,17 @@ void Dijkstra::completarAristas(Vertice v, Horario horarioLlegada){
 		if (horarioLlegada + 2 <= vuelo.inicio || horarioLlegada == 0){
 
 			G[v][vuelo.idEnlaceDestino].completa = true;
-			cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].completa <- true" << endl;
+			//cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].completa <- true" << endl;
 
 
 			int costo = vuelo.fin - horarioLlegada;
 			if (costo < G[v][vuelo.idEnlaceDestino].costo){
 				G[v][vuelo.idEnlaceDestino].id = vuelo.id;
 				G[v][vuelo.idEnlaceDestino].costo = costo;
-				cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].id <-" << vuelo.id << endl;
-				cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].costo <-" << costo << endl;
+				//cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].id <-" << vuelo.id << endl;
+				//cout << "G[" << v << "][" << vuelo.idEnlaceDestino << "].costo <-" << costo << endl;
 			}
-			cout << endl;
+			//cout << endl;
 		}
 
 	}

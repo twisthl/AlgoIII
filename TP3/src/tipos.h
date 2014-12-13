@@ -11,8 +11,6 @@ using namespace std;
 #define INF numeric_limits<int>::max()
 
 typedef int Vertice;
-typedef list<Vertice> particion;
-typedef list<Particion> k_particion;
 
 class Arista {
 	public:
@@ -34,10 +32,12 @@ class Grafo{
 		Grafo(int n, list<Arista> aristas);
 		Arista* getArista(Vertice v, Vertice w);
 		Arista** getAristas(Vertice v);
+		list<Arista*>* getAristas();
 		int getCantVertices();
 
 	private:
 		Arista *** ady;
+		list<Arista*>* aristaList;
 		int n; // |V| := cantidad de vértices 
 };
 
@@ -63,6 +63,26 @@ struct Opciones{
 	bool busqueda_local; // -bl --busquedaLocal
 	bool grasp; //-gr --grasp
 	bool clock; //-t --tiempo
+};
+
+class Particion{
+	public:
+		Particion(int nro);
+		int cuantoPesariaCon(Grafo &G, Vertice vertice);
+		int cuantoPesariaSin(Grafo &G, Vertice vertice);
+		void agregar(Grafo &G, Vertice vertice);
+		void quitarUltimo(Grafo &G);
+		void quitarUltimoSinActualizarPeso();
+		int getNro();
+		int getPeso();
+		int setPeso(int peso);
+
+	private:
+		int nro;
+		list<Vertice> vertices;
+		int peso;
+		int pesoConVerticeX;
+		Vertice verticeX;
 };
 
 #endif
