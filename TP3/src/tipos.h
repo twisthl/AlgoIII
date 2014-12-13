@@ -11,8 +11,8 @@ using namespace std;
 #define INF numeric_limits<int>::max()
 
 typedef int Vertice;
-typedef list<Vertice> Particion;
-typedef list<Particion> KParticion;
+typedef list<Vertice> particion;
+typedef list<Particion> k_particion;
 
 class Arista {
 	public:
