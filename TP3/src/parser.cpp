@@ -56,7 +56,7 @@ void Parser::resolver(){
 				int peso;
 				iss >> peso;
 				Arista arista(i, j, peso);
-				
+
 				if (this->mostrar_info) cout << "e" << i  << j << ": " <<peso << ";  ";
 			}
 			if (this->mostrar_info) cout << endl;
@@ -72,8 +72,8 @@ void Parser::resolver(){
 			break;
 		}
 		case GREED:{
-			Greed greed(G, k, this->mostrar_info);
-			vector<int> solucion = greed.resolver();
+			//Greed greed(G, k, this->mostrar_info);
+			//vector<int> solucion = greed.resolver();
 			break;
 		}
 		case BUSQUEDA_LOCAL:{
