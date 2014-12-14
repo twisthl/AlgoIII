@@ -14,7 +14,6 @@ typedef int Vertice;
 
 class Arista {
 	public:
-		Arista(Arista &arista);
 		Arista(Vertice v, Vertice w);
 		Arista(Vertice v, Vertice w, int peso);
 		Vertice getVertice1();
@@ -53,16 +52,6 @@ class Camino{
 	private:
 		list<Vertice> *vertices;
 		int peso;
-};
-
-
-struct Opciones{
-	Opciones(int argc, char * argv[]);
-	bool exacto; 	// -x --exacto 
-	bool greed; // -g --greed;
-	bool busqueda_local; // -bl --busquedaLocal
-	bool grasp; //-gr --grasp
-	bool clock; //-t --tiempo
 };
 
 class Particion{

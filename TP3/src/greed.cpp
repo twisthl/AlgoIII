@@ -3,27 +3,31 @@
 #include <algorithm>
 #include <time.h>
 
-Greed(Grafo *G, int k, bool mostrarInfo){
-	this.G = G;
+Greed::Greed(Grafo *G, int k, bool mostrarInfo){
+	this->G = G;
 	this->k = k;
 	this->mostrarInfo = mostrarInfo;
 }
 
+vector<int> Greed::resolver(){
+	vector<Arista*> aristasPesoDesc = this->getVectorDeAristasOrdenadoPorPesoDesc(G->getAristas());
 
-vector<int> resolver(){
-	vector<Arista*> aristasPesoDesc = getVectorDeAristasOrdenadoPorPesoDesc(G.getAristas());
+
+
+
 }
 
+bool Greed::wayToSort(Arista* a1, Arista* a2) { 
+	return a1->getPeso() > a2->getPeso(); 
+}
 
-vector<Arista*> getVectorDeAristasOrdenadoPorPesoDesc(list<Arista*> *aristaList){
+vector<Arista*> Greed::getVectorDeAristasOrdenadoPorPesoDesc(list<Arista*> *aristaList){
 
-	Vector<Arista*> aristaVectorOrdenado;
+	vector<Arista*> aristaVectorOrdenado;
 	for (list<Arista*>::iterator it = aristaList->begin(); it != aristaList->end(); it++){
 		aristaVectorOrdenado.push_back(*it);
 	}
+	sort(aristaVectorOrdenado.begin(), aristaVectorOrdenado.end(), wayToSort);
 
-	bool wayToSort(Arista* a1, Arista* a2) { return a1->getPeso() > a2->getPeso(); }
-	std::sort(aristaVectorOrdenado->begin(), aristaVectorOrdenado->end(), wayToSort);
-
-	return 
+	return aristaVectorOrdenado;
 }
