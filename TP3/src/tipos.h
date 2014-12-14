@@ -15,15 +15,15 @@ typedef int Vertice;
 class Arista {
 	public:
 		Arista(Vertice v, Vertice w);
-		Arista(Vertice v, Vertice w, int peso);
+		Arista(Vertice v, Vertice w, double peso);
 		Vertice getVertice1();
 		Vertice getVertice2();
-		int getPeso();
+		double getPeso();
 
 	private:
 		Vertice v;
 		Vertice w;
-		int peso;
+		double peso;
 };
 
 class Grafo{
@@ -45,32 +45,32 @@ class Camino{
 		Camino();
 		Camino(list<Vertice> &vertices);
 		list<Vertice>* getVerticesOrdenados();
-		int getPeso();
+		double getPeso();
 		int getCantVertices();
 		bool vacio();
 
 	private:
 		list<Vertice> *vertices;
-		int peso;
+		double peso;
 };
 
 class Particion{
 	public:
 		Particion(int nro);
-		int cuantoPesariaCon(Grafo &G, Vertice vertice);
-		int cuantoPesariaSin(Grafo &G, Vertice vertice);
+		double cuantoPesariaCon(Grafo &G, Vertice vertice);
+		double cuantoPesariaSin(Grafo &G, Vertice vertice);
 		void agregar(Grafo &G, Vertice vertice);
 		void quitarUltimo(Grafo &G);
 		void quitarUltimoSinActualizarPeso();
 		int getNro();
-		int getPeso();
-		int setPeso(int peso);
+		double getPeso();
+		void setPeso(double peso);
 
 	private:
 		int nro;
 		list<Vertice> vertices;
-		int peso;
-		int pesoConVerticeX;
+		double peso;
+		double pesoConVerticeX;
 		Vertice verticeX;
 };
 

@@ -45,7 +45,7 @@ bool Opciones::cargarArgumentos(int argc, char* argv[]){
 		else if ((string(argv[i]) == "-BL") || (string(argv[i]) == "--busqueda")) {
 			exercise = BUSQUEDA_LOCAL;
 		}
-		else if ((string(argv[i]) == "-BL") || (string(argv[i]) == "--podar")) {
+		else if ((string(argv[i]) == "-ph") || (string(argv[i]) == "--podar")) {
 			poda_habilitada = true;
 		}
 		else if ((string(argv[i]) == "-i") || (string(argv[i]) == "--info")) {

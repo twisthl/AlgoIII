@@ -7,7 +7,7 @@ Arista::Arista(Vertice v, Vertice w){
 	this->peso = 0;
 }
 
-Arista::Arista(Vertice v, Vertice w, int peso){
+Arista::Arista(Vertice v, Vertice w, double peso){
 	this->v = v;
 	this->w = w;
 	this->peso = peso;
@@ -21,7 +21,7 @@ Vertice Arista::getVertice2(){
 	return this->w;
 }
 
-int Arista::getPeso(){
+double Arista::getPeso(){
 	return this->peso;
 }
 
@@ -40,8 +40,7 @@ Grafo::Grafo(int n, list<Arista> aristas){
 	}
 
 	for (list<Arista>::iterator it = aristas.begin(); it != aristas.end(); it++){
-		Arista a = *it;
-		Arista* pArista = new Arista(a.getVertice1(), a.getVertice2(), a.getPeso());
+		Arista* pArista = new Arista(*it);
 		Vertice v = pArista->getVertice1();
 		Vertice w = pArista->getVertice2();
 		this->ady[v][w] = pArista;
@@ -80,7 +79,7 @@ list<Vertice>* Camino::getVerticesOrdenados(){
 	return this->vertices;
 }
 
-int Camino::getPeso(){
+double Camino::getPeso(){
 	return this->peso;
 }
 
@@ -94,12 +93,12 @@ bool Camino::vacio(){
 
 Particion::Particion(int nro){
 	this->nro = nro;
-	this->peso = 0;
+	this->peso = 0.0;
 	this->verticeX = -1;
 }
 
-int Particion::cuantoPesariaCon(Grafo &G, Vertice vertice){
-	int pesaria = this->getPeso();
+double Particion::cuantoPesariaCon(Grafo &G, Vertice vertice){
+	double pesaria = this->getPeso();
 	for (list<Vertice>::iterator it = this->vertices.begin(); it != this->vertices.end(); it++){
 		Arista* pArista =  G.getArista(vertice, *it);
 		if (pArista != NULL) 
@@ -110,8 +109,8 @@ int Particion::cuantoPesariaCon(Grafo &G, Vertice vertice){
 	return pesaria;
 }
 
-int Particion::cuantoPesariaSin(Grafo &G, Vertice vertice){
-	int pesaria = this->getPeso();
+double Particion::cuantoPesariaSin(Grafo &G, Vertice vertice){
+	double pesaria = this->getPeso();
 	for (list<Vertice>::iterator it = this->vertices.begin(); it != this->vertices.end(); it++){
 		Arista* pArista =  G.getArista(vertice, *it);
 		if (pArista != NULL) 
@@ -132,7 +131,7 @@ void Particion::agregar(Grafo &G, Vertice vertice){
 
 void Particion::quitarUltimo(Grafo &G){
 	Vertice vertice = this->vertices.back();
-	int nuevoPeso = cuantoPesariaSin(G, vertice);
+	double nuevoPeso = cuantoPesariaSin(G, vertice);
 	this->quitarUltimoSinActualizarPeso();
 	this->peso = nuevoPeso;
 }
@@ -146,10 +145,10 @@ int Particion::getNro(){
 	return this->nro;
 }
 
-int Particion::getPeso(){
+double Particion::getPeso(){
 	return this->peso;
 }
 
-int Particion::setPeso(int peso){
-	return this->peso = peso;
+void Particion::setPeso(double peso){
+	this->peso = peso;
 }

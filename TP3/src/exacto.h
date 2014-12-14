@@ -16,15 +16,15 @@ class Exacto {
 		vector<int> dameSolucion();
 
 	private:
-		void combinar(list<Particion> &k_particion, Vertice verticeAUbicar, vector<int> &ubicacion, int pesoAcumulado);
-		void mostrarPotencialSolucion(vector<int> &ubicacion);
+		void combinar(list<Particion> &k_particion, Vertice verticeAUbicar, vector<int> &ubicacion, double pesoAcumulado);
+		void mostrarPotencialSolucion(vector<int> &ubicacion, double peso);
 
 		Grafo *G; 
 		int k;
 		bool podaHabilitada;
 		bool mostrarInfo;
 		vector<int> mejorUbicacion;
-		int mejorPeso;
+		double mejorPeso;
 };
 
 #endif

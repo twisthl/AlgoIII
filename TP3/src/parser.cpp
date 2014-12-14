@@ -50,7 +50,7 @@ void Parser::resolver(){
 	for (int i=0; i < m; i++){
 		int u;
 		int v;
-		int w;
+		double w;
 
 		getline(file, line);
 		istringstream iss(line);
