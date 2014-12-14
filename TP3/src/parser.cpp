@@ -48,21 +48,21 @@ void Parser::resolver(){
 
 	list<Arista> aristaList;
 	for (int i=0; i < m; i++){
+		int u;
+		int v;
+		int w;
 
-		for (Vertice i = 0; i < n-1; ++i){
-			getline(file, line);
-			istringstream iss(line);
-			for (int j = i+1; j < n; j++){
-				int peso;
-				iss >> peso;
-				Arista arista(i, j, peso);
-				
-				if (this->mostrar_info) cout << "e" << i  << j << ": " <<peso << ";  ";
-			}
-			if (this->mostrar_info) cout << endl;
-		}
-		if (this->mostrar_info) cout << endl;
+		getline(file, line);
+		istringstream iss(line);
+		iss >> u;
+		iss >> v;
+		iss >> w;
+
+		Arista arista(u, v, w);
+
+		if (this->mostrar_info) cout << "e" << u  << v << ": " << w << endl;
 	}
+	if (this->mostrar_info) cout << endl;
 
 	Grafo* G = new Grafo(n, aristaList);
 	switch (this->exercise){
@@ -72,8 +72,8 @@ void Parser::resolver(){
 			break;
 		}
 		case GREED:{
-			Greed greed(G, k, this->mostrar_info);
-			vector<int> solucion = greed.resolver();
+			//Greed greed(G, k, this->mostrar_info);
+			//vector<int> solucion = greed.resolver();
 			break;
 		}
 		case BUSQUEDA_LOCAL:{

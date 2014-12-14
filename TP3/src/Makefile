@@ -1,7 +1,7 @@
 
 CXXFLAGS=-std=c++0x -lrt -pthread -Wall
 
-OBJ=main.o clock.o tipos.o opciones.o parser.o exacto.o greed.o
+OBJ=main.o clock.o tipos.o opciones.o parser.o exacto.o 
 #exacto.o busqueda_local.o dijkstra_class.o greed.o grasp.o
 
 .PHONY: clean dbg
