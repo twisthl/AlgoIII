@@ -36,6 +36,9 @@
 % Pseudocódigo a lo Cormen
 \usepackage{package/clrscode}
 
+
+\textwidth = 48em
+
 % auxiliares
 \newcommand{\sisosi}{\Leftrightarrow}
 
@@ -83,19 +86,33 @@
 \maketitle
 \tableofcontents
 
-
+\newpage
+\section{k-Partici\'on de M\'inimo Peso (k-PMP)}
+\input{kpmp.tex}
 
 \newpage
-\section{Problema 1: Puentes sobre lava caliente}
+\section{$k$-PMP comparativas}
 \input{ej1.tex}
 
 \newpage
-\section{Problema 2: Horizontes lejanos}
+\section{Algoritmo exacto: Backtraking}
 \input{ej2.tex}
 
 \newpage
-\section{Problema 3: Biohazard}
+\section{Heur\'istica Golosa}
 \input{ej3.tex}
+
+\newpage
+\section{Heur\'istica de B\'usqueda Local}
+\input{ej4.tex}
+
+\newpage
+\section{Heur\'istica GRASP}
+\input{ej5.tex}
+
+\newpage
+\section{Conclusiones}
+\input{ej6.tex}
 
 \newpage
 \begin{thebibliography}{2}
