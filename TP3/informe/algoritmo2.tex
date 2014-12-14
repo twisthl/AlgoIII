@@ -1,4 +1,25 @@
+Para resolver el problema del k-PMP vamos a utilizar un algoritmo que se basa en la t\'ecnica de Backtracking. Este recorre todas las posibles particiones del Grafo y basta con devolver aquella que cumpla que la sumatoria de los pesos de sus aristas intraparticiones sea m\'inimo y tenga menos de k-Particiones.
+Luego se aplican algunas podas para mejorar un poco el tiempo de ejecuci\'on de esta soluci\'on, como guaradar la mejor soluci\'on hasta el momento o no calcular aquellas que tenga mas de k particiones pues no pueden ser soluci\'on del problema.
 
+METER PSEUDO!!!!
+
+\begin{codebox}
+  \Procname{$\proc{Hash-Insert}(T,k)$}
+  \li $i \gets 0$
+  \li \Repeat
+  \li   $j \gets h(k,i)$
+  \li   \If $T[j] == \const{nil}$
+  \li   \Then
+          $T[j] \gets k$
+  \li     \Return $j$
+  \li   \Else
+          $i \gets i+1$
+        \End
+        \For
+        \While
+  \li \Until $i == m$
+  \li \Error ``hash table overflow''
+\end{codebox}
 
 \subsubsection{Podas}
 \input{podas.tex}
