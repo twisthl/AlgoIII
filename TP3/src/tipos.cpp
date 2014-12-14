@@ -1,13 +1,6 @@
 #include "tipos.h"
 #include <string.h>
 
-
-Arista::Arista(Arista &arista){
-	this->v = arista.getVertice1();
-	this->w = arista.getVertice2();
-	this->peso = arista.getPeso();
-}
-
 Arista::Arista(Vertice v, Vertice w){
 	this->v = v;
 	this->w = w;
@@ -97,37 +90,6 @@ int Camino::getCantVertices(){
 bool Camino::vacio(){
 	return this->vertices->empty();
 }
-
-
-Opciones::Opciones(int argc, char * argv[]){
-	exacto = false;
-	greed = false;
-	busqueda_local = false;
-	grasp = false;
-	clock = false;
-	
-	for(int i = 0; i < argc; i++){
-		
-		if( !strcmp(argv[i], "-x") || !strcmp(argv[i], "--exacto") ){
-			exacto = true;
-		}
-		else if( !strcmp(argv[i], "-g") || !strcmp(argv[i], "--greed") ){
-			greed = true;
-		}
-		else if( !strcmp(argv[i], "-bl") || !strcmp(argv[i], "--busquedaLocal") ){
-			busqueda_local = true;
-		}
-		else if( !strcmp(argv[i], "-gp") || !strcmp(argv[i], "--grasp") ){
-			grasp = true;
-		}
-		if( !strcmp(argv[i], "-t") || !strcmp(argv[i], "--tiempo") ){
-			clock = true;
-		}
-
-	}
-
-}
-
 
 Particion::Particion(int nro){
 	this->nro = nro;

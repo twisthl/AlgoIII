@@ -16,6 +16,9 @@ class Greed {
 		vector<int> dameSolucion();
 
 	private:
+		bool wayToSort(Arista* a1, Arista* a2);
+		vector<Arista*> getVectorDeAristasOrdenadoPorPesoDesc(list<Arista*> *aristaList);
+
 		Grafo *G; 
 		int k;
 		bool mostrarInfo;
