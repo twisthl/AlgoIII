@@ -40,7 +40,8 @@ Grafo::Grafo(int n, list<Arista> aristas){
 	}
 
 	for (list<Arista>::iterator it = aristas.begin(); it != aristas.end(); it++){
-		Arista* pArista = new Arista(*it);
+		Arista a = *it;
+		Arista* pArista = new Arista(a.getVertice1(), a.getVertice2(), a.getPeso());
 		Vertice v = pArista->getVertice1();
 		Vertice w = pArista->getVertice2();
 		this->ady[v][w] = pArista;

@@ -11,10 +11,7 @@ Greed::Greed(Grafo *G, int k, bool mostrarInfo){
 
 vector<int> Greed::resolver(){
 	vector<Arista*> aristasPesoDesc = this->getVectorDeAristasOrdenadoPorPesoDesc(G->getAristas());
-
-
-
-
+	
 }
 
 bool Greed::wayToSort(Arista* a1, Arista* a2) { 

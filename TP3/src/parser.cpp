@@ -58,7 +58,9 @@ void Parser::resolver(){
 		iss >> v;
 		iss >> w;
 
-		Arista arista(u, v, w);
+		Arista arista(u-1, v-1, w);
+
+		aristaList.push_back(arista);
 
 		if (this->mostrar_info) cout << "e" << u  << v << ": " << w << endl;
 	}
