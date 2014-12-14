@@ -60,7 +60,7 @@ void Parser::resolver(){
 
 		Arista arista(u, v, w);
 
-		if (this->mostrar_info) cout << "e" << i  << j << ": " <<peso << endl;
+		if (this->mostrar_info) cout << "e" << u  << v << ": " << w << endl;
 	}
 	if (this->mostrar_info) cout << endl;
 
