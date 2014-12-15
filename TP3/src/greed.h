@@ -17,6 +17,11 @@ class Greed {
 
 	private:
 		vector<Arista*> getVectorDeAristasOrdenadoPorPesoDesc(list<Arista*> *aristaList);
+		void ubicarNodosLibres(vector<Particion> &k_particion);
+		void ubicarNodosSinAristasEnNuevaParticion(vector<Particion> &k_particion);
+		void agregarAMejorParticion(vector<Particion> &k_particion, Vertice v);
+		void seleccionarTopK(vector<Particion> &k_particion);
+		void agregarVerticeOff(vector<Particion> &k_particion, Vertice v);
 
 		Grafo *G; 
 		int k;

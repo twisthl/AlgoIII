@@ -4,7 +4,7 @@
 #include "tipos.h"
 #include "opciones.h"
 #include "exacto.h"
-//#include "greed.h"
+#include "greed.h"
 
 using namespace std;
 

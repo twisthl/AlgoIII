@@ -60,6 +60,7 @@ class Particion{
 		double cuantoPesariaCon(Grafo &G, Vertice vertice);
 		double cuantoPesariaSin(Grafo &G, Vertice vertice);
 		void agregar(Grafo &G, Vertice vertice);
+		void agregarSinActualizarPeso(Grafo &G, Vertice vertice);
 		void quitarUltimo(Grafo &G);
 		void quitarUltimoSinActualizarPeso();
 		int getNro();

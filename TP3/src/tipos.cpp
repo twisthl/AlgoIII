@@ -120,13 +120,17 @@ double Particion::cuantoPesariaSin(Grafo &G, Vertice vertice){
 }
 
 void Particion::agregar(Grafo &G, Vertice vertice){
-	this->vertices.push_back(vertice);
 	if (vertice == verticeX){
-		peso = pesoConVerticeX;
+		this->peso = pesoConVerticeX;
 	}else{
 		this->peso = this->cuantoPesariaCon(G, vertice);
 	}
-	verticeX = -1;
+	agregarSinActualizarPeso(G, vertice);
+}
+
+void Particion::agregarSinActualizarPeso(Grafo &G, Vertice vertice){
+	this->vertices.push_back(vertice);
+	this->verticeX = -1;
 }
 
 void Particion::quitarUltimo(Grafo &G){

@@ -74,18 +74,18 @@ void Parser::resolver(){
 			break;
 		}
 		case GREED:{
-			//Greed greed(G, k, this->mostrar_info);
-			//vector<int> solucion = greed.resolver();
+			Greed greed(G, k, this->mostrar_info);
+			this->solucion = greed.resolver();
 			break;
 		}
 		case BUSQUEDA_LOCAL:{
 			//BusquedaLocal busquedaLocal(G, k, this->mostrar_info);
-			//vector<int> solucion = busquedaLocal.resolver();
+			//this->solucion = busquedaLocal.resolver();
 			break;
 		}
 		case GRASP:{
 			//Grasp grasp(G, k, this->mostrar_info);
-			//vector<int> solucion = grasp.resolver();
+			//this->solucion = grasp.resolver();
 			break;
 		}
 	}

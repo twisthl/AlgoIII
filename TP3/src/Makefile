@@ -1,7 +1,6 @@
 CXXFLAGS=-std=c++0x -lrt -pthread -Wall
 
-OBJ=algo3tp3.o clock.o tipos.o opciones.o parser.o exacto.o 
-#greed.o
+OBJ=algo3tp3.o clock.o tipos.o opciones.o parser.o exacto.o greed.o
 
 all: algo3tp3
 
