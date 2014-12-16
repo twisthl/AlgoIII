@@ -5,6 +5,7 @@
 #include "opciones.h"
 #include "exacto.h"
 #include "greed.h"
+#include "busqueda_local.h"
 
 using namespace std;
 

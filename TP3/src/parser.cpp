@@ -67,25 +67,28 @@ void Parser::resolver(){
 	if (this->mostrar_info) cout << endl;
 
 	Grafo* G = new Grafo(n, aristaList);
+
+	double time;
 	switch (this->exercise){
 		case EXACTO:{
 			Exacto exacto(G, k, this->poda_habilitada, this->mostrar_info);
-			double time = exacto.resolver();
+			time = exacto.resolver();
 			this->solucion = exacto.dameSolucion();
 			break;
 		}
 		case GREED:{
 			Greed greed(G, k, this->mostrar_info);
-			double time = greed.resolver();
+			time = greed.resolver();
 			this->solucion = greed.dameSolucion();
 			break;
 		}
 		case BUSQUEDA_LOCAL:{
-			//Greed greed(G, k, false);
-			//greed.resolver();
-			//list<Particion> ini_k_particion = greed.dameKParticion();
-			//BusquedaLocal busquedaLocal(G, ini_k_particion, k, this->mostrar_info);
-			//this->solucion = busquedaLocal.resolver();
+			Greed greed(G, k, false);
+			time = greed.resolver();
+			list<Particion> ini_k_particion = greed.dameKParticion();
+			BusquedaLocal busquedaLocal(G, ini_k_particion, k, this->mostrar_info);
+			time += busquedaLocal.resolver();
+			this->solucion = busquedaLocal.dameSolucion();
 			break;
 		}
 		case GRASP:{
@@ -94,6 +97,11 @@ void Parser::resolver(){
 			break;
 		}
 	}
+
+	guardarTiempoEjecucion(n, time);
+	cout << "Tiempo de ejecucion: " << endl;
+	cout << time << " sec" << endl;
+	cout << endl;
 
 	file.close();
 }

@@ -58,11 +58,12 @@ class Camino{
 class Particion{
 	public:
 		Particion(int nro);
-		double cuantoPesariaCon(Grafo &G, Vertice vertice);
-		double cuantoPesariaSin(Grafo &G, Vertice vertice);
-		void agregar(Grafo &G, Vertice vertice);
-		void agregarSinActualizarPeso(Grafo &G, Vertice vertice);
-		void quitarUltimo(Grafo &G);
+		double cuantoPesariaCon(Grafo *G, Vertice vertice);
+		double cuantoPesariaSin(Grafo *G, Vertice vertice);
+		void agregar(Grafo *G, Vertice vertice);
+		void agregarSinActualizarPeso(Vertice vertice);
+		void quitar(Grafo *G, Vertice vertice);
+		void quitarUltimo(Grafo *G);
 		void quitarUltimoSinActualizarPeso();
 		int getNro();
 		double getPeso();

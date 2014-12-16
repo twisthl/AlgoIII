@@ -97,10 +97,10 @@ Particion::Particion(int nro){
 	this->verticeX = -1;
 }
 
-double Particion::cuantoPesariaCon(Grafo &G, Vertice vertice){
+double Particion::cuantoPesariaCon(Grafo *G, Vertice vertice){
 	double pesaria = this->getPeso();
 	for (list<Vertice>::iterator it = this->vertices.begin(); it != this->vertices.end(); it++){
-		Arista* pArista =  G.getArista(vertice, *it);
+		Arista* pArista =  G->getArista(vertice, *it);
 		if (pArista != NULL) 
 			pesaria += pArista->getPeso();
 	}
@@ -109,31 +109,37 @@ double Particion::cuantoPesariaCon(Grafo &G, Vertice vertice){
 	return pesaria;
 }
 
-double Particion::cuantoPesariaSin(Grafo &G, Vertice vertice){
+double Particion::cuantoPesariaSin(Grafo *G, Vertice vertice){
 	double pesaria = this->getPeso();
 	for (list<Vertice>::iterator it = this->vertices.begin(); it != this->vertices.end(); it++){
-		Arista* pArista =  G.getArista(vertice, *it);
+		Arista* pArista =  G->getArista(vertice, *it);
 		if (pArista != NULL) 
 			pesaria -= pArista->getPeso();
 	}
 	return pesaria;
 }
 
-void Particion::agregar(Grafo &G, Vertice vertice){
+void Particion::agregar(Grafo *G, Vertice vertice){
 	if (vertice == verticeX){
 		this->peso = pesoConVerticeX;
 	}else{
 		this->peso = this->cuantoPesariaCon(G, vertice);
 	}
-	agregarSinActualizarPeso(G, vertice);
+	agregarSinActualizarPeso(vertice);
 }
 
-void Particion::agregarSinActualizarPeso(Grafo &G, Vertice vertice){
+void Particion::agregarSinActualizarPeso(Vertice vertice){
 	this->vertices.push_back(vertice);
 	this->verticeX = -1;
 }
 
-void Particion::quitarUltimo(Grafo &G){
+void Particion::quitar(Grafo *G, Vertice vertice){
+	double nuevoPeso = cuantoPesariaSin(G, vertice);
+	this->vertices.remove(vertice);
+	this->peso = nuevoPeso;
+}
+
+void Particion::quitarUltimo(Grafo *G){
 	Vertice vertice = this->vertices.back();
 	double nuevoPeso = cuantoPesariaSin(G, vertice);
 	this->quitarUltimoSinActualizarPeso();

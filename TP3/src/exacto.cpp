@@ -17,22 +17,12 @@ double Exacto::resolver(){
 
 	//BEGIN
 	list<Particion> k_particion;
-
-	Vertice primerVertice = 0;
-	Particion particionNueva(0);
-	particionNueva.agregar(*G, primerVertice);
-	k_particion.push_back(particionNueva);
-
 	this->mejorPeso = INF;
-
-	this->combinar(k_particion, primerVertice+1, 0);
+	combinar(k_particion, 0, 0);
 	//END
 
-	cout << "Tiempo de ejecucion: " << endl;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_end);
 	double time = (ts_end.tv_sec - ts_beg.tv_sec) + (ts_end.tv_nsec - ts_beg.tv_nsec) / 1e9;
-	cout << time << " sec" << endl;
-	cout << endl;
 
 	return time;
 }
@@ -53,14 +43,14 @@ void Exacto::combinar(list<Particion> &k_particion, Vertice verticeAUbicar, doub
 	for (itParticion = k_particion.begin(); itParticion != k_particion.end(); itParticion++){
 
 		double pesoOld = itParticion->getPeso();
-		double pesoNew = itParticion->cuantoPesariaCon((*this->G), verticeAUbicar);
+		double pesoNew = itParticion->cuantoPesariaCon(G, verticeAUbicar);
 		double difPeso = pesoNew - pesoOld;
 
 		if (this->podaHabilitada && (this->mejorPeso <= pesoAcumulado+difPeso))
 			continue;
 
 		// 'agregar' no vuelve a calcular el peso. Ya lo calcul'o en cuantoPesariaCon donde se cachea.
-		itParticion->agregar((*this->G), verticeAUbicar);
+		itParticion->agregar(G, verticeAUbicar);
 		pesoAcumulado += difPeso;
 
 		combinar(k_particion, verticeAUbicar+1, pesoAcumulado);
@@ -74,7 +64,7 @@ void Exacto::combinar(list<Particion> &k_particion, Vertice verticeAUbicar, doub
 	// Si hay menos de k particiones el vertice se puede ubicar en una particion nueva.
 	if (k_particion.size() < k) {
 		Particion particionNueva(k_particion.size());
-		particionNueva.agregar((*this->G), verticeAUbicar);
+		particionNueva.agregar(G, verticeAUbicar);
 		k_particion.push_back(particionNueva);
 		//No hace falta fijarse que pesoAcumulado sea menor a mejorPeso porque el pesoAcumulado no se modifica al hacer una particion nueva sin aristas.
 		combinar(k_particion, verticeAUbicar+1, pesoAcumulado);
@@ -95,4 +85,8 @@ void Exacto::mostrarPotencialSolucion(list<Particion> &k_particion, double peso)
 
 vector<int> Exacto::dameSolucion(){
 	return toUbicacion(G->getCantVertices(), this->mejorKParticion);
+}
+
+list<Particion> Exacto::dameKParticion(){
+	return this->mejorKParticion;
 }
