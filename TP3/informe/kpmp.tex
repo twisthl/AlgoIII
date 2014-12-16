@@ -38,3 +38,12 @@ Se puede apreciar f\'acilmente que esta partici\'on no cumple que sea m\'inima d
 \caption{2-Partici\'on de peso m\'inimo.}
 \end{center}
 \end{figure}
+
+
+\subsection{Testing}
+
+Luego de implementar todos los algoritmos pertinentes para la resolusión del problema k-PMP, vamos a realizar distintos tipos de tests y análisis.\\
+
+Por un lado vamos a generar tres familias de grafos de las cuales conocemos sus soluciones para poder medir tanto el rendimiento del algoritmo exacto y las distintas heurísticas, como la distancia de las soluciones de las heurísticas contra las del algoritmo exacto. Para esto tenemos un generador de grafos en el cual podemos configurar la cantidad de nodos y la cantidad de aristas totales con pesos aleatoreos, siendo 0\% un grafo con n nodos aislados y el 100\% un grafo completo de n nodos. Con este generador vamos a generar las tres familias de grafos que se diferencian básicamente por su cantidad de aristas. Siendo estos tres grupos grafos con el 15\% de aristas, 50\% y 100\% y vamos a variar n desde 6 a 15 por ser un numero manejable para el algoritmo exacto.\\
+
+Luego para cada heuristica vamos a intentar identificar familias de grafos para las cuales se comporten razonablemente bien y ver si existen algunas familias para las cuales las mismas los resultados sean inadmisibles.
