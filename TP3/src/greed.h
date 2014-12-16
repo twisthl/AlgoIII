@@ -1,10 +1,8 @@
 #ifndef _GREED_H
 #define _GREED_H
 
-#include <list>
-#include <iostream>
-#include <vector>
 #include "tipos.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -12,7 +10,7 @@ class Greed {
 	public:
 		Greed(Grafo *G, int k, bool mostrarInfo);
 		~Greed(){};
-		vector<int> resolver();
+		double resolver();
 		vector<int> dameSolucion();
 		list<Particion>	dameKParticion();
 

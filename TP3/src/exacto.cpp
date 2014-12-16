@@ -10,10 +10,12 @@ Exacto::Exacto(Grafo *G, int k, bool podaHabilitada, bool mostrarInfo){
 
 }
 
-vector<int> Exacto::resolver(){
+double Exacto::resolver(){
 
-	// BEGIN EXACTO
+	timespec ts_beg, ts_end;
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_beg);
 
+	//BEGIN
 	list<Particion> k_particion;
 
 	Vertice primerVertice = 0;
@@ -24,10 +26,15 @@ vector<int> Exacto::resolver(){
 	this->mejorPeso = INF;
 
 	this->combinar(k_particion, primerVertice+1, 0);
+	//END
 
-	return toUbicacion(G->getCantVertices(), this->mejorKParticion);
-	// END EXACTO
+	cout << "Tiempo de ejecucion: " << endl;
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_end);
+	double time = (ts_end.tv_sec - ts_beg.tv_sec) + (ts_end.tv_nsec - ts_beg.tv_nsec) / 1e9;
+	cout << time << " sec" << endl;
+	cout << endl;
 
+	return time;
 }
 
 void Exacto::combinar(list<Particion> &k_particion, Vertice verticeAUbicar, double pesoAcumulado){

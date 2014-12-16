@@ -1,9 +1,6 @@
 #ifndef _EXACTO_H
 #define _EXACTO_H
 
-#include <list>
-#include <iostream>
-#include <vector>
 #include "tipos.h"
 
 using namespace std;
@@ -12,7 +9,7 @@ class Exacto {
 	public:
 		Exacto(Grafo *G, int k, bool podaHabilitada, bool mostrarInfo);
 		~Exacto(){};
-		vector<int> resolver();
+		double resolver();
 		vector<int> dameSolucion();
 		list<Particion> dameKParticion();
 

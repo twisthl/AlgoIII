@@ -70,12 +70,14 @@ void Parser::resolver(){
 	switch (this->exercise){
 		case EXACTO:{
 			Exacto exacto(G, k, this->poda_habilitada, this->mostrar_info);
-			this->solucion = exacto.resolver();
+			double time = exacto.resolver();
+			this->solucion = exacto.dameSolucion();
 			break;
 		}
 		case GREED:{
 			Greed greed(G, k, this->mostrar_info);
-			this->solucion = greed.resolver();
+			double time = greed.resolver();
+			this->solucion = greed.dameSolucion();
 			break;
 		}
 		case BUSQUEDA_LOCAL:{

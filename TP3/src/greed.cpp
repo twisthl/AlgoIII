@@ -1,7 +1,4 @@
 #include "greed.h"
-#include "clock.h"
-#include <algorithm>
-#include <time.h>
 
 Greed::Greed(Grafo *G, int k, bool mostrarInfo){
 	this->G = G;
@@ -13,17 +10,27 @@ Greed::Greed(Grafo *G, int k, bool mostrarInfo){
 	}
 }
 
-vector<int> Greed::resolver(){
+double Greed::resolver(){
 
+	timespec ts_beg, ts_end;
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_beg);
+
+	//BEGIN
 	seleccionarTopK();
-
 	if (this->k - this->k_particion.size() > 0){
 		ubicarNodosSinAristasEnNuevaParticion();
 	}else{
 		ubicarNodosLibres();
 	}
+	//END
 
-	return this->ubicacion;
+	cout << "Tiempo de ejecucion: " << endl;
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_end);
+	double time = (ts_end.tv_sec - ts_beg.tv_sec) + (ts_end.tv_nsec - ts_beg.tv_nsec) / 1e9;
+	cout << time << " sec" << endl;
+	cout << endl;
+
+	return time;
 }
 
 void Greed::ubicarNodosSinAristasEnNuevaParticion(){

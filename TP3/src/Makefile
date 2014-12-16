@@ -1,6 +1,7 @@
 CXXFLAGS=-std=c++0x -lrt -pthread -Wall
 
-OBJ=algo3tp3.o clock.o tipos.o opciones.o parser.o exacto.o greed.o
+OBJ=algo3tp3.o clock.o tipos.o opciones.o parser.o exacto.o greed.o 
+#busqueda_local.o
 
 all: algo3tp3
 
@@ -30,6 +31,9 @@ exacto.o: exacto.cpp
 
 greed.o: greed.cpp
 	g++ -g -c $(CXXFLAGS) greed.cpp
+
+busqueda_local.o: busqueda_local.cpp
+	g++ -g -c $(CXXFLAGS) busqueda_local.cpp
 
 clean:
 	rm -rf *o algo3tp3
