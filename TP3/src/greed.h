@@ -14,20 +14,22 @@ class Greed {
 		~Greed(){};
 		vector<int> resolver();
 		vector<int> dameSolucion();
+		list<Particion>	dameKParticion();
 
 	private:
 		vector<Arista*> getVectorDeAristasOrdenadoPorPesoDesc(list<Arista*> *aristaList);
-		void ubicarNodosLibres(vector<Particion> &k_particion);
-		void ubicarNodosSinAristasEnNuevaParticion(vector<Particion> &k_particion);
-		void agregarAMejorParticion(vector<Particion> &k_particion, Vertice v);
-		void seleccionarTopK(vector<Particion> &k_particion);
-		void agregarVerticeOff(vector<Particion> &k_particion, Vertice v);
+		void ubicarNodosLibres();
+		void ubicarNodosSinAristasEnNuevaParticion();
+		void agregarAMejorParticion(Vertice v);
+		void seleccionarTopK();
+		void agregarVerticeOff(Vertice v);
 
 		Grafo *G; 
 		int k;
 		bool mostrarInfo;
 
 		vector<int> ubicacion;
+		list<Particion> k_particion;
 };
 
 #endif

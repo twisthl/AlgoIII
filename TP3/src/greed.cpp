@@ -14,78 +14,78 @@ Greed::Greed(Grafo *G, int k, bool mostrarInfo){
 }
 
 vector<int> Greed::resolver(){
-	
-	vector<Particion> k_particion;
 
-	seleccionarTopK(k_particion);
+	seleccionarTopK();
 
-	if (this->k - k_particion.size() > 0){
-		ubicarNodosSinAristasEnNuevaParticion(k_particion);
+	if (this->k - this->k_particion.size() > 0){
+		ubicarNodosSinAristasEnNuevaParticion();
 	}else{
-		ubicarNodosLibres(k_particion);
+		ubicarNodosLibres();
 	}
 
 	return this->ubicacion;
 }
 
-void Greed::ubicarNodosSinAristasEnNuevaParticion(vector<Particion> &k_particion){
+void Greed::ubicarNodosSinAristasEnNuevaParticion(){
 	//Si todavia quedan k libres, quiere decir que no hay mas aristas. Por lo tanto podriamos ubicar todos los nodos restantes
 	//en cualquier particion. Por si no hay particiones creadas, creamos una particion nueva.
-	Particion particionNueva(k_particion.size());
-	k_particion.push_back(particionNueva);
+	Particion particionNueva(this->k_particion.size());
+	this->k_particion.push_back(particionNueva);
 	for (Vertice v=0; v<this->G->getCantVertices(); v++){
 		if (this->ubicacion[v] == -1){
-			k_particion[k_particion.size()-1].agregarSinActualizarPeso(*(this->G), v);
+			this->k_particion.back().agregarSinActualizarPeso(*(this->G), v);
 			this->ubicacion[v] = particionNueva.getNro();
 		}
 	}
 }
 
-void Greed::ubicarNodosLibres(vector<Particion> &k_particion){
+void Greed::ubicarNodosLibres(){
 	for (Vertice v=0; v < this->ubicacion.size(); v++){
 		if (this->ubicacion[v] == -1)
-			agregarAMejorParticion(k_particion, v);
+			agregarAMejorParticion(v);
 	}
 }
 
 
-void Greed::agregarAMejorParticion(vector<Particion> &k_particion, Vertice v){
+void Greed::agregarAMejorParticion(Vertice v){
 	double menorDifPeso = INF;
-	int indiceMejorParticion;
-	for (int i=0; i < k_particion.size(); i++){
-		double difPeso = k_particion[i].cuantoPesariaCon(*(this->G), v) - k_particion[i].getPeso();
+	list<Particion>::iterator itMejorParticion;
+
+	list<Particion>::iterator itParticion;
+	for (itParticion = this->k_particion.begin(); itParticion != this->k_particion.end(); itParticion++){
+		double difPeso = itParticion->cuantoPesariaCon(*(this->G), v) - itParticion->getPeso();
 		if (difPeso < menorDifPeso){
 			menorDifPeso = difPeso;
-			indiceMejorParticion = i;
+			itMejorParticion = itParticion;
 			if (difPeso == 0) break;
 		}
 	}
-	k_particion[indiceMejorParticion].agregarSinActualizarPeso(*(this->G), v);
-	k_particion[indiceMejorParticion].setPeso(k_particion[indiceMejorParticion].getPeso()+menorDifPeso);
-	this->ubicacion[v] = k_particion[indiceMejorParticion].getNro();
+	itMejorParticion->agregarSinActualizarPeso(*(this->G), v);
+	itMejorParticion->setPeso(itMejorParticion->getPeso()+menorDifPeso);
+	this->ubicacion[v] = itMejorParticion->getNro();
 
 }
 
-void Greed::seleccionarTopK(vector<Particion> &k_particion){
+void Greed::seleccionarTopK(){
 
 	vector<Arista*> aristasPesoDesc = this->getVectorDeAristasOrdenadoPorPesoDesc(G->getAristas());
 
 	for (int i=0; i < aristasPesoDesc.size(); i++){
 
-		if (this->k - k_particion.size() == 0) break;
-		agregarVerticeOff(k_particion, aristasPesoDesc[i]->getVertice1());
+		if (this->k - this->k_particion.size() == 0) break;
+		agregarVerticeOff(aristasPesoDesc[i]->getVertice1());
 
-		if (this->k - k_particion.size() == 0) break;
-		agregarVerticeOff(k_particion, aristasPesoDesc[i]->getVertice2());
+		if (this->k - this->k_particion.size() == 0) break;
+		agregarVerticeOff(aristasPesoDesc[i]->getVertice2());
 	}
 
 }
 
-void Greed::agregarVerticeOff(vector<Particion> &k_particion, Vertice v){
+void Greed::agregarVerticeOff(Vertice v){
 	if (this->ubicacion[v] == -1){
-		Particion particion(k_particion.size());
+		Particion particion(this->k_particion.size());
 		particion.agregarSinActualizarPeso(*(this->G), v);
-		k_particion.push_back(particion);
+		this->k_particion.push_back(particion);
 		this->ubicacion[v] = particion.getNro();
 	}
 }

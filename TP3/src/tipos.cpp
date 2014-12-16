@@ -50,7 +50,7 @@ Grafo::Grafo(int n, list<Arista> aristas){
 
 }
 
-Arista* Grafo::getArista(Vertice v, Vertice w){
+Arista* Grafo::getArista(Vertice v, Vertice w){vector<Particion> k_particion;
 	return this->ady[v][w];
 }
 
@@ -155,4 +155,21 @@ double Particion::getPeso(){
 
 void Particion::setPeso(double peso){
 	this->peso = peso;
+}
+
+list<Vertice> Particion::getVertices(){
+	return this->vertices;
+}
+
+vector<int> toUbicacion(int cantVertices, list<Particion> &k_particion){
+	vector<int> ubicacion(cantVertices);
+	list<Particion>::iterator itParticion;
+	for (itParticion = k_particion.begin(); itParticion != k_particion.end(); itParticion++){
+		list<Vertice> vertices = itParticion->getVertices();
+		for (list<Vertice>::iterator it = vertices.begin(); it != vertices.end(); it++){
+			Vertice vertice = *it;
+			ubicacion[vertice] = itParticion->getNro();
+		}
+	}
+	return ubicacion;
 }

@@ -79,7 +79,10 @@ void Parser::resolver(){
 			break;
 		}
 		case BUSQUEDA_LOCAL:{
-			//BusquedaLocal busquedaLocal(G, k, this->mostrar_info);
+			//Greed greed(G, k, false);
+			//greed.resolver();
+			//list<Particion> ini_k_particion = greed.dameKParticion();
+			//BusquedaLocal busquedaLocal(G, ini_k_particion, k, this->mostrar_info);
 			//this->solucion = busquedaLocal.resolver();
 			break;
 		}
