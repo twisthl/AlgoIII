@@ -1,22 +1,80 @@
-\subsection{Descripci\'on del problema}
-
 \subsection{Resoluci\'on}
 
+Para nuestra heurística golosa comenzamos ordenando las aristas por peso de mayor a menor. Una vez obtenida la lista de aristas ordenadas por peso la iteramos escogiendo primero un nodo (arbitrariamente) de la arista más pesada y si la arista aun no se encuentra ubicada, se agrega a un nuevo conjunto siempre y cuando no hayamos sobrepasado la cantidad $k$ de conjuntos creados. En caso de que ya tengamos $k$ conjuntos o en caso de que hayamos terminado de recorrer las aristas se termina el ciclo.
+Ahora verificamos si la cantidad de conjuntos creados es menor a $k$, en caso afirmativo habremos ubicado todos los nodos con aristas en alguno de los conjuntos.
+Si quedan nodos sin ubicar, estos se agregan a cualquier conjunto, como ya agregamos todos los nodos de grado mayor a uno, los que restan se puede decir que tienen grado 0, por lo tanto, no importa en que conjunto sean agregados, estos no crearán aristas intraparticion y como consecuencia no sumarán peso a ningún conjunto.
+Si la cantidad de conjuntos creados es igual a $k$, actuamos de forma diferente, aquí recorremos todas las aristas, actuando solo con las que no hayan sido agregadas a ningún conjunto de la siguiente manera: verificamos cuanto peso agregaría en cada conjunto para luego realmente añadirlo al conjunto que sume menos peso, en caso de encontrar uno en el que no cree aristas intraparticion, es agregado a este sin seguir revisando los restantes.
 
-\subsection{Demostraci\'on de la resoluci\'on}
-
-
-\subsection{Complejidad del algoritmo}
-
-
-\subsection{C\'odigo fuente}
-
-
-
-\subsection{Casos de prueba}
+Como se puede observar usamos dos componentes greedys en la heurística:
+La primera esta cuando se ordenan las aritas decrecientemente y se crean los $k$ conjuntos a medida que se separan los nodos de las aristas de mayor peso, para que estos no generen aristas intraparticion.
+La segunda componente greedy se encuentra cuando al finalizar de crear los $k$ conjuntos se recorre nodo por nodo verificando si ya se encuentra agregado y en caso negativo, verificando en que conjunto genera menos peso para finalmente agregarlo a este.
 
 
-\subsection{Performance}
+A continuación presentamos un pseudo-grafico del algoritmo
+\begin{itemize}
+\item ordenar $aristas$ por peso en orden decreciente
+\item mientras restan $aristas$ 
+  \begin{itemize}
+  \item si no hay $k$ conjuntos, crear conjunto y agregar $nodo1$ de $arista$ (si este no pertenece a ningún conjunto)
+  \item sino cortar el ciclo  
+  \item si no hay $k$ conjuntos, crear conjunto y agregar $nodo2$ de $arista$ (si este no pertenece a ningún conjunto)
+  \item sino cortar el ciclo  
+  \end{itemize}
+\item Si hay menos de $k$ conjuntos creados
+  \begin{itemize}
+  \item agregar las aristas que quedaron fuera a alguno de los conjuntos creados
+  \end{itemize}
+\item Sino
+  \begin{itemize}
+  \item desde nodo 0 a nodo n-1
+    \begin{itemize}
+    \item si el nodo no esta en ningún conjunto
+      \begin{itemize}
+        \item verificar conjunto por conjunto cuanto peso generaría agregarlo a este
+        \item agregar el nodo al conjunto en el que genere menos peso
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+
+
+
+\subsection{Analisis de complejidad}
+
+Vamos a analizar el codigo paso por paso analizando la complejidad temporal del peor caso.
+Lo primero que hacemos es ordernar las aristas, para esto utilizamos la funcion $sort$ de la $std$ que posee una complegidad temporal de $O(n.log(n))$, en este caso como se aplica a las aristas esto es $O(m.log(m))$ siendo $m$ la cantidad de aristas.
+A continuación, y haciendo uso del psudo-codigo proporcionado:
+\begin{itemize}
+\item mientras restan $aristas$ 
+  \begin{itemize}
+  \item si no hay $k$ conjuntos, crear conjunto y agregar $nodo1$ de $arista$ (si este no pertenece a ningún conjunto)
+  \item sino cortar el ciclo  
+  \item si no hay $k$ conjuntos, crear conjunto y agregar $nodo2$ de $arista$ (si este no pertenece a ningún conjunto)
+  \item sino cortar el ciclo  
+  \end{itemize}
+\end{itemize}
+Este scope tiene una complejidad $O(m)$ ya que se recorren todas las aritas, en el peor caso creando conjuntos y agregandolos a estos, pero estas dos acciones tienen una complejidad constante.
+
+A continuacion si se crearon menos de $k$ conjuntos se agregan los nodos que restan a uno de estos. En el peor caso esto pertenece al orden de $O(n)$ siendo n la cantidad de nodos.
+Si hay $k$ conjuntos creados se procede de la siguiente manera:
+\begin{itemize}
+\item desde nodo 0 a nodo n-1   $O(n)$
+  \begin{itemize}
+  \item si el nodo no esta en ningún conjunto $O(1)$
+    \begin{itemize}
+      \item verificar conjunto por conjunto cuanto peso generaría agregarlo a este $O(k+n)$
+      \item agregar el nodo al conjunto en el que genere menos peso $O(1)$
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+
+
+\subsection{Instancias desfavorables}
+
+
+\subsection{Experimentacion}
 
 
 %\begin{figure}[H]
