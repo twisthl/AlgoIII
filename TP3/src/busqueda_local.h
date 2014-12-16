@@ -15,6 +15,7 @@ class BusquedaLocal {
 
 	private:
 		void mejorar();
+		void mostrarMejoraVecino(vector<int> ubicacion, double peso);
 
 		Grafo *G; 
 		int k;

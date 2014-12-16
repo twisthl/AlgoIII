@@ -79,5 +79,6 @@ class Particion{
 };
 
 vector<int> toUbicacion(int cantVertices, list<Particion> &k_particion);
+double cuantoPesa(list<Particion> &k_particion);
 
 #endif

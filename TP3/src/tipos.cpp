@@ -179,3 +179,12 @@ vector<int> toUbicacion(int cantVertices, list<Particion> &k_particion){
 	}
 	return ubicacion;
 }
+
+double cuantoPesa(list<Particion> &k_particion){
+	double peso = 0.0;
+	list<Particion>::iterator itParticion;
+	for (itParticion = k_particion.begin(); itParticion != k_particion.end(); itParticion++){
+		peso += itParticion->getPeso();
+	}
+	return peso;
+}

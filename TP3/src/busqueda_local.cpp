@@ -66,6 +66,12 @@ void BusquedaLocal::mejorar(){
 		itParticionFuente->quitar(G, verticeAMover);
 		itParticionDestino->agregar(G, verticeAMover);
 		this->ubicacion[verticeAMover] = itParticionDestino->getNro();
+
+		if (this->mostrarInfo) {
+			double nuevoPeso = cuantoPesa(k_particion);
+			mostrarMejoraVecino(ubicacion, nuevoPeso);
+		}
+		
 		mejorar();
 	}
 	return;
@@ -77,4 +83,13 @@ vector<int> BusquedaLocal::dameSolucion(){
 
 list<Particion> BusquedaLocal::dameKParticion(){	
 	return this->k_particion;
+}
+
+void BusquedaLocal::mostrarMejoraVecino(vector<int> ubicacion, double peso){
+
+	cout << "Mejorado a vecino: ";
+	for (int i = 0; i < ubicacion.size(); i++){
+		cout << ubicacion[i] << " ";
+	}
+	cout << " (Peso = " << peso << ") " << endl << endl;
 }
