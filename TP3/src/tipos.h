@@ -5,6 +5,7 @@
 #include <list>
 #include <limits>
 #include <vector>
+#include "clock.h"
 
 using namespace std;
 
@@ -66,6 +67,7 @@ class Particion{
 		int getNro();
 		double getPeso();
 		void setPeso(double peso);
+		list<Vertice> getVertices();
 
 	private:
 		int nro;
@@ -74,5 +76,7 @@ class Particion{
 		double pesoConVerticeX;
 		Vertice verticeX;
 };
+
+vector<int> toUbicacion(int cantVertices, list<Particion> &k_particion);
 
 #endif
