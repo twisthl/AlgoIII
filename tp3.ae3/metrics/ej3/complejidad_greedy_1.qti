@@ -1,0 +1,175 @@
+QtiPlot 0.9.8 project file
+<scripting-lang>	muParser
+<windows>	3
+<table>
+Tabla1	30	5	20 Nov 2014 17:24:25
+geometry	304	176	828	496	
+header	n[X]	T(n)[Y]	T(n) * 75 / n[Y]	T(n) * 75 / n2[Y]	T(n) / n3[Y]
+ColWidth	100	100	127	100	134	
+<com>
+<col nr="2">
+col("T(n)") * 75/col("n")
+</col>
+<col nr="3">
+col("T(n) * 75 / n") * 75 / col("n")
+</col>
+<col nr="4">
+col("T(n) * 75 / n2") / col("n")
+</col>
+</com>
+ColType	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13
+ReadOnlyColumn	0	0	0	0	0
+HiddenColumn	0	0	0	0	0
+Comments						
+WindowLabel		2
+<data>
+0	10	83716	627870	4709025	83.716
+1	20	623018	2336317.5	8761190.625	77.87725
+2	30	2023411	5058527.5	12646318.75	74.94114814813
+3	40	4759031	8923183.125	16730968.35938	74.359859375
+4	50	9731426	14597139	21895708.5	77.851408
+5	60	19199508	23999385	29999231.25	88.88661111112
+6	70	32449556	34767381.42857	37250765.81633	94.60511953353
+7	80	46404532	43504248.75	40785233.20312	90.6338515625
+8	90	69193992	57661660	48051383.33333	94.9163127572
+9	100	97809984	73357488	55018116	97.809984
+10	110	138325376	94312756.36364	64304152.06612	103.9259023291
+11	120	176109360	110068350	68792718.75	101.9151388889
+12	130	245208864	141466652.3077	81615376.33137	111.6107710514
+13	140	311112512	166667417.1429	89286116.32655	113.3791953353
+14	150	425825536	212912768	106456384	126.1705291852
+15	160	552039040	258768300	121297640.625	134.77515625
+16	170	624905856	275693760	121629600	127.1943529412
+17	180	809766336	337402640	140584433.3333	138.8488230453
+18	190	924273344	364844741.0526	144017660.9418	134.7533669631
+19	200	1129862144	423698304	158886864	141.232768
+</data>
+</table>
+<table>
+Tabla2	20	6	20 Nov 2014 17:28:35
+geometry	0	0	973	667	
+header	1[X]	2[Y]	3[Y]	4[Y]	5[Y]	6[Y]
+ColWidth	100	100	100	100	100	100	
+<com>
+</com>
+ColType	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13
+ReadOnlyColumn	0	0	0	0	0	0
+HiddenColumn	0	0	0	0	0	0
+Comments							
+WindowLabel	/media/libre/algo32c2014/greedy_time/ej3_metrics_greedy_time_k:3_d:0.5	2
+<data>
+0	10	23	3	83716	8.16869	
+1	20	84	3	623018	60.7878	
+2	30	214	3	2023411	183.84	
+3	40	393	3	4759031	361.395	
+4	50	594	3	9731426	567.364	
+5	60	909	3	19199508	923.124	
+6	70	1248	3	32449556	1399.46	
+7	80	1613	3	46404532	1731.75	
+8	90	1962	3	69193992	2227.03	
+9	100	2491	3	97809984	2825.94	
+10	110	2979	3	138325376	3312.18	
+11	120	3632	3	176109360	4253.68	
+12	130	4217	3	245208864	4990.2	
+13	140	4809	3	311112512	5781.56	
+14	150	5680	3	425825536	6932.34	
+15	160	6268	3	552039040	7710.46	
+16	170	7206	3	624905856	8893.91	
+17	180	8052	3	809766336	9884.23	
+18	190	8984	3	924273344	11200.5	
+19	200	10086	3	1129862144	12689	
+</data>
+</table>
+<multiLayer>
+Gráfica1	1	1	20 Nov 2014 17:34:10
+geometry	419	50	1001	691	active
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	400	300
+Alignement	0	0
+<AlignPolicy>0</AlignPolicy>
+<CommonAxes>0</CommonAxes>
+<graph>
+ggeometry	5	5	983	626
+<PageGeometry>0.00503525	0.00777605	0.98993	0.973561</PageGeometry>
+PlotTitle	Complejidad temporal de la heurística golosa	#000000	4228
+<Antialiasing>0</Antialiasing>
+<Autoscaling>1</Autoscaling>
+<ScaleFonts>1</ScaleFonts>
+<GridOnTop>0</GridOnTop>
+<MissingDataGap>1</MissingDataGap>
+Background	#ffffff	0
+Margin	0
+Border	0	#000000
+grid	0	0	0	0	#0000ff	0	0.5	#a0a0a4	2	0.4	#0000ff	0	0.5	#a0a0a4	2	0.4	0	0	2	0	0
+EnabledAxes	1	1	1	1	
+AxesTitles	Tamaño de la instancia (nodos de un grafo con d=0.5)	Tiempo en nanosegundos		Tiempo en nanosegundos	
+AxesTitleColors	#000000	#000000	#000000	#000000	
+AxesTitleAlignment	5124	5124	5124	5124
+AxesTitleDistance	2	2	2	2
+TitleFont	Ubuntu	20	75	0	0	0
+ScaleFont0	Ubuntu	17	75	0	0	0
+ScaleFont1	Ubuntu	17	75	0	0	0
+ScaleFont2	Ubuntu	17	75	0	0	0
+ScaleFont3	Ubuntu	17	75	0	0	0
+AxisFont0	Ubuntu	17	50	0	0	0
+AxisFont1	Ubuntu	17	50	0	0	0
+AxisFont2	Ubuntu	17	50	0	0	0
+AxisFont3	Ubuntu	17	50	0	0	0
+AxesColors	#000000	#000000	#000000	#000000
+AxesNumberColors	#3c3c3c	#3c3c3c	#3c3c3c	#3c3c3c
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffff	0
+curve	Tabla1_n	Tabla1_T(n)	1	0	#000000	0	1	7	1	#000000	#000000	0	#000000	14	1	2	0	0	29	1
+curve	Tabla1_n	Tabla1_T(n) * 75 / n	1	0	#ff0000	0	1	7	2	#ff0000	#ff0000	0	#000000	14	1	2	0	0	29	1
+curve	Tabla1_n	Tabla1_T(n) * 75 / n2	1	0	#00ff00	0	1	7	3	#00ff00	#00ff00	0	#000000	14	1	2	0	0	29	1
+curve	Tabla1_n	Tabla1_T(n) / n3	1	0	#0000ff	0	1	7	4	#0000ff	#0000ff	0	#000000	14	1	2	0	0	29	1
+scale	0	-200000000	1200000000	0	8	5	0	0
+scale	1	-200000000	1200000000	0	8	5	0	0
+scale	2	0	250	0	6	5	0	0
+scale	3	0	250	0	6	5	0	0
+LabelsFormat	0	6	0	6	0	6	0	6
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1
+MinorTicks	1	1	1	1
+TicksLength	5	9
+DrawAxesBackbone	1	1	1	1	1
+AxesLineWidth	1
+LabelsRotation	0	0	0	0
+LabelsPrefix				
+LabelsSuffix				
+TickLabelsSpace	4	4	4	4
+ShowTicksPolicy	0	0	0	0
+EnabledTickLabels	1	1	1	1
+<Legend>
+<Frame>1</Frame>
+<Color>#000000</Color>
+<FrameWidth>1</FrameWidth>
+<LineStyle>0</LineStyle>
+<x>6.265664160401</x>
+<y>1153177257.5251</y>
+<right>68.2957393483709</right>
+<bottom>1017391304.34783</bottom>
+<attachTo>1</attachTo>
+<onTop>1</onTop>
+<visible>1</visible>
+<Text>
+\l(1)%(1)
+\l(2)%(2)
+\l(3)%(3)
+\l(4)%(4)
+</Text>
+<Font>Ubuntu	17	50	0	0	0</Font>
+<TextColor>#000000</TextColor>
+<Background>#ffffff</Background>
+<Alpha>0</Alpha>
+<Angle>0</Angle>
+<AutoUpdate>1</AutoUpdate>
+<TeXOutput>0</TeXOutput>
+</Legend>
+</graph>
+<LinkXAxes>0</LinkXAxes>
+<ScaleLayers>1</ScaleLayers>
+</multiLayer>
+<open>1</open>

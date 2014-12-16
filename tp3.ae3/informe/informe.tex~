@@ -1,0 +1,113 @@
+\documentclass[spanish, 10pt,a4paper]{article}
+\usepackage[spanish]{babel}
+
+%\usepackage[utf8]{inputenc}
+%http://tex.stackexchange.com/questions/83440/inputenc-error-unicode-char-u8-not-set-up-for-use-with-latex
+
+\usepackage{textcomp}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{graphics}
+
+\usepackage{alltt}
+
+\usepackage{caratula}
+\usepackage{fancyhdr,lastpage}
+\usepackage[paper=a4paper, left=1.4cm, right=1.4cm, bottom=1.4cm, top=1.4cm]{geometry}
+\usepackage[table]{xcolor} % color en las matrices
+\usepackage[font=small,labelfont=bf]{caption} % caption de las figuras
+                                % en letra mas chica que el texto
+\usepackage{subcaption}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{amsfonts}
+\usepackage[bottom]{footmisc}
+\usepackage{fancybox, calc}
+\color{black}
+\usepackage{framed}
+
+%%%PAGE LAYOUT%%%
+\topmargin = -1.2cm
+\voffset = 0cm
+\hoffset = 0em
+\textwidth = 48em
+\textheight = 164 ex
+\oddsidemargin = 0.5 em
+\parindent = 2 em
+\parskip = 3 pt
+\footskip = 7ex
+\headheight = 20pt
+\pagestyle{fancy}
+\lhead{AyED III - 2014 C1 - Trabajo Pr\'actico 2} % cambia la parte izquierda del encabezado
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}} % cambia la parte derecha del encabezado
+\rfoot{\thepage}
+\cfoot{}
+\numberwithin{equation}{section} %sets equation numbers <chapter>.<section>.<subsection>.<index>
+
+%Lo siguiente controla el ancho de las figuras (principalmente para el texto de los captions)
+%\newcommand{\figurewidth}{.9\textwidth}
+\newcommand{\figurewidth}{1\textwidth}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\Ode}[1]{\small{$\mathcal{O}(#1)$}}
+\newtheorem{teorema}{Teorema}[section]
+
+
+\newcommand\BlockIf[1]{#1}
+\newcommand\BlockElseIf[1]{#1}
+\newcommand\BlockElse[1]{#1}
+
+\makeatletter
+\renewcommand{\algocf@uIf}[2]{\If@ifthen{#1}\If@noend{\BlockIf{#2}}}
+\renewcommand{\algocf@uElseIf}[2]{\ElseIf@elseif{#1}\If@noend{\BlockElseIf{#2}}}
+\renewcommand{\algocf@Else}[1]{\Else@else\If@endif{\BlockElse{#1}}}
+\makeatother
+
+
+
+\lstset{language=C++,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	numbers=left,
+	breaklines=true,
+	tabsize=1,
+	commentstyle=\color{magenta},
+	morecomment=[l][\color{magenta}]{\#}
+}
+
+\input{caratula.tex} 
+\begin{document}
+{ \oddsidemargin = 2em
+	\headheight = -20pt
+	\maketitle
+}
+	\tableofcontents
+	\newpage
+	  
+	\input{intro/introduccion.tex}	
+	\input{ej1/ej1.tex}
+	\input{ej2/ej2.tex}
+	\input{ej3/ej3.tex}
+	\newpage
+	\input{ej4/ej4.tex}
+	\input{ej5/ej5.tex}
+	\input{ej6/ej6.tex}
+	 
+	\newpage
+	
+	
+	%\input{apendice.tex}
+	\newpage
+	\bibliographystyle{plain}
+	\clearpage
+	\bibliography{bibliography}
+	\addcontentsline{toc}{section}{Referencias}
+\end{document}
+

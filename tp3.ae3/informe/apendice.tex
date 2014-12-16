@@ -1,0 +1,298 @@
+\appendix
+
+\lstset{language=C++,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	numbers=left,
+	breaklines=true,
+	tabsize=1,
+	commentstyle=\color{magenta},
+	morecomment=[l][\color{magenta}]{\#}
+}
+
+
+\section{Código Robanumeros} \label{App:AppendixA}
+
+\begin{frame}
+
+\begin{lstlisting}
+typedef pair<string, uint16_t> jugada_t;
+
+int32_t sumar(const vector<int16_t>& cartas, uint16_t i, uint16_t j) {
+	int32_t suma = 0;
+	for (uint16_t k = i; k <= j; ++k)
+		suma += cartas[k];
+	return suma;
+}
+
+void robanumeros(const vector<int16_t>& cartas, vector<jugada_t>& jugadas) {	
+	uint16_t n = cartas.size();
+
+	vector<int32_t> aux(n, 0);
+	vector<vector<int32_t> > memo(n, aux);
+	vector<vector<int32_t> > sumas(n, aux);
+
+	vector<jugada_t> auxj(n, jugada_t());
+	vector<vector<jugada_t> > m_jugadas(n, auxj);
+
+	// Pre calculo las sumatorias
+	for (uint16_t j = 0; j < n; ++j) {
+		for (int16_t i = 0; i <= j; ++i)
+			sumas[i][j] = sumar(cartas, i, j);
+	}
+
+	// Calculo de la maxima diferencia
+	jugada_t jugada;
+	for (uint16_t j = 0; j < n; ++j) {
+		for (uint16_t i = 0; i <= j; ++i) {
+			int32_t maximo = sumas[j-i][j]; // Robo to.do lo posible
+
+			jugada = make_pair("izq", i+1);
+
+			for (uint16_t k = 1; k <= i; ++k) {
+				int32_t sumIzq = sumas[j-i][j-i+k-1];
+				int32_t sumDer = sumas[j-k+1][j];
+
+				int32_t diffIzq = (sumIzq - memo[j-i+k][j]);
+				int32_t diffDer = (sumDer - memo[j-i][j-k]);
+
+				if (diffDer < diffIzq) {
+					if (maximo < diffIzq) {
+						maximo = diffIzq;
+						jugada = make_pair("izq", k);
+					}
+				}
+				else if (maximo < diffDer) {
+					maximo = diffDer;
+					jugada = make_pair("der", k);
+				}
+
+			}
+			m_jugadas[j-i][j] = jugada;
+			memo[j-i][j] = maximo;
+		}
+	}
+
+	// recontruyo las jugadas
+	uint16_t i = 0;
+	uint16_t j = n - 1;
+	while (j - i + 1 > 0) {
+		jugada = m_jugadas[i][j];
+		jugadas.push_back(jugada);
+		if (jugada.first == "izq")
+			i += jugada.second;
+		else
+			j -= jugada.second;
+	}
+}
+
+\end{lstlisting}
+\end{frame}
+
+\newpage
+\section{Código La Centralita (de gas)} \label{App:AppendixB}
+
+\begin{frame}
+
+\begin{lstlisting}
+class DisjointSet {
+	public:
+		DisjointSet(size_t size) {
+			for (size_t i=0; i<size; i++) {
+				rank.push_back(0);
+				parent.push_back(i);
+			}
+		}
+
+		~DisjointSet() {
+			rank.clear();
+			parent.clear();
+		}
+
+		size_t find(size_t x) {
+			if (parent[x] != x)
+				parent[x] = find(parent[x]);
+			return parent[x];
+		}
+
+		void merge(size_t x, size_t y) {
+			if (rank[x] > rank[y])
+				parent[y] = x;
+			else
+				parent[x] = y;
+			if (rank[x] == rank[y]) ++rank[y];
+		}
+
+	private:
+		vector<size_t> rank;
+		vector<size_t> parent;
+
+};
+\end{lstlisting}
+\end{frame}
+
+\newpage
+\section{Código Saltos en La Matrix} \label{App:AppendixC}
+\begin{frame}
+
+\begin{lstlisting}
+// Para almacenar los p de potencia de cada resorte
+typedef vector<vector<uint16_t> > matrix_t;
+
+class Vertex {
+public:
+	Vertex() : 
+		m_i(0), 
+		m_j(0), 
+		m_distancia(0), 
+		m_k(0), 
+		m_visitado(false) 
+	{}
+
+	Vertex(uint16_t i, uint16_t j, uint16_t distancia, uint16_t k, bool visitado=true) : 
+		m_i(i), 
+		m_j(j), 
+		m_distancia(distancia), 
+		m_k(k),  
+		m_visitado(visitado) 
+	{}
+
+	uint16_t m_i; // Fila
+	uint16_t m_j; // Columna
+	uint16_t m_distancia;
+	uint16_t m_k;
+
+	bool m_visitado; // Me visitaron?
+
+};
+
+class Edge {
+public:
+	Edge() : 
+		m_i(0), 
+		m_j(0), 
+		m_distancia(0), 
+		m_k(0)
+	{}
+
+	Edge(uint16_t i, uint16_t j, uint16_t d, uint16_t k) : 
+		m_i(i), 
+		m_j(j), 
+		m_distancia(d), 
+		m_k(k) 
+	{}
+
+	uint16_t m_i; // Fila
+	uint16_t m_j; // Columna
+
+	uint16_t m_distancia; // Distancia
+	uint16_t m_k; // El k acumulado!!! Ojo con esto.
+};
+
+void saltoMatrix(matrix_t& matrix, const Vertex& origen, const Vertex& destino, uint16_t k, list<Vertex>& saltos) {
+	uint16_t n = matrix.size();
+
+	vector<Vertex> aux(k+1, Vertex());
+	vector<vector<Vertex> > aux2(n, aux);
+	vector<vector<vector<Vertex> > > E(n, aux2);
+
+	queue<Edge> cola; // La cola de resortes a visitar
+
+	cola.push( Edge(origen.m_i, origen.m_j, 0, 0) );
+	E[origen.m_i][origen.m_j][0].m_visitado = true;
+	E[origen.m_i][origen.m_j][0].m_distancia = 0;
+
+	while (!cola.empty()) {
+		Edge u = cola.front(); cola.pop(); // Saco el proximo de la cola
+
+		uint16_t potencia = matrix[u.m_i][u.m_j];
+
+		// Para en la misma columna, salto a las filas que puedo. Hacia arriba y hacia abajo
+		for(int16_t i = u.m_i - potencia; i <= u.m_i + potencia; ++i) {
+			if( (i >= 0) && (i < n)) {
+				if(!E[i][u.m_j][u.m_k].m_visitado) {
+					E[i][u.m_j][u.m_k] = Vertex(u.m_i, u.m_j, u.m_distancia+1, u.m_k); // se marca como visitado por default
+					cola.push( Edge(i, u.m_j, u.m_distancia+1, u.m_k));
+				}
+			}
+		}
+
+		// Para en la misma fila, salto a las columnas que puedo. Hacia la izquierda y hacia la derecha
+		for(int16_t j = u.m_j - potencia; j <= u.m_j + potencia; ++j) {
+			if( (j >= 0) && (j < n)) {
+				if(!E[u.m_i][j][u.m_k].m_visitado) {
+					E[u.m_i][j][u.m_k] = Vertex(u.m_i, u.m_j, u.m_distancia+1, u.m_k); // se marca como visitado por default
+					cola.push( Edge(u.m_i, j, u.m_distancia + 1, u.m_k) );
+				}
+			}
+		}
+
+		// Ahora a usar los k extras que tengo
+		for(int16_t s = 1; s <= k - u.m_k; ++s) {
+			// En la misma columna salto a la fila de arriba
+			{
+				int16_t i = u.m_i - potencia - s;
+				if( (i >= 0) && (i < n)) {
+					if(!E[i][u.m_j][u.m_k + s].m_visitado) {
+						E[i][u.m_j][u.m_k + s] = Vertex(u.m_i, u.m_j, u.m_distancia+1, u.m_k); // se marca como visitado por default
+						cola.push( Edge(i, u.m_j, u.m_distancia + 1, u.m_k + s));
+					}
+				}
+			}
+
+			{ // En la misma columna salto a la fila de abajo
+				int16_t i = u.m_i + potencia + s;
+				if( (i >= 0) && (i < n)) {
+					if(!E[i][u.m_j][u.m_k + s].m_visitado) {
+						E[i][u.m_j][u.m_k + s] = Vertex(u.m_i, u.m_j, u.m_distancia+1, u.m_k); // se marca como visitado por default
+						cola.push( Edge(i, u.m_j, u.m_distancia + 1, u.m_k + s));
+					}
+				}
+
+			}
+
+			{ // En la misma fila salto a la columna de la izquierda
+				int16_t j = u.m_j - potencia - s;
+				if ((j >= 0) && (j < n)) {
+					if(!E[u.m_i][j][u.m_k + s].m_visitado) {
+						E[u.m_i][j][u.m_k + s] = Vertex(u.m_i, u.m_j, u.m_distancia+1, u.m_k); // se marca como visitado por default
+						cola.push( Edge(u.m_i, j, u.m_distancia+1, u.m_k + s));
+					}
+				}
+
+			}
+
+			{ // En la misma fila salto a la columna de la derecha
+				int16_t j = u.m_j + potencia + s;
+				if ((j >= 0) && (j < n)) {
+					if(!E[u.m_i][j][u.m_k + s].m_visitado) {
+						E[u.m_i][j][u.m_k + s] = Vertex(u.m_i, u.m_j, u.m_distancia+1, u.m_k); // se marca como visitado por default
+						cola.push( Edge(u.m_i, j, u.m_distancia+1, u.m_k + s));
+					}
+				}
+
+			}
+		}
+	}
+
+	// el mejor salto siempre no deberia estar siempre en k? PREGUNTAR!!!
+	Edge elMejorSalto = Edge(destino.m_i, destino.m_j, E[destino.m_i][destino.m_j][0].m_distancia, 0);
+	for(uint16_t s = 1; s <= k; ++s) {
+		if(elMejorSalto.m_distancia > E[destino.m_i][destino.m_j][s].m_distancia) {
+			elMejorSalto = Edge(destino.m_i, destino.m_j, E[destino.m_i][destino.m_j][s].m_distancia, s);
+		}
+	}
+
+	// Construyo el camino de saltos a realizar ( ojo con el K, esta acumulado)
+	Vertex salto = Vertex(elMejorSalto.m_i, elMejorSalto.m_j, elMejorSalto.m_distancia, elMejorSalto.m_k);
+	while (salto.m_i != origen.m_i || salto.m_j != origen.m_j ) {
+		saltos.push_front(salto);
+		salto = E[salto.m_i][salto.m_j][salto.m_k];
+	}
+}
+
+\end{lstlisting}
+\end{frame}
+

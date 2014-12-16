@@ -1,0 +1,8 @@
+\section{Introducción}
+%\addcontentsline{toc}{section}{Introducci\'on}
+
+En el presente trabajo práctico se intenta resolver mediante algoritmos ciertos problemas brindados por la c\'atedra. 
+Se decidi\'o implementar dichas soluciones usando el lenguaje \textit{C++}\cite{cplusplus}. Junto con las implementaciones, se adjunta el presente 
+informe que especifica los detalles sobre el desarrollo de las soluciones, as\'i como pruebas, 
+cálculos de complejidad temporal, mediciones, etc.\\
+Para calcular la complejidad de los algoritmos involucrados, utilizamos el \textbf{modelo de costos uniforme}, que es el solicitado por el enunciado.
