@@ -1,0 +1,11 @@
+graph segundoPaso{
+  subgraph clusterB {
+  5;
+  1;
+  }
+
+  subgraph clusterC {
+  4;
+  2;
+  }
+}

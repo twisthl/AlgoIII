@@ -9,6 +9,40 @@ Como se puede observar usamos dos componentes greedys en la heurística:
 La primera esta cuando se ordenan las aritas decrecientemente y se crean los $k$ conjuntos a medida que se separan los nodos de las aristas de mayor peso, para que estos no generen aristas intraparticion.
 La segunda componente greedy se encuentra cuando al finalizar de crear los $k$ conjuntos se recorre nodo por nodo verificando si ya se encuentra agregado y en caso negativo, verificando en que conjunto genera menos peso para finalmente agregarlo a este.
 
+A modo de ejemplo presentamos algunas imagenes para mostrar el funcionamiento de la heuristica:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/greedy1.png}
+\caption{(1) Grafo de ejemplo}
+\end{center}
+end{figure}
+La primer imagen corresponde al grafo al que se le aplicará k-PMP (1)
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/greedy2.png}
+\caption{(2) Conjuntos 1 y 2 luego de separar los nodos de las aristas mas pesadas}
+\end{center}
+end{figure}
+Luego de ordenar las aristas escoge las de mayor tamaño y separa sus nodos en k conjuntos k=2 para este ejemplo. (2)
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/greedy3.png}
+\caption{(3) Conjuntos luego de comenzar a ingresar los nodos restantes}
+\end{center}
+end{figure}
+Luego como ya hay 2 conjuntos creados procede a verificar nodo los nodos y agregandolos al conjunto que menos sume. En el caso del nodo 1, se agrega de inmediato al primer conjunto porque no genera arista intraparticion. Para el nodo 2 primero verifica en el 1er conjunto, aqui sumaria 2 de peso, se verifica en el siguiente conjunto, y como no suma peso, se ingresa ahí. (3)
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/greedy4.png}
+\caption{(4) Resultado de haber corrido la heuristica greedy al grafo (1)}
+\end{center}
+end{figure}
+Finalmente resta agregar el nodo 3 el cual genera en el conjunto uno un peso igual a 5, y en el conjunto 2 un peso igual a 7 al unirse con los nodos 2 y 4. Por lo tanto el nodo 3 es introducido en el conjunto 1. (4)
+
 
 A continuación presentamos un pseudo-grafico del algoritmo
 \begin{itemize}

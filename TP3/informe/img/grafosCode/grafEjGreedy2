@@ -1,0 +1,9 @@
+graph PrimerPaso {
+  subgraph clusterB {
+  5;
+  }
+
+  subgraph clusterC {
+  4;
+  }
+}

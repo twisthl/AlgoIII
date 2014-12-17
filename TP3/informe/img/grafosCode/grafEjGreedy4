@@ -1,0 +1,11 @@
+graph tercerPaso{
+  subgraph clusterB {
+  5;
+  1 -- 3 [label=5];
+  }
+
+  subgraph clusterC {
+  4;
+  2;
+  }
+}
