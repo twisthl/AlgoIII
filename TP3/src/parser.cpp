@@ -117,7 +117,7 @@ void Parser::mostrarSolucion(){
 }
 
 void Parser::guardarTiempoEjecucion(int n, double time){
-	string path = "recursos/times";
+	string path = "../recursos/times";
 	fstream output(path, ios::out | ios::app);
 	output << time << endl;
 	output.close();
