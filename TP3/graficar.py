@@ -8,7 +8,6 @@ def main(argv):
 
 def construirRandomInput():
     from random import randint
-
     for k in range(2, 6):
     	print(str(k))
     	for n in range(5, 15):
@@ -25,15 +24,15 @@ def construirRandomInput():
 
     		aristas = {}
 
-    		for i in range(1, m):
-    			origen = randint(1, (n-1))
-		        destino = randint(2, n)
+    		for i in range(0, m):
+    			origen = randint(0, (n-1))
+		        destino = randint(1, n)
 		        while (destino<origen):
 			        destino = randint(1, n)
 
 				while ((str(str(origen)+str(destino))) in aristas):
-					origen = randint(1, (n-1))
-		      		destino = randint(2, n)
+					origen = randint(0, (n-1))
+		      		destino = randint(1, n)
 		        	while (destino<origen):
 			        	destino = randint(1, n)
 
@@ -54,16 +53,16 @@ def construirRandomInput():
 
     		aristas = {}
 
-    		for i in range(1, m):
+    		for i in range(0, m):
     			
-    			origen = randint(1, (n-1))
-		        destino = randint(2, n)
+    			origen = randint(0, (n-1))
+		        destino = randint(1, n)
 		        while (destino<origen):
 			        destino = randint(1, n)
 
 				while ((str(str(origen)+str(destino))) in aristas):
-					origen = randint(1, (n-1))
-		      		destino = randint(2, n)
+					origen = randint(0, (n-1))
+		      		destino = randint(1, n)
 		        	while (destino<origen):
 			        	destino = randint(1, n)
 
@@ -72,7 +71,6 @@ def construirRandomInput():
 				w = randint(1, 999)
 
 				t.write(str(origen) + ' ' + str(destino) + ' '+ str(w) + '\n')
-
 			t.close()
 
 			m = (n * (n-1))/2
@@ -82,12 +80,10 @@ def construirRandomInput():
 
     		r.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
 
-    		for i in range(1, (n-1)):
+    		for i in range(0, (n-1)):
 	    		for j in range((i+1), n):
 	    			w = randint(1, 999)
 	    			r.write(str(i) + ' ' + str(j) + ' ' + str(w) + '\n')
-
 			r.close()
 
-	return 0
-
+if __name__=="__main__":main(sys.argv[1:])
