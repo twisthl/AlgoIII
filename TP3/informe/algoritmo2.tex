@@ -1,26 +1,65 @@
 Para resolver el problema del k-PMP vamos a utilizar un algoritmo que se basa en la t\'ecnica de Backtracking. Este recorre todas las posibles particiones del Grafo y basta con devolver aquella que cumpla que la sumatoria de los pesos de sus aristas intraparticiones sea m\'inimo y tenga menos de k-Particiones.
-Luego se aplican algunas podas para mejorar un poco el tiempo de ejecuci\'on de esta soluci\'on, como guaradar la mejor soluci\'on hasta el momento o no calcular aquellas que tenga mas de k particiones pues no pueden ser soluci\'on del problema.
+Luego se aplican algunas podas para mejorar un poco el tiempo de ejecuci\'on de esta soluci\'on, como guardar la mejor soluci\'on hasta el momento o no calcular aquellas que tenga mas de k particiones pues no pueden ser soluci\'on del problema.
 
-METER PSEUDO!!!!
+Básicamente el algoritmo exacto va iterando los nodos y colocandolos en las particiones para ir verificando si voy generando una solusión mejor. En el algoritmo sin podas agrego un nodo a una partición y calculo la sumatoria de las aristas intrapartición del grafo que si es la mínima hasta el momento me la guardo como solución del problema, para luego llamar recursivamente a la función con el próximo nodo. Luego de salir de la recursión saco el nodo que habia colocado en la particion y pruebo colocandolo en la próxima partición para reiterar los cáluclos y ver si puedo disminuir el peso de la sumatoria de las aristas intrapartición.
 
 \begin{codebox}
-  \Procname{$\proc{Hash-Insert}(T,k)$}
-  \li $i \gets 0$
-  \li \Repeat
-  \li   $j \gets h(k,i)$
-  \li   \If $T[j] == \const{nil}$
+  \Procname{$\proc{combinar}(list<Particion> particiones, Vertice verticeAUbicar, double pesoAcumulado)$}
+  \li \For (p in particiones)
+  \li   pesoViejo = p.getPeso()
+  \li   pesoNuevo = pesoDelGrafoConVerticeEnParticion(p,verticeAUbicar)
+      \End
+  \li   \If $pesoAcumulado <= pesoGrafoConModificacion$
   \li   \Then
-          $T[j] \gets k$
-  \li     \Return $j$
+          $continue$
   \li   \Else
-          $i \gets i+1$
+  \li     $p.setPeso(pesoNuevo)$
+  \li     $pesoAcumulado = pesoGrafoConModificacion$
+  \li     $combinar(particiones, proximoVertice(verticeAUbicar), pesoAcumulado)$
+
+  \li     $pesoAcumulado = pesoGrafoConModificacion - pesoNuevo$
+  \li     $p.sacarNodo(verticeAUbicar)$
+  \li     $p.setPeso(pesoOld)$
+
         \End
-        \For
-        \While
-  \li \Until $i == m$
-  \li \Error ``hash table overflow''
 \end{codebox}
 
 \subsubsection{Podas}
 \input{podas.tex}
+
+
+
+\lstset{language=C++,
+                basicstyle=\ttfamily\footnotesize,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                breaklines=true
+}
+\begin{lstlisting}
+
+list<Particion>::iterator itParticion;
+  for (itParticion = k_particion.begin(); itParticion != k_particion.end(); itParticion++){
+
+    double pesoOld = itParticion->getPeso();
+    double pesoNew = itParticion->cuantoPesariaCon(G, verticeAUbicar);
+    double difPeso = pesoNew - pesoOld;
+
+    if (this->podaHabilitada && (this->mejorPeso <= pesoAcumulado+difPeso))
+      continue;
+
+    // 'agregar' no vuelve a calcular el peso. Ya lo calcul'o en cuantoPesariaCon donde se cachea.
+    itParticion->agregar(G, verticeAUbicar);
+    pesoAcumulado += difPeso;
+
+    combinar(k_particion, verticeAUbicar+1, pesoAcumulado);
+
+    pesoAcumulado -= difPeso;
+    itParticion->quitarUltimoSinActualizarPeso();
+    itParticion->setPeso(pesoOld);
+  }
+
+\end{lstlisting}
+
 

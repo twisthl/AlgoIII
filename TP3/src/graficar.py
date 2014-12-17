@@ -13,13 +13,13 @@ def construirRandomInput():
     from random import randint
 
     for k in range(2, 8):
-        for n in range(5,26):
+        for n in range(5,20):
             m = int(((n * (n-1))/2)*0.15)
             
             f = open('../recursos/times', 'wb+')
             f.close()
 
-            for q in range(0,100):
+            for q in range(0,20):
                 nombre = 'N' + str(n) + 'K' + str(k) + 'M15.grafo'
                 s = open(str('../recursos/instancias/' + nombre), 'wb+')
                 s.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
@@ -61,7 +61,7 @@ def construirRandomInput():
             m = int(((n * (n-1))/2)/2)
             f = open('../recursos/times', 'wb+')
             f.close()
-            for q in range(0,100):
+            for q in range(0,20):
                 nombre = 'N' + str(n) + 'K' + str(k) + 'M50.grafo'
                 t = open(str('../recursos/instancias/' + nombre), 'wb+')
                 t.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
@@ -107,7 +107,7 @@ def construirRandomInput():
             m = (n * (n-1))/2
             f = open('../recursos/times', 'wb+')
             f.close()
-            for q in range(0,100):
+            for q in range(0,20):
                 nombre = 'N' + str(n) + 'K' + str(k) + 'M100.grafo'
 
                 r = open(str('../recursos/instancias/' + nombre), 'wb+')
@@ -141,7 +141,7 @@ def tiempos():
         import os
 
         for k in range(2, 8):
-            for n in range(5,26):
+            for n in range(5,20):
                 instancia = 'N' + str(n) + 'K' + str(k) + 'M15.grafo'
                 
                 f = open('../recursos/times', 'wb+')

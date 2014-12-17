@@ -1,0 +1,10 @@
+El analisis de complejidad lo vamos a realizar en base a la cantidad de particiones posibles en k-subconjunto. Ya que si no aplicamos ninguna poda las estaríamos generando todas para verificar cual de ellas es la mínima.
+Para el primer vertices $v_1$, tenemos una única partición posible en donde ubicarlo, que la vamos a denominar $p_1$.\\
+Para el segundo vertice $v_2$, lo podemos ubicar tanto en la primer partición como en una nueva llamemosla $p_2$.\\
+Para el tercer nodo $v_3$, si ya habíamos ubicado a $v_1$ y $v_2$ en $p_1$, podemos colocarlo tambi\'en en $p_1$ o bien crear una nueva partición $p_2$ que no sería la misma que la anterior pues esa no existiría producto que $v_1$ y $v_2$ se encuentran en $p_1$, pero en cambio si ubicamos a $v_1$ en $p_1$ y a $v_2$ en $p_2$, podemos entonces ubicarlo en alguno de estos dos conjuntos o príamos crear una tercera partición $p_3$ (siempre y cuando k >=3) para ubicar a $v_3$.\\
+
+Así sucesivamente hasta llegar a $k$ vértices. Luego, para $v_1$ hay 1 posibilidad, para $v_2$ hay 2, para $v_3$ hay 3, hasta $v_k$ con $k$ y eso es $k!$.\\
+
+Para los $(n-k)$ v\'ertices restantes tenemos $k$ subconjuntos por cada uno, por lo que es $k^{(n-k)}$.\\
+
+Por lo tanto, la complejidad del algoritmo es $O(k!\ *\ k^{(n-k)})$ en el peor caso, sin tener en cuenta para el c\'alculo las podas mencionadas anteriormente. Notar que todas las dem\'as operaciones se realizan en $O(1)$.
