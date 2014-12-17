@@ -21,16 +21,16 @@ def construirRandomInput():
             aristas = {}
 
             for i in range(0, m):
-                origen = randint(0, (n-2))
-                destino = randint(1, (n-1))
+                origen = randint(1, (n-1))
+                destino = randint(2,n)
                 while (destino<=origen):
-                    destino = randint(1, (n-1))
+                    destino = randint(2,n)
 
                 while ((str(str(origen)+str(destino))) in aristas):
-                    origen = randint(0, (n-2))
-                    destino = randint(1, (n-1))
+                    origen = randint(1, (n-1))
+                    destino = randint(2,n)
                     while (destino<=origen):
-                        destino = randint(1, (n-1))
+                        destino = randint(2,n)
 
                 aristas[str(str(origen)+str(destino))] = 1
 
@@ -51,16 +51,16 @@ def construirRandomInput():
 
             for i in range(0, m):
                 
-                origen = randint(0, (n-2))
-                destino = randint(1, (n-1))
+                origen = randint(1, (n-1))
+                destino = randint(2,n)
                 while (destino<=origen):
-                    destino = randint(1, (n-1))
+                    destino = randint(2,n)
 
                 while ((str(str(origen)+str(destino))) in aristas):
-                    origen = randint(0, (n-2))
-                    destino = randint(1, (n-1))
+                    origen = randint(1, (n-1))
+                    destino = randint(2,n)
                     while (destino<=origen):
-                        destino = randint(1, (n-1))
+                        destino = randint(2,n)
 
                 aristas[str(str(origen)+str(destino))] = 1
 
