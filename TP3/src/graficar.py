@@ -20,7 +20,7 @@ def construirRandomInput():
             f.close()
 
             for q in range(0,20):
-                nombre = 'N' + str(n) + 'K' + str(k) + 'M15.grafo'
+                nombre = 'N' + str(n) + 'K' + str(k) + 'M15SINPODA.grafo'
                 s = open(str('../recursos/instancias/' + nombre), 'wb+')
                 s.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
                 aristas = {}
@@ -39,7 +39,7 @@ def construirRandomInput():
                     s.write(str(origen) + ' ' + str(destino) + ' '+ str(w) + '\n')
                 s.close()
 
-                bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre + " -ph"
+                bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre
                 os.system(bashCommand)
 
             r = open('../recursos/times', 'r')
@@ -53,7 +53,7 @@ def construirRandomInput():
             promedio = suma / cant
             print (promedio)
 
-            s = open('../recursos/resultadosNVariadoK' + str(k) + 'M15.dat', 'a+')
+            s = open('../recursos/resultadosNVariadoK' + str(k) + 'M15SINPODA.dat', 'a+')
             s.write(str(n)+"   "+str(promedio)+'\n')
             s.close()
 
@@ -62,7 +62,7 @@ def construirRandomInput():
             f = open('../recursos/times', 'wb+')
             f.close()
             for q in range(0,20):
-                nombre = 'N' + str(n) + 'K' + str(k) + 'M50.grafo'
+                nombre = 'N' + str(n) + 'K' + str(k) + 'M50SINPODA.grafo'
                 t = open(str('../recursos/instancias/' + nombre), 'wb+')
                 t.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
                 aristas = {}
@@ -86,7 +86,7 @@ def construirRandomInput():
                     t.write(str(origen) + ' ' + str(destino) + ' '+ str(w) + '\n')
                 t.close()
 
-                bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre + " -ph"
+                bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre
                 os.system(bashCommand)
 
             r = open('../recursos/times', 'r')
@@ -100,7 +100,7 @@ def construirRandomInput():
             promedio = suma / cant
             print (promedio)
 
-            s = open('../recursos/resultadosNVariadoK' + str(k) + 'M50.dat', 'a+')
+            s = open('../recursos/resultadosNVariadoK' + str(k) + 'M50SINPODA.dat', 'a+')
             s.write(str(n)+"   "+str(promedio)+'\n')
             s.close()
 
@@ -108,7 +108,7 @@ def construirRandomInput():
             f = open('../recursos/times', 'wb+')
             f.close()
             for q in range(0,20):
-                nombre = 'N' + str(n) + 'K' + str(k) + 'M100.grafo'
+                nombre = 'N' + str(n) + 'K' + str(k) + 'M100SINPODA.grafo'
 
                 r = open(str('../recursos/instancias/' + nombre), 'wb+')
 
@@ -119,7 +119,7 @@ def construirRandomInput():
                         w = randint(1, 999)
                         r.write(str(i) + ' ' + str(j) + ' ' + str(w) + '\n')
                 r.close()
-                bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre + " -ph"
+                bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre
                 os.system(bashCommand)
 
             r = open('../recursos/times', 'r')
@@ -133,7 +133,7 @@ def construirRandomInput():
             promedio = suma / cant
             print (promedio)
 
-            s = open('../recursos/resultadosNVariadoK' + str(k) + 'M100.dat', 'a+')
+            s = open('../recursos/resultadosNVariadoK' + str(k) + 'M100SINPODA.dat', 'a+')
             s.write(str(n)+"   "+str(promedio)+'\n')
             s.close()
 
@@ -142,13 +142,13 @@ def tiempos():
 
         for k in range(2, 8):
             for n in range(5,20):
-                instancia = 'N' + str(n) + 'K' + str(k) + 'M15.grafo'
+                instancia = 'N' + str(n) + 'K' + str(k) + 'M15SINPODA.grafo'
                 
                 f = open('../recursos/times', 'wb+')
                 f.close()
 
                 for i in range(0,30):
-                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia + " -ph"
+                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia
                     os.system(bashCommand)
 
                 r = open('../recursos/times', 'r')
@@ -162,17 +162,17 @@ def tiempos():
                 promedio = suma / cant
                 print (promedio)
 
-                s = open('../recursos/resultadosNVariadoK' + str(k) + 'M15.dat', 'a+')
+                s = open('../recursos/resultadosNVariadoK' + str(k) + 'M15SINPODA.dat', 'a+')
                 s.write(str(n)+"   "+str(promedio)+'\n')
                 s.close()
 
-                instancia = 'N' + str(n) + 'K' + str(k) + 'M50.grafo'
+                instancia = 'N' + str(n) + 'K' + str(k) + 'M50SINPODA.grafo'
                 
                 f = open('../recursos/times', 'wb+')
                 f.close()
 
                 for i in range(0,30):
-                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia + " -ph"
+                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia
                     os.system(bashCommand)
 
                 r = open('../recursos/times', 'r')
@@ -186,17 +186,17 @@ def tiempos():
                 promedio = suma / cant
                 print (promedio)
 
-                s = open('../recursos/resultadosNVariadoK' + str(k) + 'M50.dat', 'a+')
+                s = open('../recursos/resultadosNVariadoK' + str(k) + 'M50SINPODA.dat', 'a+')
                 s.write(str(n)+"   "+str(promedio)+'\n')
                 s.close()
 
-                instancia = 'N' + str(n) + 'K' + str(k) + 'M100.grafo'
+                instancia = 'N' + str(n) + 'K' + str(k) + 'M100SINPODA.grafo'
                 
                 f = open('../recursos/times', 'wb+')
                 f.close()
 
                 for i in range(0,30):
-                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia + " -ph"
+                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia
                     os.system(bashCommand)
 
                 r = open('../recursos/times', 'r')
@@ -210,7 +210,7 @@ def tiempos():
                 promedio = suma / cant
                 print (promedio)
 
-                s = open('../recursos/resultadosNVariadoK' + str(k) + 'M100.dat', 'a+')
+                s = open('../recursos/resultadosNVariadoK' + str(k) + 'M100SINPODA.dat', 'a+')
                 s.write(str(n)+"   "+str(promedio)+'\n')
                 s.close()
 
