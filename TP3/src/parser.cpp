@@ -92,7 +92,7 @@ void Parser::resolver(){
 			break;
 		}
 		case GRASP:{
-			Grasp grasp(G, k, this->mostrar_info, 0.40, 3, 100);
+			Grasp grasp(G, k, this->mostrar_info, 100, 0, 3);
 			time = grasp.resolver();
 			this->solucion = grasp.dameSolucion();
 			break;
