@@ -73,12 +73,16 @@ void Parser::resolver(){
 		case EXACTO:{
 			Exacto exacto(G, k, this->poda_habilitada, this->mostrar_info);
 			time = exacto.resolver();
+			list<Particion> k_particion = exacto.dameKParticion();
+			guardarPesoSolucion("EXACTO", cuantoPesa(k_particion));
 			this->solucion = exacto.dameSolucion();
 			break;
 		}
 		case GREED:{
 			Greed greed(G, k, this->mostrar_info);
 			time = greed.resolver();
+			list<Particion> k_particion = greed.dameKParticion();
+			guardarPesoSolucion("GREED", cuantoPesa(k_particion));
 			this->solucion = greed.dameSolucion();
 			break;
 		}
@@ -87,13 +91,18 @@ void Parser::resolver(){
 			time = greed.resolver();
 			list<Particion> ini_k_particion = greed.dameKParticion();
 			BusquedaLocal busquedaLocal(G, ini_k_particion, k, this->mostrar_info);
+
 			time += busquedaLocal.resolver();
+			list<Particion> k_particion = busquedaLocal.dameKParticion();
+			guardarPesoSolucion("BUSQUEDA", cuantoPesa(k_particion));
 			this->solucion = busquedaLocal.dameSolucion();
 			break;
 		}
 		case GRASP:{
 			Grasp grasp(G, k, this->mostrar_info, 100, 0, 3);
 			time = grasp.resolver();
+			list<Particion> k_particion = grasp.dameKParticion();
+			guardarPesoSolucion("GRASP", cuantoPesa(k_particion));
 			this->solucion = grasp.dameSolucion();
 			break;
 		}
@@ -108,6 +117,12 @@ void Parser::resolver(){
 }
 
 	
+void Parser::guardarPesoSolucion(string archivoPeso, double pesoSolucion){
+	string path = "../recursos/" + archivoPeso;
+	fstream output(path, ios::out | ios::app);
+	output << pesoSolucion << endl;
+	output.close();
+}
 
 void Parser::mostrarSolucion(){
 	cout << "Solucion: ";
@@ -118,7 +133,7 @@ void Parser::mostrarSolucion(){
 }
 
 void Parser::guardarTiempoEjecucion(int n, double time){
-	string path = "..recursos/times";
+	string path = "../recursos/times";
 	fstream output(path, ios::out | ios::app);
 	output << time << endl;
 	output.close();

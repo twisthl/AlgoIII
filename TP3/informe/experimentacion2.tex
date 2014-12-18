@@ -44,3 +44,58 @@ Pudimos verificar que el peso de las sumatoria de sus aristas intraparticion es:
 \ec
 
 B\'asicamente esto es as\'i pues en cada partici\'on voy a tener como m\'inimo n div k nodos que se conectan todos entre todos por ser un grafo completo. Con lo cual esa partici\'on va a aportar ((n div k) * ((n div k) - 1)/2) al peso total pues todas sus aristas intraparticion pesan 1. Luego tengo k particiones y por ultimo el resto de dividir a n por k son los nodos que me restan que los tengo que ubicar en alguna particion y estos se conectan con el resto de los nodos de esa particion.
+
+
+\subsubsection{Rendimiento}
+
+Para el análisis de rendimiento, corrimos el algoritmo variando la cantidad de particiones de 2 a 7, 100 instancias aleatoreas para cada n entre 5 y 20 de las cuales sacamos el promedio de tiempos, para las tres familias de grafos con el 15\%, 50\% y 100\% de sus aristas, tanto con el algoritmo sin podas y con podas.
+
+
+\bc
+\begin{tabular}{l c}
+\includegraphics[scale=0.16]{finales/rendimientoExactoSinPoda2Particiones.png}
+&
+\includegraphics[scale=0.16]{finales/rendimientoExactoConPoda2Particiones.png}
+\end{tabular}
+\ec
+
+\bc
+\begin{tabular}{l c}
+\includegraphics[scale=0.16]{finales/rendimientoExactoSinPoda3Particiones.png}
+&
+\includegraphics[scale=0.16]{finales/rendimientoExactoConPoda3Particiones.png}
+\end{tabular}
+\ec
+
+\bc
+\begin{tabular}{l c}
+\includegraphics[scale=0.16]{finales/rendimientoExactoSinPoda4Particiones.png}
+&
+\includegraphics[scale=0.16]{finales/rendimientoExactoConPoda4Particiones.png}
+\end{tabular}
+\ec
+
+\bc
+\begin{tabular}{l c}
+\includegraphics[scale=0.16]{finales/rendimientoExactoSinPoda5Particiones.png}
+&
+\includegraphics[scale=0.16]{finales/rendimientoExactoConPoda5Particiones.png}
+\end{tabular}
+\ec
+
+\bc
+\begin{tabular}{l c}
+\includegraphics[scale=0.16]{finales/rendimientoExactoSinPoda6Particiones.png}
+&
+\includegraphics[scale=0.16]{finales/rendimientoExactoConPoda6Particiones.png}
+\end{tabular}
+\ec
+
+\bc
+\begin{tabular}{l c}
+\includegraphics[scale=0.16]{finales/rendimientoExactoSinPoda7Particiones.png}
+&
+\includegraphics[scale=0.16]{finales/rendimientoExactoConPoda7Particiones.png}
+\end{tabular}
+\ec
+

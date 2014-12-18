@@ -20,6 +20,8 @@ class Parser {
 		void mostrarSolucion();
 
 	private:
+		void guardarPesoSolucion(string archivoPeso, double pesoSolucion);
+
 		int exercise;
 		vector<int> solucion;
 		string archivo_entrada;
