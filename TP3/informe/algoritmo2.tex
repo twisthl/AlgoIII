@@ -1,7 +1,7 @@
 Para resolver el problema del k-PMP vamos a utilizar un algoritmo que se basa en la t\'ecnica de Backtracking. Este recorre todas las posibles particiones del Grafo y basta con devolver aquella que cumpla que la sumatoria de los pesos de sus aristas intraparticiones sea m\'inimo y tenga menos de k-Particiones.
 Luego se aplican algunas podas para mejorar un poco el tiempo de ejecuci\'on de esta soluci\'on, como guardar la mejor soluci\'on hasta el momento o no calcular aquellas que tenga mas de k particiones pues no pueden ser soluci\'on del problema.
 
-Básicamente el algoritmo exacto va iterando los nodos y colocandolos en las particiones para ir verificando si voy generando una solusión mejor. En el algoritmo sin podas agrego un nodo a una partición y calculo la sumatoria de las aristas intrapartición del grafo que si es la mínima hasta el momento me la guardo como solución del problema, para luego llamar recursivamente a la función con el próximo nodo. Luego de salir de la recursión saco el nodo que habia colocado en la particion y pruebo colocandolo en la próxima partición para reiterar los cáluclos y ver si puedo disminuir el peso de la sumatoria de las aristas intrapartición.
+Básicamente el algoritmo exacto va iterando los nodos y colocandolos en las particiones para ir verificando si voy generando una solución mejor. En el algoritmo sin podas agrego un nodo a una partición y calculo la sumatoria de las aristas intrapartición del grafo que si es la mínima hasta el momento, la guardo como solución del problema, para luego llamar recursivamente a la función con el próximo nodo. Luego de salir de la recursión saco el nodo que habia colocado en la particion y pruebo colocandolo en la próxima partición para reiterar los cáluclos y ver si puedo disminuir el peso de la sumatoria de las aristas intrapartición.
 
 \begin{codebox}
   \Procname{$\proc{combinar}(list<Particion> particiones, Vertice verticeAUbicar, double pesoAcumulado)$}
@@ -29,6 +29,9 @@ Básicamente el algoritmo exacto va iterando los nodos y colocandolos en las par
 
 
 
+\subsection{C\'odigo Relevante}
+El esta secci\'on del c\'odigo pondremos partes del c\'odigo relevante.
+
 \lstset{language=C++,
                 basicstyle=\ttfamily\footnotesize,
                 keywordstyle=\color{blue}\ttfamily,
@@ -39,7 +42,70 @@ Básicamente el algoritmo exacto va iterando los nodos y colocandolos en las par
 }
 \begin{lstlisting}
 
-list<Particion>::iterator itParticion;
+class Arista {
+  public:
+    Arista(Vertice v, Vertice w);
+    Arista(Vertice v, Vertice w, double peso);
+    Vertice getVertice1();
+    Vertice getVertice2();
+    double getPeso();
+
+  private:
+    Vertice v;
+    Vertice w;
+    double peso;
+};
+
+class Grafo{
+  public:
+    Grafo(int n, list<Arista> aristas);
+    Arista* getArista(Vertice v, Vertice w);
+    Arista** getAristas(Vertice v);
+    list<Arista*>* getAristas();
+    int getCantVertices();
+
+  private:
+    Arista *** ady;
+    list<Arista*>* aristaList;
+    int n; \\ |V| := cantidad de vertices 
+};
+
+class Particion{
+  public:
+    Particion(int nro);
+    double cuantoPesariaCon(Grafo *G, Vertice vertice);
+    double cuantoPesariaSin(Grafo *G, Vertice vertice);
+    void agregar(Grafo *G, Vertice vertice);
+    void agregarSinActualizarPeso(Vertice vertice);
+    void quitar(Grafo *G, Vertice vertice);
+    void quitarUltimo(Grafo *G);
+    void quitarUltimoSinActualizarPeso();
+    int getNro();
+    double getPeso();
+    void setPeso(double peso);
+    list<Vertice> getVertices();
+
+  private:
+    int nro;
+    list<Vertice> vertices;
+    double peso;
+    double pesoConVerticeX;
+    Vertice verticeX;
+};
+
+void Exacto::combinar(list<Particion> &k_particion, Vertice verticeAUbicar, double pesoAcumulado){
+
+  //Lo siguiente equipara a decir: Si no hay mas quimicos para cargar..
+  if (verticeAUbicar == G->getCantVertices()) {
+    if (pesoAcumulado < this->mejorPeso){
+      this->mejorPeso = pesoAcumulado;
+      this->mejorKParticion = k_particion;
+      if (mostrarInfo) mostrarPotencialSolucion(this->mejorKParticion, this->mejorPeso);
+    }
+    return;
+  }
+
+  list<Particion>::iterator itParticion;
   for (itParticion = k_particion.begin(); itParticion != k_particion.end(); itParticion++){
 
     double pesoOld = itParticion->getPeso();
@@ -59,6 +125,19 @@ list<Particion>::iterator itParticion;
     itParticion->quitarUltimoSinActualizarPeso();
     itParticion->setPeso(pesoOld);
   }
+  
+
+  // Si hay menos de k particiones el vertice se puede ubicar en una particion nueva.
+  if (k_particion.size() < k) {
+    Particion particionNueva(k_particion.size());
+    particionNueva.agregar(G, verticeAUbicar);
+    k_particion.push_back(particionNueva);
+    //No hace falta fijarse que pesoAcumulado sea menor a mejorPeso porque el pesoAcumulado no se modifica al hacer una particion nueva sin aristas.
+    combinar(k_particion, verticeAUbicar+1, pesoAcumulado);
+    k_particion.pop_back();
+  }
+
+}
 
 \end{lstlisting}
 
