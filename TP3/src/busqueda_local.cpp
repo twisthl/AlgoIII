@@ -17,7 +17,10 @@ double BusquedaLocal::resolver(){
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_beg);
 
 	//BEGIN
-	mejorar();
+	bool hayMejora;
+	do {
+		hayMejora = mejorar();
+	} while (hayMejora);
 	//END
 	
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_end);
@@ -26,8 +29,9 @@ double BusquedaLocal::resolver(){
 	return time;
 }
 
-void BusquedaLocal::mejorar(){
+bool BusquedaLocal::mejorar(){
 
+	bool haMejorado = false;
 	Vertice verticeAMover = -1;
 	list<Particion>::iterator itParticionFuente;
 	list<Particion>::iterator itParticionDestino;
@@ -42,7 +46,7 @@ void BusquedaLocal::mejorar(){
 
 		list<Particion>::iterator itParticion;
 		for (itParticion = this->k_particion.begin(); itParticion != this->k_particion.end(); itParticion++){
-			if (ubicacion[vertice] == itParticion->getNro()){
+			if (this->ubicacion[vertice] == itParticion->getNro()){
 				cuantoPesoPerderia = itParticion->getPeso() - itParticion->cuantoPesariaSin(G, vertice);
 				deDondeSeMoveria = itParticion;
 			}else{
@@ -63,18 +67,17 @@ void BusquedaLocal::mejorar(){
 	}
 
 	if (verticeAMover != -1){
+		haMejorado = true;
 		itParticionFuente->quitar(G, verticeAMover);
 		itParticionDestino->agregar(G, verticeAMover);
 		this->ubicacion[verticeAMover] = itParticionDestino->getNro();
 
 		if (this->mostrarInfo) {
 			double nuevoPeso = cuantoPesa(k_particion);
-			mostrarMejoraVecino(ubicacion, nuevoPeso);
+			mostrarMejoraVecino(this->ubicacion, nuevoPeso);
 		}
-		
-		mejorar();
 	}
-	return;
+	return haMejorado;
 }
 
 vector<int> BusquedaLocal::dameSolucion(){	
@@ -85,7 +88,7 @@ list<Particion> BusquedaLocal::dameKParticion(){
 	return this->k_particion;
 }
 
-void BusquedaLocal::mostrarMejoraVecino(vector<int> ubicacion, double peso){
+void BusquedaLocal::mostrarMejoraVecino(vector<int> &ubicacion, double peso){
 
 	cout << "Mejorado a vecino: ";
 	for (int i = 0; i < ubicacion.size(); i++){

@@ -78,6 +78,17 @@ class Particion{
 		Vertice verticeX;
 };
 
+struct Candidato{
+	Candidato(list<Particion>::iterator itParticionDestino, double difPeso){
+		this->itParticionDestino = itParticionDestino;
+		this->difPeso = difPeso;
+	}
+	list<Particion>::iterator itParticionDestino;
+	double difPeso;
+};
+
+
+
 vector<int> toUbicacion(int cantVertices, list<Particion> &k_particion);
 double cuantoPesa(list<Particion> &k_particion);
 

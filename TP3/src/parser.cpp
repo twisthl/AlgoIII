@@ -18,8 +18,8 @@ Parser::Parser(Opciones opt){
 
 	if (this->archivo_salida.empty()){
 		cout << "No se especificó archivo de salida, se usa: " << endl;
-		cout << "recursos/output" << endl << endl;
-		this->archivo_salida = "recursos/output";
+		cout << "..recursos/output" << endl << endl;
+		this->archivo_salida = "..recursos/output";
 	}
 
 	fstream output(archivo_salida, ios::trunc);
@@ -92,8 +92,9 @@ void Parser::resolver(){
 			break;
 		}
 		case GRASP:{
-			//Grasp grasp(G, k, this->mostrar_info);
-			//this->solucion = grasp.resolver();
+			Grasp grasp(G, k, this->mostrar_info, 0.40, 3, 100);
+			time = grasp.resolver();
+			this->solucion = grasp.dameSolucion();
 			break;
 		}
 	}
@@ -117,7 +118,7 @@ void Parser::mostrarSolucion(){
 }
 
 void Parser::guardarTiempoEjecucion(int n, double time){
-	string path = "../recursos/times";
+	string path = "..recursos/times";
 	fstream output(path, ios::out | ios::app);
 	output << time << endl;
 	output.close();

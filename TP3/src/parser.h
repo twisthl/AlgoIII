@@ -6,6 +6,7 @@
 #include "exacto.h"
 #include "greed.h"
 #include "busqueda_local.h"
+#include "grasp.h"
 
 using namespace std;
 

@@ -14,8 +14,8 @@ class BusquedaLocal {
 		list<Particion> dameKParticion();
 
 	private:
-		void mejorar();
-		void mostrarMejoraVecino(vector<int> ubicacion, double peso);
+		bool mejorar();
+		void mostrarMejoraVecino(vector<int> &ubicacion, double peso);
 
 		Grafo *G; 
 		int k;
