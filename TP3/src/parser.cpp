@@ -99,7 +99,7 @@ void Parser::resolver(){
 			break;
 		}
 		case GRASP:{
-			Grasp grasp(G, k, this->mostrar_info, 100, 0, 3);
+			Grasp grasp(G, k, this->mostrar_info, 0.3, 3, 15, 100);
 			time = grasp.resolver();
 			list<Particion> k_particion = grasp.dameKParticion();
 			guardarPesoSolucion("GRASP", cuantoPesa(k_particion));

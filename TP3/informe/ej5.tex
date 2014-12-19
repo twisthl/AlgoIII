@@ -1,0 +1,83 @@
+\subsection{Resoluci\'on}
+
+La metaheuristica GRASP es una combinacion de una heuristica golosa “aleatorizada” y un procedimiento de busqueda local. En detalle GRASP se define de la siguiente manera:
+
+\begin{itemize}
+\item Mientras no se alcance el \textbf{criterio de terminacion}
+  \begin{itemize}
+  \item Obtener $s \in S$ mediante una heuristica golosa \textbf{aleatorizada}.
+  \item Mejorar $s$ mediante busqueda local
+  \item Recordar la mejor solucion obtenida hasta el momento.
+  \end{itemize}
+\end{itemize}
+
+Para nuestro GRASP, basamos la heuristica golosa aleatorizada en la segunda componente golosa descrita en el punto 4. \\
+Entrando en detalle, la heuristica golosa itera sobre todos los vertices y decide sobre cada uno a que particion va a ser agregada. La manera en que lo hacia en la heuristica golosa previamente especificada era elegir la particion tal que el peso agregado a la solucion sea el menor posible. Para ello requeria iterar sobre todos las Particiones y preguntarse cuanto pesaria de ser agregada alli. \\
+En la heuristica randomizada cambia en que primero comenzamos con k particiones vacias. Y segundo que en vez de elegir directamente la mejor opcion, armamos una RCL (lista Restringida de Candidatos), donde los candidatos son Particiones. Luego se elige aleatoriamente un destino cualquiera entre los candidatos y se agrega el vertice en el.\\
+Definimos la restriccion de los candidatos utilizando dos parametros alpha y beta. \\
+Decimos que los candidatos no pueden tener un valor menor que un cierto porcentaje alpha del valor del mejor candidato. Empezamos por identificar al mejor candidato como el menor peso agregado a la solucion, y al peor candidato como el mayor peso agregado a la solucion. La restriccion luego excluye a aquellos candidatos cuyo peso agregado a la solucion no se comprenda entre el menor peso y el mayor peso menos el porcentaje alpha de la distancia entre ambos pesos.\\
+Por ultimo tambien la RCL puede contener como maximo los beta mejores candidatos.
+
+En cuanto al procedimiento de busqueda local utilizamos nada mas y nada menos que la misma heuristica concebida en el punto anterior.\\
+
+Y finalmente como criterios de terminacion, definimos dos. Uno es la cantidad maxima de iteraciones. Es decir la cantidad de veces que se itera sobre el ciclo principal de GRASP. Y el otro la cantidad maxima de iteraciones seguidas sin cambios. Es decir el maximo de veces que itera sobre el ciclo principal, luego de haber encontrado una mejora, sin encontrar otra.\\
+
+A continuación presentamos un pseudo-codigo del algoritmo goloso aleatorizado:\\
+\begin{itemize}
+\item desde vertice 1 a vertice n
+    \begin{itemize}
+    \item por cada particion existente
+        \begin{itemize}
+        \item verificamos el peso de agregar el vertice a la particion
+        \item Si el peso resultado de agregarlo es el maximo encontrado hasta el momento lo recuerdo
+        \item Si el peso resultado de agregarlo es el minimo encontrado hasta el momento lo recuerdo
+        \item Agregamos la particion destino con peso asociado a la lista RLC
+        \item Si el tamano de RLC es mayor a beta:
+            \begin{itemize}
+            \item Eliminamos la particion destino con mayor peso
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item Eliminamos de RLC las particion destino cuyo valor de peso no se encuentre entre el rango alpha de mejores
+    \item Elegimos aleatoriamente una particion destino entre las candidatas y agregamos el vertice en esa particion 
+\end{itemize}
+
+
+\subsection{Analisis de complejidad}
+
+Analisamos la complejidad del pseudo-codigo del algoritmo goloso aleatorizado:
+
+Lo primero que hacemos es iterar por todos los vertices. De 1 a n. Esto es O(n)
+\begin{itemize}
+\item desde vertice 1 a vertice n       $O(n)$
+    \begin{itemize}
+    \item por cada particion existente    $O(k)$
+        \begin{itemize}
+        \item verificamos el peso de agregar el vertice a la particion     $O(n?)$
+        \item Si el peso resultado de agregarlo es el maximo encontrado hasta el momento lo recuerdo $O(1)$
+        \item Si el peso resultado de agregarlo es el minimo encontrado hasta el momento lo recuerdo $O(1)$
+        \item Agregamos la particion destino con peso asociado a la lista RLC (ORDENADAMENTE)  $O(min(k,beta))$
+        \item Si el tamano de RLC es mayor a beta: $O(1)$
+            \begin{itemize}
+            \item Eliminamos la particion destino con mayor peso  $O(1)$
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item Eliminamos de RLC las particion destino cuyo valor de peso no se encuentre entre el rango alpha de mejores $O(min(beta, k))$
+    \item Elegimos aleatoriamente una particion destino entre las candidatas y agregamos el vertice en esa particion $O(min(beta, k))$
+\end{itemize}
+
+Haciendo un analisis mas profundo podemos notar que el costo en complejidad de verificar el peso de agregar el vertice a una particion es: O(1) por la $k_{i}$ particion + la cantidad de vertices que contenga. El costo para un vertice i luego es O(i-1) + O(k) comparaciones por todas las particiones y los vertices totales contenido en ellas, i es creciente desde 1 hasta n. La complejidad resultado acotando a k por n es O(n). \\
+Agregar ordenadamente a una lista ordenada cuesta el tamano de la lista. Y la lista contiene como maximo todas las particiones, es decir como maximo $k$. Recordemos que $k$ podemos acotarlo por $n$, entonces la complejidad es absorida por el item anterior deducido O(n).
+La complejidad de eliminar particiones de una lista y de elegir aleatoriamente tambien se acotan por O(n). La complejidad final es O(n)*O(n) = O(n2). \\
+
+La complejidad de busqueda local ya la calculamos en el punto anterior y es O(n2).
+
+Finalmente la complejidad de Grasp es O(maxIteraciones*n2). Dado que logicamente la cantidad de iteraciones seguidas sin cambios es menor a la cota maxima cantidad de iteraciones.
+
+Los costos de copia de lista de particiones como resultado de busqueda local o greedy random o comparacion con anterior mejor solucion son despreciados por encontrar un maximo costo de O(n).
+
+
+\subsection{Criterios de parada y RCL}
+
+

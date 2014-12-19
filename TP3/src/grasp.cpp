@@ -1,12 +1,13 @@
 #include "grasp.h"
 
-Grasp::Grasp(Grafo *G, int k, bool mostrarInfo, int iteraciones, double alpha, int beta){
+Grasp::Grasp(Grafo *G, int k, bool mostrarInfo, double alpha, int beta, int itSinMejora, int maxIteraciones){
 	this->G = G;
 	this->k = k;
 	this->mostrarInfo = mostrarInfo;
-	this->iteraciones = iteraciones;
 	this->alpha = alpha;
 	this->beta = beta;
+	this->itSinMejora = itSinMejora;
+	this->maxIteraciones = maxIteraciones;
 	this->mejorPeso = INF;
 
 	srand (time(NULL));
@@ -17,8 +18,10 @@ double Grasp::resolver(){
 	timespec ts_beg, ts_end;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_beg);
 
+
 	//BEGIN
-	for (int i=0; i<iteraciones; i++){
+	int ultimasNoMejoradas = 0;
+	for (int i=0; i<maxIteraciones; i++){
 		
 		list<Particion> k_particion_inicial = greedyRandomizado();
 
@@ -28,10 +31,17 @@ double Grasp::resolver(){
 
 		double peso = cuantoPesa(posibleSolucion);
 		if (peso < this->mejorPeso){
-			//cout << "(peso=" << peso << " < this->mejorPeso=" << this->mejorPeso << ") = " <<(peso < this->mejorPeso) << endl << endl;
 			this->mejorKParticion = posibleSolucion;
 			this->mejorPeso = peso;
-			mostrarNuevaMejorSolucion(this->mejorKParticion, this->mejorPeso);
+			if (this->mostrarInfo) mostrarNuevaMejorSolucion(this->mejorKParticion, this->mejorPeso, i+1);
+			ultimasNoMejoradas = 0;
+		}else{
+			ultimasNoMejoradas++;
+		}
+		if (ultimasNoMejoradas==this->itSinMejora) {
+			if (this->mostrarInfo) 
+				cout << "Finaliza en Iteracion = " << i+1 << endl << endl;
+			break;
 		}
 	}
 	//END
@@ -112,7 +122,7 @@ list<Particion> Grasp::dameKParticion(){
 	return this->mejorKParticion;
 }
 
-void Grasp::mostrarNuevaMejorSolucion(list<Particion> &k_particion, double peso){
+void Grasp::mostrarNuevaMejorSolucion(list<Particion> &k_particion, double peso, int numIteracion){
 
 	vector<int> ubicacion = toUbicacion(G->getCantVertices(), this->mejorKParticion);
 
@@ -120,5 +130,5 @@ void Grasp::mostrarNuevaMejorSolucion(list<Particion> &k_particion, double peso)
 	for (int i = 0; i < ubicacion.size(); i++){
 		cout << ubicacion[i] << " ";
 	}
-	cout << " (Peso = " << peso << ") " << endl << endl;
+	cout << " (Peso=" << peso << "; Iteracion=" << numIteracion << ") " << endl << endl;
 }
