@@ -94,7 +94,7 @@ void Opciones::mostrarUso() {
 		<< "\t-BL, --busqueda\t\t\tSe ejecuta la implementacion del algoritmo busqueda local con la entrada resultado de greed\n"
 		<< "\t-GP, --grasp\t\t\tSe ejecuta la implementacion del algoritmo grasp\n"
 		<< "\t-PS, --peor\t\t\tSe ejecuta la implementacion del algoritmo peor_solucion\n"
-		<< "\t-RS, --peor\t\t\tSe ejecuta la implementacion del algoritmo random_solucion\n"
+		<< "\t-RS, --random\t\t\tSe ejecuta la implementacion del algoritmo random_solucion\n"
 		<< "\t-p, --path\t\t[PATH]\tCarga el archivo de [PATH]\n"
 		<< "\t-o, --ouput\t\t[PATH]\tArchivo de salida\n"
 		<< "\t-ph, --podar\t\t\tHabilida la poda en del algoritmo exacto\n"

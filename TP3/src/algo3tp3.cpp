@@ -52,6 +52,13 @@ int main(int argc, char * argv[]){
 			parser.mostrarSolucion();
 			break;
 		}
+		case RANDOM_SOLUCION:{
+			cout << "# RANDOM SOLUCION" << endl;
+			Parser parser(opt);
+			parser.resolver();
+			parser.mostrarSolucion();
+			break;
+		}
 		default :{ 
 			cerr << "Error fatal, no se ejecuta ningun ejercicio" << endl;
 		}

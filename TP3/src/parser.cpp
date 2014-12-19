@@ -114,6 +114,14 @@ void Parser::resolver(){
 			this->solucion = peorSolucion.dameSolucion();
 			break;
 		}
+		case RANDOM_SOLUCION:{
+			RandomSolucion randomSolucion(G, k, this->mostrar_info);
+			time = randomSolucion.resolver();
+			list<Particion> k_particion = randomSolucion.dameKParticion();
+			guardarPesoSolucion("RANDOM_SOLUCION", cuantoPesa(k_particion));
+			this->solucion = randomSolucion.dameSolucion();
+			break;
+		}
 	}
 
 	guardarTiempoEjecucion(n, time);
