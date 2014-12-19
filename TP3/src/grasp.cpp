@@ -7,6 +7,7 @@ Grasp::Grasp(Grafo *G, int k, bool mostrarInfo, int iteraciones, double alpha, i
 	this->iteraciones = iteraciones;
 	this->alpha = alpha;
 	this->beta = beta;
+	this->mejorPeso = INF;
 
 	srand (time(NULL));
 }
@@ -20,13 +21,14 @@ double Grasp::resolver(){
 	for (int i=0; i<iteraciones; i++){
 		
 		list<Particion> k_particion_inicial = greedyRandomizado();
-		
+
 		BusquedaLocal busquedaLocal(this->G, k_particion_inicial, this->k, false);
 		busquedaLocal.resolver();
 		list<Particion> posibleSolucion = busquedaLocal.dameKParticion();
 
 		double peso = cuantoPesa(posibleSolucion);
-		if (peso < mejorPeso){
+		if (peso < this->mejorPeso){
+			//cout << "(peso=" << peso << " < this->mejorPeso=" << this->mejorPeso << ") = " <<(peso < this->mejorPeso) << endl << endl;
 			this->mejorKParticion = posibleSolucion;
 			this->mejorPeso = peso;
 			mostrarNuevaMejorSolucion(this->mejorKParticion, this->mejorPeso);
