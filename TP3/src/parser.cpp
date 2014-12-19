@@ -106,6 +106,14 @@ void Parser::resolver(){
 			this->solucion = grasp.dameSolucion();
 			break;
 		}
+		case PEOR_SOLUCION:{
+			PeorSolucion peorSolucion(G, k, this->mostrar_info);
+			time = peorSolucion.resolver();
+			list<Particion> k_particion = peorSolucion.dameKParticion();
+			guardarPesoSolucion("PEOR_SOLUCION", cuantoPesa(k_particion));
+			this->solucion = peorSolucion.dameSolucion();
+			break;
+		}
 	}
 
 	guardarTiempoEjecucion(n, time);

@@ -45,6 +45,13 @@ int main(int argc, char * argv[]){
 			parser.mostrarSolucion();
 			break;
 		}
+		case PEOR_SOLUCION:{
+			cout << "# PEOR SOLUCION" << endl;
+			Parser parser(opt);
+			parser.resolver();
+			parser.mostrarSolucion();
+			break;
+		}
 		default :{ 
 			cerr << "Error fatal, no se ejecuta ningun ejercicio" << endl;
 		}
