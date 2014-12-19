@@ -103,12 +103,50 @@ Si hay $k$ conjuntos creados se procede de la siguiente manera:
   \end{itemize}
 \end{itemize}
 
-
+Esta ultima parte del algoritmo tiene una complejidad acotada en el peor caso de O(n^2) ya que por cada nodo no agregado ($n$ en total en el peor caso) se verifica cuanto pesaría agregarlo a cada conjunto. Para esto se recorren los nodos ya ingresados en el conjunto actual (peor caso $n$) y se agrega al que menor peso aporte. Esto tiene relacion con el $k$ tambien ya que en el peor caso se verificará en los $k$ conjuntos.
 
 \subsection{Instancias desfavorables}
 
 
+Probamos la heuristica con varias familias de grafos, grafos estrella...(ETC) 
+Para el caso de los grafos estrella nuestra heuristica funcionaba mal, particularmente cuando el numero del nodo central era superior a la cantidad k de conjuntos. 
+Para aclarar, en un principio nuestro algoritmo constaba solo de la segunda componente greedy de la que se habla en la seccion Resolucion. Por lo que comenzaba desde el primer nodo hasta el ultimo probando en que conjunto convenia poner dicho nodo de forma de disminuir lo mas posible el peso total de las aristas intraparticion. Volviendo al caso del grafo estrella, lo que pasaba era que ingresaba en los
+
 \subsection{Experimentacion}
+
+Para poder observar la performance del algoritmo en terminos de tiempo de ejecucion en funcion al tamaño de la entrada nos contruimos un script en python que genera tres tipos de grafos, grafos con un 15 porciento de aristas, uno con un 50 porciento de aristas y el último con el 100 porciento de aristas, tomando para el porcentaje la cantidad de aristas que llevaria un grafo completo.
+Para cada uno de estos variamos los valores de n y de k con n entre 100 y 500. 
+Por cada uno de esos valores de n, variamos el valor de k entre 2 y 10.
+Cada una de todas estas instancias fueron corridas entre 20 y 30 veces, (20 para las instancias mas grandes) para poder calcular un promedio. Ya que consideramos que el procesador no esta ejecutando solo nuestra heurística, por lo que el tiempo que le toma correr el algoritmo hasta obtener una solucion seguramente es mayor al real. Por otro lado tambien pensamos en la posibilidad de que el procesador cachee las soluciones al estar haciendo muchas veces lo mismo, razon por la cual decidimos no superar las 30 repeticiones. Entre estas dos cosas donde una desfavorece y otra favorece el tiempo de ejecucion, nos parecio razonable realizar un promedio.
+Con los valores obtenidos presentamos algunos graficos para tener una descripcion mas visual y los analizamos.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/greedyN1.png}
+\caption{Graficos de}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/greedyN2.png}
+\caption{Graficos de}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/greedyN3.png}
+\caption{Graficos de}
+\end{center}
+\end{figure}
+
+
+En estos graficos podemos observar que el algoritmo tiene una complejidad de n^2 en relacion a la cantidad de nodos, la cual obviamente se ve afectada al mismo tiempo por la cantidad de aristas que el grafo posee. Esta observacion se puede notar ya que cada grafo presenta la complejidad temporal para una densidad de aristas de 15\%, 50\% y 100\% comparada con un valor n^2 multiplicado por una constante obtenida a partir de dividir el tiempo sobre la cantidad de nodos, y a su vez este valor es multiplicado por 0.15, 0.50 y 1.
+Al hacer esto y verificar que los valores se asemejan demasiado podemos concluir que la cantidad de aristas del grafo afecta directamente al rendimiento de forma lineal.
+
+En los tres graficos utilizamos los mismos valores para O(n^2)* densidad de cantidad de aristas, y como se puede observar comparando los distintos graficos, que presentan una variacion en la cantidad k de conjuntos, los valores resultantes de los tests son casi los mismos, no se nota ninguna variacion apreciable. 
+
 
 
 %\begin{figure}[H]
@@ -117,3 +155,4 @@ Si hay $k$ conjuntos creados se procede de la siguiente manera:
 %\caption{Gr\'afico de tiempos con test pseudo-aleatorios.}
 %\end{center}
 %end{figure}
+
