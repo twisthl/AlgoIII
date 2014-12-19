@@ -12,6 +12,8 @@ using namespace std;
 #define GREED 1
 #define BUSQUEDA_LOCAL 2
 #define GRASP 3
+#define PEOR_SOLUCION 4
+#define RANDOM_SOLUCION 5
 
 class Opciones{
 	public:

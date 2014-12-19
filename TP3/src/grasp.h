@@ -10,7 +10,7 @@ using namespace std;
 
 class Grasp {
 	public:
-		Grasp(Grafo *G, int k, bool mostrarInfo, int iteraciones, double alpha, int beta);
+		Grasp(Grafo *G, int k, bool mostrarInfo, double alpha, int beta, int itSinMejora, int maxIteraciones);
 		~Grasp(){};
 		double resolver();
 		vector<int> dameSolucion();
@@ -19,14 +19,15 @@ class Grasp {
 	private:
 		list<Particion> greedyRandomizado();
 		void agregarVertice(list<Particion> &k_particion, Vertice v);
-		void mostrarNuevaMejorSolucion(list<Particion> &k_particion, double peso);
+		void mostrarNuevaMejorSolucion(list<Particion> &k_particion, double peso, int numIteracion);
 
 		Grafo *G;
 		int k;
 		bool mostrarInfo;
 		list<Particion> mejorKParticion;
 		double mejorPeso;
-		int iteraciones;
+		int itSinMejora;
+		int maxIteraciones;
 		double alpha;
 		int beta;
 

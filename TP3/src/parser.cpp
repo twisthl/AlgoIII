@@ -99,11 +99,27 @@ void Parser::resolver(){
 			break;
 		}
 		case GRASP:{
-			Grasp grasp(G, k, this->mostrar_info, 100, 0, 3);
+			Grasp grasp(G, k, this->mostrar_info, 0.3, 3, 15, 100);
 			time = grasp.resolver();
 			list<Particion> k_particion = grasp.dameKParticion();
 			guardarPesoSolucion("GRASP", cuantoPesa(k_particion));
 			this->solucion = grasp.dameSolucion();
+			break;
+		}
+		case PEOR_SOLUCION:{
+			PeorSolucion peorSolucion(G, k, this->mostrar_info);
+			time = peorSolucion.resolver();
+			list<Particion> k_particion = peorSolucion.dameKParticion();
+			guardarPesoSolucion("PEOR_SOLUCION", cuantoPesa(k_particion));
+			this->solucion = peorSolucion.dameSolucion();
+			break;
+		}
+		case RANDOM_SOLUCION:{
+			RandomSolucion randomSolucion(G, k, this->mostrar_info);
+			time = randomSolucion.resolver();
+			list<Particion> k_particion = randomSolucion.dameKParticion();
+			guardarPesoSolucion("RANDOM_SOLUCION", cuantoPesa(k_particion));
+			this->solucion = randomSolucion.dameSolucion();
 			break;
 		}
 	}
@@ -118,7 +134,7 @@ void Parser::resolver(){
 
 	
 void Parser::guardarPesoSolucion(string archivoPeso, double pesoSolucion){
-	string path = "../recursos/" + archivoPeso;
+	string path = "../recursos/comparando/" + archivoPeso;
 	fstream output(path, ios::out | ios::app);
 	output << pesoSolucion << endl;
 	output.close();

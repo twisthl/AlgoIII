@@ -7,6 +7,8 @@
 #include "greed.h"
 #include "busqueda_local.h"
 #include "grasp.h"
+#include "peorSolucion.h"
+#include "randomSolucion.h"
 
 using namespace std;
 

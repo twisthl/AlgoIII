@@ -184,6 +184,7 @@ double cuantoPesa(list<Particion> &k_particion){
 	double peso = 0.0;
 	list<Particion>::iterator itParticion;
 	for (itParticion = k_particion.begin(); itParticion != k_particion.end(); itParticion++){
+		//cout << "peso particion " << itParticion->getNro() << " = " << itParticion->getPeso() << endl;
 		peso += itParticion->getPeso();
 	}
 	return peso;
