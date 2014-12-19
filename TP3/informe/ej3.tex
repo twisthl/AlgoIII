@@ -6,10 +6,10 @@ Si quedan nodos sin ubicar, estos se agregan a cualquier conjunto, como ya agreg
 Si la cantidad de conjuntos creados es igual a $k$, actuamos de forma diferente, aquí recorremos todas las aristas, actuando solo con las que no hayan sido agregadas a ningún conjunto de la siguiente manera: verificamos cuanto peso agregaría en cada conjunto para luego realmente añadirlo al conjunto que sume menos peso, en caso de encontrar uno en el que no cree aristas intraparticion, es agregado a este sin seguir revisando los restantes.
 
 Como se puede observar usamos dos componentes greedys en la heurística:
-La primera esta cuando se ordenan las aritas decrecientemente y se crean los $k$ conjuntos a medida que se separan los nodos de las aristas de mayor peso, para que estos no generen aristas intraparticion.
+La primera esta cuando se ordenan las aristas decrecientemente y se crean los $k$ conjuntos a medida que se separan los nodos de las aristas de mayor peso, para que estos no generen aristas intraparticion.
 La segunda componente greedy se encuentra cuando al finalizar de crear los $k$ conjuntos se recorre nodo por nodo verificando si ya se encuentra agregado y en caso negativo, verificando en que conjunto genera menos peso para finalmente agregarlo a este.
 
-A modo de ejemplo presentamos algunas imagenes para mostrar el funcionamiento de la heuristica:
+A modo de ejemplo presentamos algunas imágenes para mostrar el funcionamiento de la heurística:
 
 \begin{figure}[H]
 \begin{center}
@@ -33,18 +33,18 @@ Luego de ordenar las aristas escoge las de mayor tamaño y separa sus nodos en k
 \caption{(3) Conjuntos luego de comenzar a ingresar los nodos restantes}
 \end{center}
 \end{figure}
-Luego como ya hay 2 conjuntos creados procede a verificar nodo los nodos y agregandolos al conjunto que menos sume. En el caso del nodo 1, se agrega de inmediato al primer conjunto porque no genera arista intraparticion. Para el nodo 2 primero verifica en el 1er conjunto, aqui sumaria 2 de peso, se verifica en el siguiente conjunto, y como no suma peso, se ingresa ahí. (3)
+Luego como ya hay 2 conjuntos creados procede a verificar nodo los nodos y agregándolos al conjunto que menos sume. En el caso del nodo 1, se agrega de inmediato al primer conjunto porque no genera arista intraparticion. Para el nodo 2 primero verifica en el 1er conjunto, aquí sumaria 2 de peso, se verifica en el siguiente conjunto, y como no suma peso, se ingresa ahí. (3)
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.4]{./img/greedy4.png}
-\caption{(4) Resultado de haber corrido la heuristica greedy al grafo (1)}
+\caption{(4) Resultado de haber corrido la heurística greedy al grafo (1)}
 \end{center}
 \end{figure}
 Finalmente resta agregar el nodo 3 el cual genera en el conjunto uno un peso igual a 5, y en el conjunto 2 un peso igual a 7 al unirse con los nodos 2 y 4. Por lo tanto el nodo 3 es introducido en el conjunto 1. (4)
 
 
-A continuación presentamos un pseudo-grafico del algoritmo
+A continuación presentamos un pseudo-gráfico del algoritmo
 \begin{itemize}
 \item ordenar $aristas$ por peso en orden decreciente
 \item mientras restan $aristas$ 
@@ -74,11 +74,11 @@ A continuación presentamos un pseudo-grafico del algoritmo
 
 
 
-\subsection{Analisis de complejidad}
+\subsection{Análisis de complejidad}
 
-Vamos a analizar el codigo paso por paso analizando la complejidad temporal del peor caso.
-Lo primero que hacemos es ordernar las aristas, para esto utilizamos la funcion $sort$ de la $std$ que posee una complegidad temporal de $O(n.log(n))$, en este caso como se aplica a las aristas esto es $O(m.log(m))$ siendo $m$ la cantidad de aristas.
-A continuación, y haciendo uso del psudo-codigo proporcionado:
+Vamos a analizar el código paso por paso analizando la complejidad temporal del peor caso.
+Lo primero que hacemos es ordenar las aristas, para esto utilizamos la función $sort$ de la $std$ que posee una complejidad temporal de $O(n.log(n))$, en este caso como se aplica a las aristas esto es $O(m.log(m))$ siendo $m$ la cantidad de aristas.
+A continuación, y haciendo uso del pseudocódigo proporcionado:
 \begin{itemize}
 \item mientras restan $aristas$ 
   \begin{itemize}
@@ -88,9 +88,9 @@ A continuación, y haciendo uso del psudo-codigo proporcionado:
   \item sino cortar el ciclo  
   \end{itemize}
 \end{itemize}
-Este scope tiene una complejidad $O(m)$ ya que se recorren todas las aritas, en el peor caso creando conjuntos y agregandolos a estos, pero estas dos acciones tienen una complejidad constante.
+Este scope tiene una complejidad $O(m)$ ya que se recorren todas las aristas, en el peor caso creando conjuntos y agregándolos a estos, pero estas dos acciones tienen una complejidad constante.
 
-A continuacion si se crearon menos de $k$ conjuntos se agregan los nodos que restan a uno de estos. En el peor caso esto pertenece al orden de $O(n)$ siendo n la cantidad de nodos.
+A continuación si se crearon menos de $k$ conjuntos se agregan los nodos que restan a uno de estos. En el peor caso esto pertenece al orden de $O(n)$ siendo n la cantidad de nodos.
 Si hay $k$ conjuntos creados se procede de la siguiente manera:
 \begin{itemize}
 \item desde nodo 0 a nodo n-1   $O(n)$
@@ -103,55 +103,55 @@ Si hay $k$ conjuntos creados se procede de la siguiente manera:
   \end{itemize}
 \end{itemize}
 
-Esta ultima parte del algoritmo tiene una complejidad acotada en el peor caso de O(n^2) ya que por cada nodo no agregado ($n$ en total en el peor caso) se verifica cuanto pesaría agregarlo a cada conjunto. Para esto se recorren los nodos ya ingresados en el conjunto actual (peor caso $n$) y se agrega al que menor peso aporte. Esto tiene relacion con el $k$ tambien ya que en el peor caso se verificará en los $k$ conjuntos.
+Esta ultima parte del algoritmo tiene una complejidad acotada en el peor caso de O(n^2) ya que por cada nodo no agregado ($n$ en total en el peor caso) se verifica cuanto pesaría agregarlo a cada conjunto. Para esto se recorren los nodos ya ingresados en el conjunto actual (peor caso $n$) y se agrega al que menor peso aporte. Esto tiene relación con el $k$ también ya que en el peor caso se verificará en los $k$ conjuntos.
 
 \subsection{Instancias desfavorables}
 
 
-Probamos la heuristica con varias familias de grafos, grafos estrella...(ETC) 
-Para el caso de los grafos estrella nuestra heuristica funcionaba mal, particularmente cuando el numero del nodo central era superior a la cantidad k de conjuntos. 
-Para aclarar, en un principio nuestro algoritmo constaba solo de la segunda componente greedy de la que se habla en la seccion Resolucion. Por lo que comenzaba desde el primer nodo hasta el ultimo probando en que conjunto convenia poner dicho nodo de forma de disminuir lo mas posible el peso total de las aristas intraparticion. Volviendo al caso del grafo estrella, lo que pasaba era que ingresaba en los
+Probamos la heurística con varias familias de grafos, grafos estrella...(ETC) 
+Para el caso de los grafos estrella nuestra heurística funcionaba mal, particularmente cuando el numero del nodo central era superior a la cantidad k de conjuntos. 
+Para aclarar, en un principio nuestro algoritmo constaba solo de la segunda componente greedy de la que se habla en la sección Resolución. Por lo que comenzaba desde el primer nodo hasta el ultimo probando en que conjunto convenía poner dicho nodo de forma de disminuir lo mas posible el peso total de las aristas intraparticion. Volviendo al caso del grafo estrella, lo que pasaba era que ingresaba en los
 
-\subsection{Experimentacion}
+\subsection{Experimentación}
 
-Para poder observar la performance del algoritmo en terminos de tiempo de ejecucion en funcion al tamaño de la entrada nos contruimos un script en python que genera tres tipos de grafos, grafos con un 15 porciento de aristas, uno con un 50 porciento de aristas y el último con el 100 porciento de aristas, tomando para el porcentaje la cantidad de aristas que llevaria un grafo completo.
+Para poder observar la performance del algoritmo en términos de tiempo de ejecución en función al tamaño de la entrada nos construimos un script en python que genera tres tipos de grafos, grafos con un 15 \% de aristas, uno con un 50 \% de aristas y el último con el 100 \% de aristas, tomando para el porcentaje la cantidad de aristas que llevaría un grafo completo.
 Para cada uno de estos variamos los valores de n y de k con n entre 100 y 500. 
 Por cada uno de esos valores de n, variamos el valor de k entre 2 y 10.
-Cada una de todas estas instancias fueron corridas entre 20 y 30 veces, (20 para las instancias mas grandes) para poder calcular un promedio. Ya que consideramos que el procesador no esta ejecutando solo nuestra heurística, por lo que el tiempo que le toma correr el algoritmo hasta obtener una solucion seguramente es mayor al real. Por otro lado tambien pensamos en la posibilidad de que el procesador cachee las soluciones al estar haciendo muchas veces lo mismo, razon por la cual decidimos no superar las 30 repeticiones. Entre estas dos cosas donde una desfavorece y otra favorece el tiempo de ejecucion, nos parecio razonable realizar un promedio.
-Con los valores obtenidos presentamos algunos graficos para tener una descripcion mas visual y los analizamos.
+Cada una de todas estas instancias fueron corridas entre 20 y 30 veces, (20 para las instancias mas grandes) para poder calcular un promedio. Ya que consideramos que el procesador no esta ejecutando solo nuestra heurística, por lo que el tiempo que le toma correr el algoritmo hasta obtener una solución seguramente es mayor al real. Por otro lado también pensamos en la posibilidad de que el procesador cachee las soluciones al estar haciendo muchas veces lo mismo, razón por la cual decidimos no superar las 30 repeticiones. Entre estas dos cosas donde una desfavorece y otra favorece el tiempo de ejecución, nos pareció razonable realizar un promedio.
+Con los valores obtenidos presentamos algunos gráficos para tener una descripción mas visual y los analizamos.
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.4]{./img/greedyN1.png}
-\caption{Graficos de}
+\caption{Gráficos con k = 2}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.4]{./img/greedyN2.png}
-\caption{Graficos de}
+\caption{Gráficos con k = 5}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.4]{./img/greedyN3.png}
-\caption{Graficos de}
+\caption{Gráficos con k = 10}
 \end{center}
 \end{figure}
 
 
-En estos graficos podemos observar que el algoritmo tiene una complejidad de n^2 en relacion a la cantidad de nodos, la cual obviamente se ve afectada al mismo tiempo por la cantidad de aristas que el grafo posee. Esta observacion se puede notar ya que cada grafo presenta la complejidad temporal para una densidad de aristas de 15\%, 50\% y 100\% comparada con un valor n^2 multiplicado por una constante obtenida a partir de dividir el tiempo sobre la cantidad de nodos, y a su vez este valor es multiplicado por 0.15, 0.50 y 1.
+En estos gráficos podemos observar que el algoritmo tiene una complejidad de n^2 en relación a la cantidad de nodos, la cual obviamente se ve afectada al mismo tiempo por la cantidad de aristas que el grafo posee. Esta observación se puede notar ya que cada grafo presenta la complejidad temporal para una densidad de aristas de 15\%, 50\% y 100\% comparada con un valor n^2 multiplicado por una constante obtenida a partir de dividir el tiempo sobre la cantidad de nodos, y a su vez este valor es multiplicado por 0.15, 0.50 y 1.
 Al hacer esto y verificar que los valores se asemejan demasiado podemos concluir que la cantidad de aristas del grafo afecta directamente al rendimiento de forma lineal.
 
-En los tres graficos utilizamos los mismos valores para O(n^2)* densidad de cantidad de aristas, y como se puede observar comparando los distintos graficos, que presentan una variacion en la cantidad k de conjuntos, los valores resultantes de los tests son casi los mismos, no se nota ninguna variacion apreciable. 
+En los tres gráficos utilizamos los mismos valores para O(n^2)* densidad de cantidad de aristas, y como se puede observar comparando los distintos gráficos, que presentan una variación en la cantidad k de conjuntos, los valores resultantes de los tests son casi los mismos, no se nota ninguna variación apreciable. 
 
 
 
 %\begin{figure}[H]
 %\begin{center}
-%\includegraphics[scale=0.4]{./imagenes/ej1_chartRendimiento.png}
+%\includegraphics[scale=0.4]{./imágenes/ej1_chartRendimiento.png}
 %\caption{Gr\'afico de tiempos con test pseudo-aleatorios.}
 %\end{center}
 %end{figure}
