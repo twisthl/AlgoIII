@@ -118,7 +118,7 @@ void Parser::resolver(){
 
 	
 void Parser::guardarPesoSolucion(string archivoPeso, double pesoSolucion){
-	string path = "../recursos/" + archivoPeso;
+	string path = "../recursos/comparando/" + archivoPeso;
 	fstream output(path, ios::out | ios::app);
 	output << pesoSolucion << endl;
 	output.close();
