@@ -10,7 +10,10 @@ Grasp::Grasp(Grafo *G, int k, bool mostrarInfo, double alpha, int beta, int itSi
 	this->maxIteraciones = maxIteraciones;
 	this->mejorPeso = INF;
 
-	srand (time(NULL));
+	struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+	/* using nano-seconds instead of seconds */
+	srand((time_t)ts.tv_nsec);
 }
 
 double Grasp::resolver(){

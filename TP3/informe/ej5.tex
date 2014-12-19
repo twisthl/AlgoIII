@@ -20,7 +20,7 @@ Por ultimo tambien la RCL puede contener como maximo los beta mejores candidatos
 
 En cuanto al procedimiento de busqueda local utilizamos nada mas y nada menos que la misma heuristica concebida en el punto anterior.\\
 
-Y finalmente como criterios de terminacion, definimos dos. Uno es la cantidad maxima de iteraciones. Es decir la cantidad de veces que se itera sobre el ciclo principal de GRASP. Y el otro la cantidad maxima de iteraciones seguidas sin cambios. Es decir el maximo de veces que itera sobre el ciclo principal, luego de haber encontrado una mejora, sin encontrar otra.\\
+Y finalmente como criterios de terminacion, definimos dos. Uno es la cantidad maxima de 10475. Es decir la cantidad de veces que se itera sobre el ciclo principal de GRASP. Y el otro la cantidad maxima de 10475 seguidas sin cambios. Es decir el maximo de veces que itera sobre el ciclo principal, luego de haber encontrado una mejora, sin encontrar otra.\\
 
 A continuación presentamos un pseudo-codigo del algoritmo goloso aleatorizado:\\
 \begin{itemize}
@@ -73,11 +73,68 @@ La complejidad de eliminar particiones de una lista y de elegir aleatoriamente t
 
 La complejidad de busqueda local ya la calculamos en el punto anterior y es O(n2).
 
-Finalmente la complejidad de Grasp es O(maxIteraciones*n2). Dado que logicamente la cantidad de iteraciones seguidas sin cambios es menor a la cota maxima cantidad de iteraciones.
+Finalmente la complejidad de Grasp es O(max10475*n2). Dado que logicamente la cantidad de 10475 seguidas sin cambios es menor a la cota maxima cantidad de 10475.
 
 Los costos de copia de lista de particiones como resultado de busqueda local o greedy random o comparacion con anterior mejor solucion son despreciados por encontrar un maximo costo de O(n).
 
 
 \subsection{Criterios de parada y RCL}
 
+En primer lugar queremos definir un \textbf{criterio de calidad}, el cual utilizaremos para decir que tan \textbf{bueno} es el resultado obtenido por la implementacion de una heuristica.
+Decimos que los mejores resultados posibles son aquellos cuyo peso sea el optimo. Dado un grafo, una manera accesible para nosotros de saber cual es el peso optimo es corriendo la implementacion del algoritmo exacto.  \\
+Decimos tambien que los peores resultados posibles son aquellos cuyo peso sea maximo. Dado un grafo, una manera de saber cual es el peso maximo es sumar todas las aristas de un grafo. Una peor solucion posible podria ser una k-particion tal que una contenga todos los nodos y el resto sean vacios. \\
 
+Definimos el resultado de la calidad de un algoritmo como un valor real entre 0 y 1 no excluyente, donde 1 es el mejor peso posible (el minimo) y 0 el peor peso (el maximo). \\
+Luego la calculamos de la siguiente manera: $ (1 -(pesoObtenido - mejorPeso) / (peorPeso - mejorPso))^{2}$ \\
+La multiplicacion al cuadrado del valor tiene varios motivos. Uno, es por simple impacto visual para desmotivar los valores alejados del mejor resultado. Y dos es que luego compararemos la calidad en funcion del tiempo para elegir mejores criterios de terminacion y de esta manera le podemos dar un poco mas de fuerza al peso. \\
+
+Como comentamos anteriormente tenemos dos parametros fundamentales en la seleccion de la RCL. Alpha y beta.  \\
+Con el objetivo de encontrar \textbf{buenos} parametros implementamos un ejecutable llamado testingGrasp. \\ 
+La idea de testingGrasp es alternar los valores de alpha y beta y testear la calidad de grasp contra grafos generados aleatoriamente. A su vez por cada parametro variamos la cantidad de aristas m, la cantidad de particiones k y la cantidad de nodos n. \\ 
+Debido a que hay tantos parametros en juego, acotamos un poco las combinaciones.  \\ 
+Probamos con n = 4, 8, 12, 16. Solo hasta n=16 dado que para valores mas grandes, el algoritmo exacto empieza a ser muy lento y hace el testeo imposible. \\ 
+Con m = 2, 4, 8 , ... , (n-1)*n.  \\ 
+Y con k = 2, 4, 6, .. n. \\ 
+Alpha va desde 0 a 1 entre saltos de 0,05. Y beta desde 1 hasta 16 (valor maximo de n). \\ 
+Tambien por cada combinacion de parametros, se randomiza el grafo unas 50 veces y se ejecuta grasp unas 5 veces por cada una. \\ 
+Como resultado obtenemos el promedio de la calidad en funcion de los parametros especificados para las mejores 10 calidades promedio. \\ 
+A continuacíon los valores retornados: \\ 
+
+
+
+\noindent
+\begin{tabular}[t]{|l |l |l |l |l|}
+\hline
+alpha & beta & iteraciones & calidad \\
+\hline
+0.4 & 3 & 104750 & 0.986533 \\
+\hline
+0.85 & 6 & 104750 & 0.986485 \\
+\hline
+0.85 & 15 & 104750 & 0.98636 \\
+\hline
+0.8 & 2 & 104750 & 0.98636 \\
+\hline
+0.55 & 8 & 104750 & 0.986334 \\
+\hline
+0.85 & 3 & 104750 & 0.986306 \\
+\hline
+0.05 & 2 & 104750 & 0.986298 \\
+\hline
+0.55 & 9 & 104750 & 0.986296 \\
+\hline
+0.95 & 12 & 104750 & 0.986283 \\
+\hline
+0.5 &  3 & 104750 & 0.986278 \\
+\hline
+\end{tabular}
+\bigskip
+
+
+\noindent 
+Luego elegimos por pequenicima diferencia el mejor alpha y beta.  \\ 
+Alpha = 0,4. Y beta = 3.  \\ 
+\noindent 
+En cuanto criterios de terminacion, utilizamos una herramienta que creamos llamada comparaciones.py.  \\ 
+La misma se encarga de generar instancias aleatorias de grafos y ejecutar varias algoritmos simultaneamente. A su vez compara la calidad de esos algoritmos. 
+Dado distintos valores de maxima cantidad de iteraciones e iteraciones sin cambios. Nos queremos quedar con aquellos cuyo valor epsilon = tiempoTardado*calidad sea optimo.
