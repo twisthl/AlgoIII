@@ -45,6 +45,12 @@ bool Opciones::cargarArgumentos(int argc, char* argv[]){
 		else if ((string(argv[i]) == "-BL") || (string(argv[i]) == "--busqueda")) {
 			exercise = BUSQUEDA_LOCAL;
 		}
+		else if ((string(argv[i]) == "-PS") || (string(argv[i]) == "--peor")) {
+			exercise = PEOR_SOLUCION;
+		}
+		else if ((string(argv[i]) == "-RS") || (string(argv[i]) == "--random")) {
+			exercise = RANDOM_SOLUCION;
+		}
 		else if ((string(argv[i]) == "-ph") || (string(argv[i]) == "--podar")) {
 			poda_habilitada = true;
 		}
@@ -85,8 +91,10 @@ void Opciones::mostrarUso() {
 		<< "\t-h, --help\t\t\tMuestra este mensaje\n"
 		<< "\t-EX, --exacto\t\t\tSe ejecuta la implementacion del algoritmo exacto\n"
 		<< "\t-GD, --greed\t\t\tSe ejecuta la implementacion del algoritmo greedy\n"
+		<< "\t-BL, --busqueda\t\t\tSe ejecuta la implementacion del algoritmo busqueda local con la entrada resultado de greed\n"
 		<< "\t-GP, --grasp\t\t\tSe ejecuta la implementacion del algoritmo grasp\n"
-		<< "\t-BL, --busqueda\t\t\tSe ejecuta la implementacion del algoritmo grasp\n"
+		<< "\t-PS, --peor\t\t\tSe ejecuta la implementacion del algoritmo peor_solucion\n"
+		<< "\t-RS, --peor\t\t\tSe ejecuta la implementacion del algoritmo random_solucion\n"
 		<< "\t-p, --path\t\t[PATH]\tCarga el archivo de [PATH]\n"
 		<< "\t-o, --ouput\t\t[PATH]\tArchivo de salida\n"
 		<< "\t-ph, --podar\t\t\tHabilida la poda en del algoritmo exacto\n"
@@ -96,7 +104,7 @@ void Opciones::mostrarUso() {
 
 void Opciones::imprimirTitulo(){
 	cout << "########################\n";
-	cout << "# ALGORITMOS III - TP1 #\n";
+	cout << "# ALGORITMOS III - TP3 #\n";
 	cout << "########################\n";
 	cout << endl;
 }
