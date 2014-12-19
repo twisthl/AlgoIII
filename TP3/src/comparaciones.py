@@ -77,22 +77,28 @@ def construirComparaciones():
             lineasPS = t.readlines()
             t.close()
 
-            promedioGD = 0
-            promedioBL = 0
-            promedioGP = 0
+            sumatoriaGD = 0
+            sumatoriaBL = 0
+            sumatoriaGP = 0
             for z in range(0,len(lineasEX)):
                 if (float(lineasPS[k]) == float(lineasEX[k])):
-                    promedioGD = 1
-                    promedioBL = 1
-                    promedioGP = 1
+                    calidadGD = 1
+                    calidadBL = 1
+                    calidadGP = 1
                 else:
-                    promedioGD += 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
-                    promedioBL += 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
-                    promedioGP += 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGD = 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGD = calidadGD * calidadGD
+                    calidadBL = 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadBL = calidadBL * calidadBL
+                    calidadGP = 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGP = calidadGP * calidadGP
+                sumatoriaGD += calidadGD
+                sumatoriaBL += calidadBL
+                sumatoriaGP += calidadGP
 
-            promedioGD = promedioGD/len(lineasEX)
-            promedioBL = promedioBL/len(lineasEX)
-            promedioGP = promedioGP/len(lineasEX)
+            promedioGD = sumatoriaGD/len(lineasEX)
+            promedioBL = sumatoriaBL/len(lineasEX)
+            promedioGP = sumatoriaGP/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M15COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGD)+'\n')
@@ -171,22 +177,28 @@ def construirComparaciones():
             lineasGR = t.readlines()
             t.close()
 
-            promedioGD = 0
-            promedioBL = 0
-            promedioGP = 0
+            sumatoriaGD = 0
+            sumatoriaBL = 0
+            sumatoriaGP = 0
             for z in range(0,len(lineasEX)):
                 if (float(lineasPS[k]) == float(lineasEX[k])):
-                    promedioGD = 1
-                    promedioBL = 1
-                    promedioGP = 1
+                    calidadGD = 1
+                    calidadBL = 1
+                    calidadGP = 1
                 else:
-                    promedioGD += 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
-                    promedioBL += 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
-                    promedioGP += 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGD = 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGP = calidadGP * calidadGP
+                    calidadBL = 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadBL = calidadBL * calidadBL
+                    calidadGP = 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGP = calidadGP * calidadGP
+                sumatoriaGD += calidadGD
+                sumatoriaBL += calidadBL
+                sumatoriaGP += calidadGP
 
-            promedioGD = promedioGD/len(lineasEX)
-            promedioBL = promedioBL/len(lineasEX)
-            promedioGP = promedioGP/len(lineasEX)
+            promedioGD = sumatoriaGD/len(lineasEX)
+            promedioBL = sumatoriaBL/len(lineasEX)
+            promedioGP = sumatoriaGP/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M50COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGD)+'\n')
@@ -256,23 +268,29 @@ def construirComparaciones():
             lineasGR = t.readlines()
             t.close()
 
-            promedioGD = 0
-            promedioBL = 0
-            promedioGP = 0
 
+            sumatoriaGD = 0
+            sumatoriaBL = 0
+            sumatoriaGP = 0
             for z in range(0,len(lineasEX)):
                 if (float(lineasPS[k]) == float(lineasEX[k])):
-                    promedioGD = 1
-                    promedioBL = 1
-                    promedioGP = 1
+                    calidadGD = 1
+                    calidadBL = 1
+                    calidadGP = 1
                 else:
-                    promedioGD += 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
-                    promedioBL += 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
-                    promedioGP += 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGD = 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGP = calidadGP * calidadGP
+                    calidadBL = 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadBL = calidadBL * calidadBL
+                    calidadGP = 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGP = calidadGP * calidadGP
+                sumatoriaGD += calidadGD
+                sumatoriaBL += calidadBL
+                sumatoriaGP += calidadGP
 
-            promedioGD = promedioGD/len(lineasEX)
-            promedioBL = promedioBL/len(lineasEX)
-            promedioGP = promedioGP/len(lineasEX)
+            promedioGD = sumatoriaGD/len(lineasEX)
+            promedioBL = sumatoriaBL/len(lineasEX)
+            promedioGP = sumatoriaGP/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M100COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGD)+'\n')
