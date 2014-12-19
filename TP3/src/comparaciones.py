@@ -21,6 +21,8 @@ def construirComparaciones():
             f.close()
             f = open('../recursos/comparando/GRASP', 'wb+')
             f.close()
+            f = open('../recursos/comparando/PEOR_SOLUCION', 'wb+')
+            f.close()
 
 
             for q in range(0,10):
@@ -55,40 +57,51 @@ def construirComparaciones():
                 bashCommand = " ./algo3tp3 -BL -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
+                bashCommand = " ./algo3tp3 -PS -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
 
             f = open('../recursos/comparando/EXACTO', 'r')
             lineasEX = f.readlines()
             f.close()
             r = open('../recursos/comparando/GREED', 'r')
-            lineasGE = r.readlines()
+            lineasGD = r.readlines()
             r.close()
             s = open('../recursos/comparando/BUSQUEDA', 'r')
-            lineasBU = s.readlines()
+            lineasBL = s.readlines()
             s.close()
             t = open('../recursos/comparando/GRASP', 'r')
-            lineasGR = t.readlines()
+            lineasGP = t.readlines()
+            t.close()
+            t = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasPS = t.readlines()
             t.close()
 
-            promedioGE = 0
-            promedioBU = 0
-            promedioGR = 0
+            promedioGD = 0
+            promedioBL = 0
+            promedioGP = 0
             for z in range(0,len(lineasEX)):
-                promedioGE += (float(lineasEX[k]) + 1)/(float(lineasGE[k]) + 1)
-                promedioBU += (float(lineasEX[k]) + 1)/(float(lineasBU[k]) + 1)
-                promedioGR += (float(lineasEX[k]) + 1)/(float(lineasGR[k]) + 1)
+                if (float(lineasPS[k]) == float(lineasEX[k])):
+                    promedioGD = 1
+                    promedioBL = 1
+                    promedioGP = 1
+                else:
+                    promedioGD += 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    promedioBL += 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    promedioGP += 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
 
-            promedioGE = promedioGE/len(lineasEX)
-            promedioBU = promedioBU/len(lineasEX)
-            promedioGR = promedioGR/len(lineasEX)
+            promedioGD = promedioGD/len(lineasEX)
+            promedioBL = promedioBL/len(lineasEX)
+            promedioGP = promedioGP/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M15COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGE)+'\n')
+            s.write(str(n)+"   "+str(promedioGD)+'\n')
             s.close()
             s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M15COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioBU)+'\n')
+            s.write(str(n)+"   "+str(promedioBL)+'\n')
             s.close()
             s = open('../recursos/comparando/GRASPK' + str(k) + 'M15COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGR)+'\n')
+            s.write(str(n)+"   "+str(promedioGP)+'\n')
             s.close()
 
 
@@ -101,6 +114,8 @@ def construirComparaciones():
             f = open('../recursos/comparando/BUSQUEDA', 'wb+')
             f.close()
             f = open('../recursos/comparando/GRASP', 'wb+')
+            f.close()
+            f = open('../recursos/comparando/PEOR_SOLUCION', 'wb+')
             f.close()
 
 
@@ -136,6 +151,9 @@ def construirComparaciones():
                 bashCommand = " ./algo3tp3 -BL -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
+                bashCommand = " ./algo3tp3 -PS -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
 
             f = open('../recursos/comparando/EXACTO', 'r')
             lineasEX = f.readlines()
@@ -149,27 +167,35 @@ def construirComparaciones():
             t = open('../recursos/comparando/GRASP', 'r')
             lineasGR = t.readlines()
             t.close()
+            t = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasGR = t.readlines()
+            t.close()
 
-            promedioGE = 0
-            promedioBU = 0
-            promedioGR = 0
+            promedioGD = 0
+            promedioBL = 0
+            promedioGP = 0
             for z in range(0,len(lineasEX)):
-                promedioGE += (float(lineasEX[k]) + 1)/(float(lineasGE[k]) + 1)
-                promedioBU += (float(lineasEX[k]) + 1)/(float(lineasBU[k]) + 1)
-                promedioGR += (float(lineasEX[k]) + 1)/(float(lineasGR[k]) + 1)
+                if (float(lineasPS[k]) == float(lineasEX[k])):
+                    promedioGD = 1
+                    promedioBL = 1
+                    promedioGP = 1
+                else:
+                    promedioGD += 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    promedioBL += 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    promedioGP += 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
 
-            promedioGE = promedioGE/len(lineasEX)
-            promedioBU = promedioBU/len(lineasEX)
-            promedioGR = promedioGR/len(lineasEX)
+            promedioGD = promedioGD/len(lineasEX)
+            promedioBL = promedioBL/len(lineasEX)
+            promedioGP = promedioGP/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M50COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGE)+'\n')
+            s.write(str(n)+"   "+str(promedioGD)+'\n')
             s.close()
             s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M50OMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioBU)+'\n')
+            s.write(str(n)+"   "+str(promedioBL)+'\n')
             s.close()
             s = open('../recursos/comparando/GRASPK' + str(k) + 'M50COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGR)+'\n')
+            s.write(str(n)+"   "+str(promedioGP)+'\n')
             s.close()
 
 
@@ -182,6 +208,8 @@ def construirComparaciones():
             f = open('../recursos/comparando/BUSQUEDA', 'wb+')
             f.close()
             f = open('../recursos/comparando/GRASP', 'wb+')
+            f.close()
+            f = open('../recursos/comparando/PEOR_SOLUCION', 'wb+')
             f.close()
 
 
@@ -209,6 +237,9 @@ def construirComparaciones():
                 bashCommand = " ./algo3tp3 -BL -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
+                bashCommand = " ./algo3tp3 -PS -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
             f = open('../recursos/comparando/EXACTO', 'r')
             lineasEX = f.readlines()
             f.close()
@@ -221,26 +252,36 @@ def construirComparaciones():
             t = open('../recursos/comparando/GRASP', 'r')
             lineasGR = t.readlines()
             t.close()
+            t = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasGR = t.readlines()
+            t.close()
 
-            promedioGE = 0
-            promedioBU = 0
-            promedioGR = 0
+            promedioGD = 0
+            promedioBL = 0
+            promedioGP = 0
+
             for z in range(0,len(lineasEX)):
-                promedioGE += (float(lineasEX[k]) + 1)/(float(lineasGE[k]) + 1)
-                promedioBU += (float(lineasEX[k]) + 1)/(float(lineasBU[k]) + 1)
-                promedioGR += (float(lineasEX[k]) + 1)/(float(lineasGR[k]) + 1)
-            promedioGE = promedioGE/len(lineasEX)
-            promedioBU = promedioBU/len(lineasEX)
-            promedioGR = promedioGR/len(lineasEX)
+                if (float(lineasPS[k]) == float(lineasEX[k])):
+                    promedioGD = 1
+                    promedioBL = 1
+                    promedioGP = 1
+                else:
+                    promedioGD += 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    promedioBL += 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    promedioGP += 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+
+            promedioGD = promedioGD/len(lineasEX)
+            promedioBL = promedioBL/len(lineasEX)
+            promedioGP = promedioGP/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M100COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGE)+'\n')
+            s.write(str(n)+"   "+str(promedioGD)+'\n')
             s.close()
             s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M100COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioBU)+'\n')
+            s.write(str(n)+"   "+str(promedioBL)+'\n')
             s.close()
             s = open('../recursos/comparando/GRASPK' + str(k) + 'M100COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGR)+'\n')
+            s.write(str(n)+"   "+str(promedioGP)+'\n')
             s.close()
 
 
