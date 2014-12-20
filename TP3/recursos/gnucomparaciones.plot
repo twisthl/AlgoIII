@@ -1,8 +1,7 @@
 set terminal png size 1366, 768
 
 set xlabel "Cantidad de nodos"
-set ylabel "Exacto/Heuristica"
-set logscale y
+set ylabel "Divergencia contra el Algoritmo Exacto"
 
 print "------------------------------gnuplot--------------------------------"
 print "              ...............ploteando.............."

@@ -9,8 +9,29 @@ def construirComparaciones():
     import os
     from random import randint
 
-    for n in range(5,20):
-        for k in range(2, 8):
+    for k in range(2, 8):
+        s = open('../recursos/comparando/GREEDK' + str(k) + 'M15COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M15COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASPK' + str(k) + 'M15COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GREEDK' + str(k) + 'M50COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M50COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASPK' + str(k) + 'M50COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GREEDK' + str(k) + 'M100COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M100COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASPK' + str(k) + 'M100COMPARACION.dat', 'wb+')
+        s.close()
+
+    for k in range(2, 8):
+        for n in range(5,20):
+#        for k in range(2, 8):
             m = int(((n * (n-1))/2)*0.15)
 
             f = open('../recursos/comparando/EXACTO', 'wb+')
@@ -211,7 +232,7 @@ def construirComparaciones():
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M50COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGD)+'\n')
             s.close()
-            s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M50OMPARACION.dat', 'a+')
+            s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M50COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioBL)+'\n')
             s.close()
             s = open('../recursos/comparando/GRASPK' + str(k) + 'M50COMPARACION.dat', 'a+')
