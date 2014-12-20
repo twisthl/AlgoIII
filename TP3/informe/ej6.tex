@@ -172,21 +172,21 @@ Usamos el mismo cr\'iterio de comparacion que en el ejercicio anterior. Pero en 
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon5Particiones15Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon5Particiones15Aristas.png}
 \caption{Distancias de las soluciones para K = 5 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon5Particiones50Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon5Particiones50Aristas.png}
 \caption{Distancias de las solucioens para K = 5 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon5Particiones100Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon5Particiones100Aristas.png}
 \caption{Distancias de las solucioens para K = 5 y 100\% de aristas}
 \end{center}
 \end{figure}
@@ -195,21 +195,21 @@ Usamos el mismo cr\'iterio de comparacion que en el ejercicio anterior. Pero en 
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon30Particiones15Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon30Particiones15Aristas.png}
 \caption{Distancias de las soluciones para K = 30 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon30Particiones50Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon30Particiones50Aristas.png}
 \caption{Distancias de las solucioens para K = 30 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon30Particiones100Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon30Particiones100Aristas.png}
 \caption{Distancias de las solucioens para K = 30 y 100\% de aristas}
 \end{center}
 \end{figure}
@@ -218,21 +218,36 @@ Usamos el mismo cr\'iterio de comparacion que en el ejercicio anterior. Pero en 
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon70Particiones15Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon70Particiones15Aristas.png}
 \caption{Distancias de las soluciones para K = 70 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon70Particiones50Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon70Particiones50Aristas.png}
 \caption{Distancias de las solucioens para K = 70 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{finales/muchosComparacionesCon70Particiones100Aristas.png}
+\includegraphics[scale=0.4]{finales/muchosComparacionesCon70Particiones100Aristas.png}
 \caption{Distancias de las solucioens para K = 70 y 100\% de aristas}
 \end{center}
 \end{figure}
+
+
+Luego de estos neuvos experimentos tenemos nuevas conclusiones pero tamb\'ien nuevas dudas.
+
+Por ejemplo se puede corroborar claramente el orden de eficiencia de las Heuristicas, desde la peor siendo la Greedy, luego las Busqueda local, para finalizar con la GRASP con sus distinta cantidad de iteraciones (A mayor cantida de iteraciones, mayor calidad de la soluci\'on).\\
+
+Luego tambien podemos corroborar como la cantidad de particiones y la densidad de los grafos marcan un corte desde el cual comienzan a incrementar las diferencias entre las soluciones de los distintos algoritmos. Por ejemplo vemo como para 30 particiones cuando la cantidad de nodos no supera los 30 todos los algoritmos retornan la soluci\'on optima que es la de peso 0. M\'as a\'un, para una densidad menor del grafo, con 30 particiones vemos como para el 50\% de las aristas siguen retornando todos la mejor soluci\'on (que en este caso no se puede afirmar que sea de peso 0) hasta casi instancias del problema con 90 nodos.
+
+Luego de todo esto pudimos percibir ciertos comportamientos llamativos.
+
+Por ejemplo hab\'iamos pensado que aumentando la cantidad de nodos y que la relaci\'on entre la cantida de particiones y cantidad de nodos, sea amplimente superada, iba a producir que la distancia de la soluci\'on de las Heuristicas se alejen cada vez m\'as de los valores \'optimos.
+
+Pero por un lado podemos ver que para todos los algoritmos y sin importar la cantidad de nodos ni la relaci\'on entre las particiones y la cantidad de nodos, que la variaci\'on entre los mejores resultados y los peores es muy peque\'na. No llega a alejarse m\'as del 0.92 dentro de esta escala que fijamos para comparar resultados.\\
+
+Lo m\'as llamativo es que todos los algoritmos parecieran a converger a un valor estable de distancia en relaci\'on a la mejor soluci\'on, como podemos ver en el gr\'afico para 5 particiones con el 100\% de las aristas.
