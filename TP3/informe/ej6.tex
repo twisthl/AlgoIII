@@ -1,38 +1,38 @@
 En esta seccion vamos a realizar una conclusi\'on general de los distintos algoritmos. En base a la performance de los mismos y las distancias con respecto a la soluci\'on Exacta.
 
-Primero planteamos un experimento en el cual corrimos para instancias aleatoreas, nuevamente con las tres densidades utilizadas a lo largo de todo el Trabajo Pr\'actico(15\%, 50\% y 100\%), todos los algoritmos (Exacto con podas, Heuristica Golosa, Heuristica de Busqueda Local y Heuristica GRASP con 5, 15 y 40 oteracioens respectivamente) unas 50 veces para cada cantidad de nodos entre 5 y 20 (por ser numeros manejables para el algoritmo exacto) para sacar un promedio de cuanto difiere cada Heuristica contra el algoritmo Exacto.\\
-Para esto calculamos la peor soluci\'on para cada instancia (que ser\'ia ubicar todos los nodos en una \'unica partici\'on, con lo cual la sumatoria de las aristas intrapartici\'on ser\'a la sumatoria total de las aristas) y generamos una formula que nos representa un valor entre 1 y 0 que tanto diverge la Heuristica en relaci\'on al exacto, pero considerando el valor entre la peor soluci\'on y la soluci\'on ideal.
+Primero planteamos un experimento en el cual corrimos para instancias aleatoreas, nuevamente con las tres densidades utilizadas a lo largo de todo el Trabajo Pr\'actico(15\%, 50\% y 100\%), todos los algoritmos (Exacto con podas, Heur\'istica Golosa, Heur\'istica de Busqueda Local y Heur\'istica GRASP con 5, 15 y 40 iteracioens respectivamente) unas 50 veces para cada cantidad de nodos entre 5 y 20 (por ser numeros manejables para el algoritmo exacto) para sacar un promedio de cuanto difiere cada Heur\'istica contra el algoritmo Exacto.\\
+Para esto calculamos la peor soluci\'on para cada instancia (que ser\'ia ubicar todos los nodos en una \'unica partici\'on, con lo cual la sumatoria de las aristas intrapartici\'on ser\'a la sumatoria total de las aristas) y generamos una formula que nos representa un valor entre 1 y 0 que tanto diverge la Heur\'istica en relaci\'on al exacto, pero considerando el valor entre la peor soluci\'on y la soluci\'on ideal.
 La formula es: 
 
 \bc
-1 - ((solucionHeuristica - solucionExacto)/(peorSolucion - solucionExacto))
+1 - ((solucionHeur\'istica - solucionExacto)/(peorSolucion - solucionExacto))
 \ec
 
-Si la Heuristica tiene el mismo valor que el Exacto esta relaci\'on nos devuelve que es 1. Todo lo contrario si la heuristica devuelve la peor soluci\'on, esta formula nos retorna 0.\\
-Con lo cual es un buen indicador para saber cuan buena es la soluci\'on de una de las heuristicas.
+Si la Heur\'istica tiene el mismo valor que el Exacto esta relaci\'on nos devuelve que es 1. Todo lo contrario si la heur\'istica devuelve la peor soluci\'on, esta formula nos retorna 0.\\
+Con lo cual es un buen indicador para saber cuan buena es la soluci\'on de una de las heur\'isticas.
 
-\subsection{Divergencia de las Heuristicas}
+\subsection{Divergencia de las Heur\'isticas}
 
 \subsubsection{2 Particiones}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon2Particiones15Aristas.png}
-\caption{Distancias de las Heuristicas para K = 2 y 15\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 2 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon2Particiones50Aristas.png}
-\caption{Distancias de las Heuristicas para K = 2 y 50\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 2 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon2Particiones100Aristas.png}
-\caption{Distancias de las Heuristicas para K = 2 y 100\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 2 y 100\% de aristas}
 \end{center}
 \end{figure}
 
@@ -41,21 +41,21 @@ Con lo cual es un buen indicador para saber cuan buena es la soluci\'on de una d
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon3Particiones15Aristas.png}
-\caption{Distancias de las Heuristicas para K = 3 y 15\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 3 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon3Particiones50Aristas.png}
-\caption{Distancias de las Heuristicas para K = 3 y 50\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 3 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon3Particiones100Aristas.png}
-\caption{Distancias de las Heuristicas para K = 3 y 100\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 3 y 100\% de aristas}
 \end{center}
 \end{figure}
 
@@ -65,21 +65,21 @@ Con lo cual es un buen indicador para saber cuan buena es la soluci\'on de una d
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon4Particiones15Aristas.png}
-\caption{Distancias de las Heuristicas para K = 4 y 15\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 4 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon4Particiones50Aristas.png}
-\caption{Distancias de las Heuristicas para K = 4 y 50\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 4 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon4Particiones100Aristas.png}
-\caption{Distancias de las Heuristicas para K = 4 y 100\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 4 y 100\% de aristas}
 \end{center}
 \end{figure}
 
@@ -88,21 +88,21 @@ Con lo cual es un buen indicador para saber cuan buena es la soluci\'on de una d
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon5Particiones15Aristas.png}
-\caption{Distancias de las Heuristicas para K = 5 y 15\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 5 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon5Particiones50Aristas.png}
-\caption{Distancias de las Heuristicas para K = 5 y 50\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 5 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon5Particiones100Aristas.png}
-\caption{Distancias de las Heuristicas para K = 5 y 100\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 5 y 100\% de aristas}
 \end{center}
 \end{figure}
 
@@ -111,21 +111,21 @@ Con lo cual es un buen indicador para saber cuan buena es la soluci\'on de una d
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon6Particiones15Aristas.png}
-\caption{Distancias de las Heuristicas para K = 6 y 15\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 6 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon6Particiones50Aristas.png}
-\caption{Distancias de las Heuristicas para K = 6 y 50\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 6 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon6Particiones100Aristas.png}
-\caption{Distancias de las Heuristicas para K = 6 y 100\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 6 y 100\% de aristas}
 \end{center}
 \end{figure}
 
@@ -134,21 +134,21 @@ Con lo cual es un buen indicador para saber cuan buena es la soluci\'on de una d
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon7Particiones15Aristas.png}
-\caption{Distancias de las Heuristicas para K = 7 y 15\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 7 y 15\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon7Particiones50Aristas.png}
-\caption{Distancias de las Heuristicas para K = 7 y 50\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 7 y 50\% de aristas}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{finales/ComparacionesCon7Particiones100Aristas.png}
-\caption{Distancias de las Heuristicas para K = 7 y 100\% de aristas}
+\caption{Distancias de las Heur\'isticas para K = 7 y 100\% de aristas}
 \end{center}
 \end{figure}
 
@@ -156,7 +156,7 @@ Con lo cual es un buen indicador para saber cuan buena es la soluci\'on de una d
 
 Podemos ver como a medida que aumenta la cantida de nodos los valores de divergencia de las Heur\'isticas comienzan a aumentar.\\
 
-Otro punto f\'acilmente apreciable es que la Heur\'istica Greedy es la que mayor distancia tiene con respecto a la soluci\'on Exacta para todos los valores de n y cantidad de particiones, seguida por Busqueda Local y luego como, es de esperarse, los GRASP con distinta cantidad de iteraciones.\\
+Otro punto f\'acilmente apreciable es que la Heur\'istica Greedy es la que mayor distancia tiene con respecto a la soluci\'on Exacta para todos los valores de n y cantidad de particiones, seguida por Busqueda Local y luego, como es de esperarse, los GRASP con distinta cantidad de iteraciones.\\
 
 Volvemos a ver como al aumentar la cantidad de particiones, en funcion de las densidades del grafo, para grafos menos densos, en todos los algoritmos las soluciones se acercan mucho mas a la Ecxacta. Como ya lo mencionamos en alg\'un momento esto debe ser produco de la libertad que tengo de colocar los nodos al tener un grafo poco denso (que probablemnte tanga una gran cantidad de nodos aislados y una menor aristas intrapartici\'ones).
 
@@ -166,7 +166,7 @@ Por este motivo vamos a realizar m\'as experimentos pero excuptuando al algoritm
 
 \section{Divergencia para instancias mayores}
 
-Usamos el mismo cr\'iterio de comparacion que en el ejercicio anterior. Pero en vez de utilizar el excato como patr\'on utilizamos el GRASP con 40 repeticiones. Los valores para la cantidad de particiones seleccionados fueron 5, 30 y 100
+Usamos el mismo cr\'iterio de comparacion que en el ejercicio anterior. Pero en vez de utilizar el excato como patr\'on utilizamos el GRASP con 40 repeticiones. Los valores para la cantidad de particiones seleccionados fueron 5, 30 y 70.
 
 \subsubsection{5 Particiones}
 
@@ -238,15 +238,15 @@ Usamos el mismo cr\'iterio de comparacion que en el ejercicio anterior. Pero en 
 \end{figure}
 
 
-Luego de estos neuvos experimentos tenemos nuevas conclusiones pero tamb\'ien nuevas dudas.
+Luego de estos neuvos experimentos tenemos nuevas conclusiones pero tamb\'ien nuevas dudas. Para empezar hay valores mayores a 1 para algunas corridas de los GRASP, que no tienen sentido, pues esto debendr\'ia de valores negativos en las soluciones de las Heur\'isticas, lo cual no puede presentarse nunca, por ser los peso de las aristas todos positivos. Son casos algunos pocos casos aislados con lo cual no afectan mucho nuestros experimentos.
 
-Por ejemplo se puede corroborar claramente el orden de eficiencia de las Heuristicas, desde la peor siendo la Greedy, luego las Busqueda local, para finalizar con la GRASP con sus distinta cantidad de iteraciones (A mayor cantida de iteraciones, mayor calidad de la soluci\'on).\\
+Por otro lado, se puede corroborar claramente el orden de eficiencia de las Heur\'isticas, desde la peor siendo la Greedy, luego las Busqueda local, para finalizar con la GRASP con sus distinta cantidad de iteraciones (A mayor cantida de iteraciones, mayor calidad de la soluci\'on).\\
 
-Luego tambien podemos corroborar como la cantidad de particiones y la densidad de los grafos marcan un corte desde el cual comienzan a incrementar las diferencias entre las soluciones de los distintos algoritmos. Por ejemplo vemo como para 30 particiones cuando la cantidad de nodos no supera los 30 todos los algoritmos retornan la soluci\'on optima que es la de peso 0. M\'as a\'un, para una densidad menor del grafo, con 30 particiones vemos como para el 50\% de las aristas siguen retornando todos la mejor soluci\'on (que en este caso no se puede afirmar que sea de peso 0) hasta casi instancias del problema con 90 nodos.
+Luego tambien podemos ver como la cantidad de particiones y la densidad de los grafos marcan un corte desde el cual comienzan a incrementar las diferencias entre las soluciones de los distintos algoritmos. Por ejemplo vemo como para 30 particiones cuando la cantidad de nodos no supera los 30 todos los algoritmos retornan la soluci\'on optima que es la de peso 0. M\'as a\'un, para una densidad menor del grafo, con 30 particiones vemos como para el 50\% de las aristas siguen retornando todos la mejor soluci\'on (que en este caso no se puede afirmar que sea de peso 0) hasta casi instancias del problema con 90 nodos.
 
 Luego de todo esto pudimos percibir ciertos comportamientos llamativos.
 
-Por ejemplo hab\'iamos pensado que aumentando la cantidad de nodos y que la relaci\'on entre la cantida de particiones y cantidad de nodos, sea amplimente superada, iba a producir que la distancia de la soluci\'on de las Heuristicas se alejen cada vez m\'as de los valores \'optimos.
+Por ejemplo hab\'iamos pensado que aumentando la cantidad de nodos y que la relaci\'on entre la cantida de particiones y cantidad de nodos, sea amplimente superada, iba a producir que la distancia de la soluci\'on de las Heur\'isticas se alejen cada vez m\'as de los valores \'optimos.
 
 Pero por un lado podemos ver que para todos los algoritmos y sin importar la cantidad de nodos ni la relaci\'on entre las particiones y la cantidad de nodos, que la variaci\'on entre los mejores resultados y los peores es muy peque\'na. No llega a alejarse m\'as del 0.92 dentro de esta escala que fijamos para comparar resultados.\\
 
