@@ -12,48 +12,48 @@ int main(int argc, char * argv[]){
 /* Carga e Impresion de Argumentos */
 	Opciones opt;
 	// Imprime el título del TP.
-	opt.imprimirTitulo();
+	//opt.imprimirTitulo();
 	// Carga los argumentos.
 	if (!opt.cargarArgumentos(argc, argv))
 		return -1;
 	switch (opt.exercise){
 		case EXACTO:{
-			cout << "# EXACTO" << endl;
+			//cout << "# EXACTO" << endl;
 			Parser parser(opt);
 			parser.resolver();
 			parser.mostrarSolucion();
 			break;
 		}
 		case GREED:{
-			cout << "# GREED" << endl;
+			//cout << "# GREED" << endl;
 			Parser parser(opt);
 			parser.resolver();
 			parser.mostrarSolucion();
 			break;
 		}
 		case BUSQUEDA_LOCAL:{
-			cout << "# BUSQUEDA LOCAL" << endl;
+			//cout << "# BUSQUEDA LOCAL" << endl;
 			Parser parser(opt);
 			parser.resolver();
 			parser.mostrarSolucion();
 			break;
 		}
 		case GRASP:{
-			cout << "# GRASP" << endl;
+			//cout << "# GRASP" << endl;
 			Parser parser(opt);
 			parser.resolver();
 			parser.mostrarSolucion();
 			break;
 		}
 		case PEOR_SOLUCION:{
-			cout << "# PEOR SOLUCION" << endl;
+			//cout << "# PEOR SOLUCION" << endl;
 			Parser parser(opt);
 			parser.resolver();
 			parser.mostrarSolucion();
 			break;
 		}
 		case RANDOM_SOLUCION:{
-			cout << "# RANDOM SOLUCION" << endl;
+			//cout << "# RANDOM SOLUCION" << endl;
 			Parser parser(opt);
 			parser.resolver();
 			parser.mostrarSolucion();

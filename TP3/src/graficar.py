@@ -12,8 +12,8 @@ def construirRandomInput():
     import os
     from random import randint
 
-    for n in range(15,20):
-        for k in range(2, 8):
+    for n in range(100,300):
+        for k in (2, 5, 9):
             m = int(((n * (n-1))/2)*0.15)
             
             f = open('../recursos/times', 'wb+')
@@ -24,7 +24,7 @@ def construirRandomInput():
             s = open(str('../recursos/instancias/' + nombre), 'wb+')
             s.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
             aristas = {}
-            for i in range(0, m):
+            for i in range(0, 2):
                 origen = randint(1, (n-1))
                 destino = randint(2,n)
                 while (destino<=origen):
@@ -39,7 +39,7 @@ def construirRandomInput():
                 s.write(str(origen) + ' ' + str(destino) + ' '+ str(w) + '\n')
             s.close()
 
-            bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre
+            bashCommand = " ./algo3tp3 -GP -p ../recursos/instancias/" + nombre
             os.system(bashCommand)
 
             r = open('../recursos/times', 'r')
@@ -66,7 +66,7 @@ def construirRandomInput():
             t = open(str('../recursos/instancias/' + nombre), 'wb+')
             t.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
             aristas = {}
-            for i in range(0, m):
+            for i in range(0, 2):
                 
                 origen = randint(1, (n-1))
                 destino = randint(2,n)
@@ -86,7 +86,7 @@ def construirRandomInput():
                 t.write(str(origen) + ' ' + str(destino) + ' '+ str(w) + '\n')
             t.close()
 
-            bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre
+            bashCommand = " ./algo3tp3 -GP -p ../recursos/instancias/" + nombre
             os.system(bashCommand)
 
             r = open('../recursos/times', 'r')
@@ -119,7 +119,7 @@ def construirRandomInput():
                     w = randint(1, 999)
                     r.write(str(i) + ' ' + str(j) + ' ' + str(w) + '\n')
             r.close()
-            bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + nombre
+            bashCommand = " ./algo3tp3 -GP -p ../recursos/instancias/" + nombre
             os.system(bashCommand)
 
             r = open('../recursos/times', 'r')
@@ -140,15 +140,15 @@ def construirRandomInput():
 def tiempos():
         import os
 
-        for k in range(2, 8):
-            for n in range(5,20):
+        for k in range(100, 300):
+            for n in (2, 5, 9):
                 instancia = 'N' + str(n) + 'K' + str(k) + 'M15SINPODA.grafo'
                 
                 f = open('../recursos/times', 'wb+')
                 f.close()
 
-                for i in range(0,30):
-                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia
+                for i in range(0,2):
+                    bashCommand = " ./algo3tp3 -GP -p ../recursos/instancias/" + instancia
                     os.system(bashCommand)
 
                 r = open('../recursos/times', 'r')
@@ -171,8 +171,8 @@ def tiempos():
                 f = open('../recursos/times', 'wb+')
                 f.close()
 
-                for i in range(0,30):
-                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia
+                for i in range(0,2):
+                    bashCommand = " ./algo3tp3 -GP -p ../recursos/instancias/" + instancia
                     os.system(bashCommand)
 
                 r = open('../recursos/times', 'r')
@@ -195,8 +195,8 @@ def tiempos():
                 f = open('../recursos/times', 'wb+')
                 f.close()
 
-                for i in range(0,30):
-                    bashCommand = " ./algo3tp3 -EX -p ../recursos/instancias/" + instancia
+                for i in range(0,2):
+                    bashCommand = " ./algo3tp3 -GP -p ../recursos/instancias/" + instancia
                     os.system(bashCommand)
 
                 r = open('../recursos/times', 'r')

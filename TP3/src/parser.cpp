@@ -17,8 +17,8 @@ Parser::Parser(Opciones opt){
 	this->mostrar_info = opt.mostrar_info;
 
 	if (this->archivo_salida.empty()){
-		cout << "No se especificó archivo de salida, se usa: " << endl;
-		cout << "..recursos/output" << endl << endl;
+		//cout << "No se especificó archivo de salida, se usa: " << endl;
+		//cout << "..recursos/output" << endl << endl;
 		this->archivo_salida = "..recursos/output";
 	}
 
@@ -32,7 +32,7 @@ void Parser::resolver(){
 	// Se carga el archivo
 	ifstream file(this->archivo_entrada);
 	string line;
-	cout << "# Carga archivo : " << this->archivo_entrada << endl << endl;
+	//cout << "# Carga archivo : " << this->archivo_entrada << endl << endl;
 
 	int n;
 	int m;
@@ -99,7 +99,7 @@ void Parser::resolver(){
 			break;
 		}
 		case GRASP:{
-			Grasp grasp(G, k, this->mostrar_info, 0.3, 3, 15, 100);
+			Grasp grasp(G, k, this->mostrar_info, 0.4, 3, 5, 10);
 			time = grasp.resolver();
 			list<Particion> k_particion = grasp.dameKParticion();
 			guardarPesoSolucion("GRASP", cuantoPesa(k_particion));
@@ -125,9 +125,9 @@ void Parser::resolver(){
 	}
 
 	guardarTiempoEjecucion(n, time);
-	cout << "Tiempo de ejecucion: " << endl;
-	cout << time << " sec" << endl;
-	cout << endl;
+	//cout << "Tiempo de ejecucion: " << endl;
+	//cout << time << " sec" << endl;
+	//cout << endl;
 
 	file.close();
 }
@@ -141,11 +141,11 @@ void Parser::guardarPesoSolucion(string archivoPeso, double pesoSolucion){
 }
 
 void Parser::mostrarSolucion(){
-	cout << "Solucion: ";
+	//cout << "Solucion: ";
 	for (int i = 0; i < this->solucion.size(); i++){
-		cout << solucion[i] << " ";
+		//cout << solucion[i] << " ";
 	}
-	cout << endl << endl;
+	//cout << endl << endl;
 }
 
 void Parser::guardarTiempoEjecucion(int n, double time){

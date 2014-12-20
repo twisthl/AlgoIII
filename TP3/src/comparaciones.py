@@ -73,25 +73,29 @@ def construirComparaciones():
             t = open('../recursos/comparando/GRASP', 'r')
             lineasGP = t.readlines()
             t.close()
-            t = open('../recursos/comparando/PEOR_SOLUCION', 'r')
-            lineasPS = t.readlines()
-            t.close()
+            u = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasPS = u.readlines()
+            u.close()
 
             sumatoriaGD = 0
             sumatoriaBL = 0
             sumatoriaGP = 0
             for z in range(0,len(lineasEX)):
-                if (float(lineasPS[k]) == float(lineasEX[k])):
+                if (float(lineasPS[z]) == float(lineasEX[z])):
                     calidadGD = 1
                     calidadBL = 1
                     calidadGP = 1
                 else:
-                    calidadGD = 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGD = 1 - ((float(lineasGD[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadGD = calidadGD * calidadGD
-                    calidadBL = 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadBL = 1 - ((float(lineasBL[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadBL = calidadBL * calidadBL
-                    calidadGP = 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGP = 1 - ((float(lineasGP[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadGP = calidadGP * calidadGP
+                    print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
+                    print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
+                    print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
+                print "calidadGD = " +  str(calidadGD)
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
                 sumatoriaGP += calidadGP
@@ -165,33 +169,37 @@ def construirComparaciones():
             lineasEX = f.readlines()
             f.close()
             r = open('../recursos/comparando/GREED', 'r')
-            lineasGE = r.readlines()
+            lineasGD = r.readlines()
             r.close()
             s = open('../recursos/comparando/BUSQUEDA', 'r')
-            lineasBU = s.readlines()
+            lineasBL = s.readlines()
             s.close()
             t = open('../recursos/comparando/GRASP', 'r')
-            lineasGR = t.readlines()
+            lineasGP = t.readlines()
             t.close()
-            t = open('../recursos/comparando/PEOR_SOLUCION', 'r')
-            lineasGR = t.readlines()
-            t.close()
+            u = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasPS = u.readlines()
+            u.close()
 
             sumatoriaGD = 0
             sumatoriaBL = 0
             sumatoriaGP = 0
             for z in range(0,len(lineasEX)):
-                if (float(lineasPS[k]) == float(lineasEX[k])):
+                if (float(lineasPS[z]) == float(lineasEX[z])):
                     calidadGD = 1
                     calidadBL = 1
                     calidadGP = 1
                 else:
-                    calidadGD = 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
-                    calidadGP = calidadGP * calidadGP
-                    calidadBL = 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGD = 1 - ((float(lineasGD[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGD = calidadGD * calidadGD
+                    calidadBL = 1 - ((float(lineasBL[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadBL = calidadBL * calidadBL
-                    calidadGP = 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGP = 1 - ((float(lineasGP[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadGP = calidadGP * calidadGP
+                    print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
+                    print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
+                    print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
+                print "calidadGD = " +  str(calidadGD)
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
                 sumatoriaGP += calidadGP
@@ -256,34 +264,38 @@ def construirComparaciones():
             lineasEX = f.readlines()
             f.close()
             r = open('../recursos/comparando/GREED', 'r')
-            lineasGE = r.readlines()
+            lineasGD = r.readlines()
             r.close()
             s = open('../recursos/comparando/BUSQUEDA', 'r')
-            lineasBU = s.readlines()
+            lineasBL = s.readlines()
             s.close()
             t = open('../recursos/comparando/GRASP', 'r')
-            lineasGR = t.readlines()
+            lineasGP = t.readlines()
             t.close()
-            t = open('../recursos/comparando/PEOR_SOLUCION', 'r')
-            lineasGR = t.readlines()
-            t.close()
+            u = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasPS = u.readlines()
+            u.close()
 
 
             sumatoriaGD = 0
             sumatoriaBL = 0
             sumatoriaGP = 0
             for z in range(0,len(lineasEX)):
-                if (float(lineasPS[k]) == float(lineasEX[k])):
+                if (float(lineasPS[z]) == float(lineasEX[z])):
                     calidadGD = 1
                     calidadBL = 1
                     calidadGP = 1
                 else:
-                    calidadGD = 1 - ((float(lineasGD[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
-                    calidadGP = calidadGP * calidadGP
-                    calidadBL = 1 - ((float(lineasBL[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGD = 1 - ((float(lineasGD[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGD = calidadGD * calidadGD
+                    calidadBL = 1 - ((float(lineasBL[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadBL = calidadBL * calidadBL
-                    calidadGP = 1 - ((float(lineasGP[k]) - float(lineasEX[k])) / (float(lineasPS[k]) - float(lineasEX[k])))
+                    calidadGP = 1 - ((float(lineasGP[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadGP = calidadGP * calidadGP
+                    print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
+                    print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
+                    print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
+                print "calidadGD = " +  str(calidadGD)
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
                 sumatoriaGP += calidadGP
