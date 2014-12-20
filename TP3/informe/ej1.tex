@@ -1,18 +1,22 @@
 \subsection{k-PMP y Ej3-TP1}
 
-El ejercicio 3 del trabajo práctico 1 $"$Biohazard$"$, consistía en distribuir químicos en camiones para que puedan ser transportados de una central de químicos a otra. El problema estaba en que hay ciertos químicos que no pueden transportarse juntos porque presentan un gran nivel de peligrosidad. Por lo que se determinó un coeficiente de peligrosidad que determina cuan peligroso es transportar dos ciertos químicos juntos, y un umbral de peligro que cada camión no debe sobrepasar en la suma de coeficientes de peligrosidad que existe entre los quimicos que transporta.
+El ejercicio 3 del trabajo práctico 1 $"$Biohazard$"$, consistía en distribuir químicos en camiones para que puedan ser transportados de una central de químicos a otra.\\
+El problema estaba en que hay ciertos químicos que no pueden transportarse juntos pues presentan un gran nivel de peligrosidad. Por lo que se determinó un coeficiente de peligrosidad que determina cuan peligroso es transportar dos ciertos químicos juntos, y un umbral de peligro que cada camión no debe sobrepasar en la suma de coeficientes de peligrosidad que existe entre los quimicos que transporta.\\
 Con esto y dado un conjunto de productos con sus coeficientes de peligrosidad se buscaba distribuirlos de forma de minimizar la cantidad de camiones utilizados, obviamente sin que cada uno de estos sobrepase el umbral de peligro.
 
-El problema es basicamente el mismo que k-PMP, con la diferencia de que en k-PMP no existe umbral alguno, pero existe un limite en la cantidad de camiones, $k$, de manera que lo que se busca optimizar no es la cantidad de camiones, sino (llevando el ej Biohazard a k-PMP) la peligrosidad total de los $k$ camiones.
+El problema es b\'asicamente el mismo que k-PMP, con la diferencia de que en k-PMP no existe umbral alguno, pero existe un l\'imite en la cantidad de camiones, $k$, de manera que lo que se busca optimizar no es la cantidad de camiones, sino (llevando el ej Biohazard a k-PMP) la peligrosidad total de los $k$ camiones.
 
 
 \subsection{k-PMP y Coloreo de Vértices}
 
-Se llama coloreo a la asignación de colores a los vértices de un grafo tal que dos vértices que compartan la misma arista tengan colores diferentes. 
-Un coloreo que usa a lo sumo k colores se llama k-coloreo. Un grafo al que se le puede asignar un k-coloreo se lo llama k-coloreable. Por ultimo un subconjunto de vertices con el mismo color asignado en el coloreo se llama clase de color y cada clase forma un conjunto independiente. De esta forma podemos definir un k-coloreo como una particion del conjunto de aristas del grafo en k conjuntos independientes.
-(Para la siguiente explicacion vamos a suponer que el grafo no posee aristas de peso 0).
-Como se explicó antes, el problema k-PMP consiste en particionar las aristas en k conjuntos de modo que la suma de los pesos de las aristas intraparticion sea mínima.
-Cuando el peso de cada k-partición resulta en 0 quiere decir que dentro de cada particion no existen aristas intraparticion, osea quiere decir que se pudo dividir el grafo en k conjuntos independientes de vertices, en otras palabras, tenemos un grafo k-partito. Ahora si a cada k-particion se le asigna un color, resulta en un coloreo válido del grafo dado. 
+Se llama coloreo a la asignación de colores a los vértices de un grafo tal que dos vértices que compartan la misma arista tengan colores diferentes.\\
+Un coloreo que usa a lo sumo k colores se llama k-coloreo. Un grafo al que se le puede asignar un k-coloreo se lo llama k-coloreable.\\
+Por \'ultimo, un subconjunto de v\'ertices con el mismo color asignado en el coloreo, se llama clase de color y cada clase forma un conjunto independiente. De esta forma podemos definir un k-coloreo como una particion del conjunto de aristas del grafo en k conjuntos independientes.\\
+
+(Para la siguiente explicaci\'on vamos a suponer que el grafo no posee aristas de peso 0 o en su defecto eliminarlas).\\
+Como se explicó antes, el problema k-PMP consiste en particionar las aristas en k conjuntos de modo que la suma de los pesos de las aristas intrapartici\'on sea mínima.\\
+Cuando el peso de cada k-partición resulta en 0, quiere decir que dentro de cada particion no existen aristas intrapartici\'on, lo cual quiere decir que se pudo dividir el grafo en k subconjuntos independientes de v\'ertices, o en otras palabras, tenemos un grafo k-partito.\\
+Ahora si a cada k-particion se le asigna un color, resulta en un coloreo válido del grafo dado.
 
 
 \subsection{k-PMP en la vida real}
@@ -20,13 +24,17 @@ Cuando el peso de cada k-partición resulta en 0 quiere decir que dentro de cada
 Con k-PMP se pueden modelar aquellos problemas en los que hace falta agrupar un conjunto de cosas de forma que se minimice la relación entre estos.
 Por ejemplo:\\
 
-$Arca de Noe$\\
-Suponemos que tenemos un arca con k sectores, en los cuales debemos repartir todos los animales de forma de minimizar el riezgo de riña entre ellos. Para esto asignamos un valor de peligrosidad a los pares de animales que tienen alguna posibilidad de pelearse entre si. En este caso los animales pueden ser representados con nodos y el valor de peligrosidad entre ellos esta dado como el peso de la arista que los une.\\
+$Arca\ de\ Noe$\\
+Suponemos que tenemos un arca con k sectores, en los cuales debemos repartir todos los animales de forma de minimizar el riezgo de riña entre ellos.\\
+Para esto asignamos un valor de peligrosidad a los pares de animales que tienen alguna posibilidad de pelearse entre s\'i.\\
+En este caso los animales pueden ser representados con nodos y el valor de peligrosidad entre ellos esta dado como el peso de la arista que los une.\\
 
 
-$Campus Universitario$\\
-Se desea construir un campus universitario en el que se edificarán $k$ pabellones, y se pretende poder distribuir un total de $n$ carreras en los pabellones de forma que aquellas carreras que esten directamente relacionadas se destinen a un mismo edificio. Para esto se define un valor x a la relacion entre cada carrera, el cual determina cuan relacionadas están entre ambas, siendo 0 el coeficiente que identifica la mayor relación.\\
+$Campus\ Universitario$\\
+Se desea construir un campus universitario en el que se edificarán $k$ pabellones, y se pretende poder distribuir un total de $n$ carreras en los pabellones de forma que aquellas carreras que esten directamente relacionadas se destinen a un mismo edificio. Para esto se define un valor x a la relaci\'on entre cada carrera, el cual determina cuan relacionadas están entre ambas, siendo 0 el coeficiente que identifica la mayor relación.\\
 
 
-$Torneo de Futbol$\\
-Se tiene una cantidad n de equipos de futbol
+$Torneo\ de\ Futbol\ Extraterrestre$\\
+Cay\'o un extraterrestre en la tierra y tomo el cuerpo de un alto dirigente de Futbol de la FIFA sin saberlo. Resulta que la actividad del humano al cual invadi\'o era organizar k torneos cortos de partidos amistosos entre selecciones que maximicen la ganancia de los eventos.\\
+Para tal motivo se tiene estipulado la ganancia que generan los equipos al competir entre ellos, siendo la m\'inima  ganancia > 0.\\
+Como viene de otro planeta se le ocurre aplicar k-pmp (que con su tecnolog\'ia pudieron demostrar que P=NP( cuando N = 1 (?))) tomando como pesos de las aristas la inversa de la ganancia, con lo cual equipos que generan mucho dinero, est\'an unidos por una arista de poco costo.
