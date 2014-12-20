@@ -103,7 +103,7 @@ Si hay $k$ conjuntos creados se procede de la siguiente manera:
   \end{itemize}
 \end{itemize}
 
-Esta ultima parte del algoritmo tiene una complejidad acotada en el peor caso de O(n^2) ya que por cada nodo no agregado ($n$ en total en el peor caso) se verifica cuanto pesaría agregarlo a cada conjunto. Para esto se recorren los nodos ya ingresados en el conjunto actual (peor caso $n$) y se agrega al que menor peso aporte. Esto tiene relación con el $k$ también ya que en el peor caso se verificará en los $k$ conjuntos.
+Esta ultima parte del algoritmo tiene una complejidad acotada en el peor caso de O($n^{2}$) ya que por cada nodo no agregado ($n$ en total en el peor caso) se verifica cuanto pesaría agregarlo a cada conjunto. Para esto se recorren los nodos ya ingresados en el conjunto actual (peor caso $n$) y se agrega al que menor peso aporte. Esto tiene relación con el $k$ también ya que en el peor caso se verificará en los $k$ conjuntos.
 
 \subsection{Instancias desfavorables}
 
@@ -142,10 +142,10 @@ Con los valores obtenidos presentamos algunos gráficos para tener una descripci
 \end{figure}
 
 
-En estos gráficos podemos observar que el algoritmo tiene una complejidad de n^2 en relación a la cantidad de nodos, la cual obviamente se ve afectada al mismo tiempo por la cantidad de aristas que el grafo posee. Esta observación se puede notar ya que cada grafo presenta la complejidad temporal para una densidad de aristas de 15\%, 50\% y 100\% comparada con un valor n^2 multiplicado por una constante obtenida a partir de dividir el tiempo sobre la cantidad de nodos, y a su vez este valor es multiplicado por 0.15, 0.50 y 1.
+En estos gráficos podemos observar que el algoritmo tiene una complejidad de $n^{2}$ en relación a la cantidad de nodos, la cual obviamente se ve afectada al mismo tiempo por la cantidad de aristas que el grafo posee. Esta observación se puede notar ya que cada grafo presenta la complejidad temporal para una densidad de aristas de 15\%, 50\% y 100\% comparada con un valor $n^{2}$ multiplicado por una constante obtenida a partir de dividir el tiempo sobre la cantidad de nodos, y a su vez este valor es multiplicado por 0.15, 0.50 y 1.
 Al hacer esto y verificar que los valores se asemejan demasiado podemos concluir que la cantidad de aristas del grafo afecta directamente al rendimiento de forma lineal.
 
-En los tres gráficos utilizamos los mismos valores para O(n^2)* densidad de cantidad de aristas, y como se puede observar comparando los distintos gráficos, que presentan una variación en la cantidad k de conjuntos, los valores resultantes de los tests son casi los mismos, no se nota ninguna variación apreciable. 
+En los tres gráficos utilizamos los mismos valores para O($n^{2}$)* densidad de cantidad de aristas, y como se puede observar comparando los distintos gráficos, que presentan una variación en la cantidad k de conjuntos, los valores resultantes de los tests son casi los mismos, no se nota ninguna variación apreciable. 
 
 
 
