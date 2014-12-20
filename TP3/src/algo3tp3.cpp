@@ -54,11 +54,13 @@ int main(int argc, char * argv[]){
 				cerr << "Error fatal, no se ejecuta ningun ejercicio" << endl;
 			return -1;
 		}
-		Parser parser(opt);
-		parser.resolver();
-		if (opt.silence == false)
-			parser.mostrarSolucion();
+
 	}
+	
+	Parser parser(opt);
+	parser.resolver();
+	if (opt.silence == false)
+		parser.mostrarSolucion();
 
 	return 0;
 
