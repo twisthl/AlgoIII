@@ -9,41 +9,41 @@ def construirComparaciones():
     import os
     from random import randint
 
-    coleccion = [5,30,70]
-    for k in coleccion:
-        s = open('../recursos/comparando/GREEDK' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GREEDK' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GREEDK' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
-        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
-        s.close()
+#    coleccion = [5,30,70]
+#    for k in coleccion:
+#        s = open('../recursos/comparando/GREEDK' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M15NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GREEDK' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M50NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GREEDK' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+##        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
+#        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M100NGRANDECOMPARACION.dat', 'wb+')
+#        s.close()
 
 #    for k in range(2, 8):
-    for n in range(5,2000):
+    for n in range(93,2000):
         coleccion = [5,30,70]
         for k in coleccion:
             
@@ -52,7 +52,7 @@ def construirComparaciones():
 #            else:
 #                v = 16
 
-            v= 4
+            v= 2
 
             m = int(((n * (n-1))/2)*0.15)
 
