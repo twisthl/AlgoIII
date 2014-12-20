@@ -158,4 +158,79 @@ Podemos ver como a medida que aumenta la cantida de nodos los valores de diverge
 
 Otro punto f\'acilmente apreciable es que la Heur\'istica Greedy es la que mayor distancia tiene con respecto a la soluci\'on Exacta para todos los valores de n y cantidad de particiones, seguida por Busqueda Local y luego como, es de esperarse, los GRASP con distinta cantidad de iteraciones.\\
 
-Volvemos a ver como al aumentar la cantidad de particiones, para grafos poco densos, para todos los algoritmos las soluciones se acercan mucho mas a la Ecxacta. Como ya lo mencionamos en alg\'un momento esto debe ser produco de la libertad que tengo de colocar los nodos al tener un grafo copo denso (que probablemnte tanga una gran cantidad de nodos aislados) y en funcion que aumentan la cantidad de particiones se reducen 
+Volvemos a ver como al aumentar la cantidad de particiones, en funcion de las densidades del grafo, para grafos menos densos, en todos los algoritmos las soluciones se acercan mucho mas a la Ecxacta. Como ya lo mencionamos en alg\'un momento esto debe ser produco de la libertad que tengo de colocar los nodos al tener un grafo poco denso (que probablemnte tanga una gran cantidad de nodos aislados y una menor aristas intrapartici\'ones).
+
+No podemos apreciar bien los valores de los distintos GRASP con sus respectiva cantidad de repeticiones, ya que para estas cantidades de nodos y particiones todos devuelven resultados muy similares.\\
+Por este motivo vamos a realizar m\'as experimentos pero excuptuando al algoritmo exacto para poder correr instancias m\'as grandes.
+
+
+\section{Divergencia para instancias mayores}
+
+\subsubsection{5 Particiones}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon5Particiones15Aristas.png}
+\caption{Distancias de las soluciones para K = 5 y 15\% de aristas}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon5Particiones50Aristas.png}
+\caption{Distancias de las solucioens para K = 5 y 50\% de aristas}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon5Particiones100Aristas.png}
+\caption{Distancias de las solucioens para K = 5 y 100\% de aristas}
+\end{center}
+\end{figure}
+
+\subsubsection{30 Particiones}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon30Particiones15Aristas.png}
+\caption{Distancias de las soluciones para K = 30 y 15\% de aristas}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon30Particiones50Aristas.png}
+\caption{Distancias de las solucioens para K = 30 y 50\% de aristas}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon30Particiones100Aristas.png}
+\caption{Distancias de las solucioens para K = 30 y 100\% de aristas}
+\end{center}
+\end{figure}
+
+\subsubsection{70 Particiones}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon70Particiones15Aristas.png}
+\caption{Distancias de las soluciones para K = 70 y 15\% de aristas}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon70Particiones50Aristas.png}
+\caption{Distancias de las solucioens para K = 70 y 50\% de aristas}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{finales/muchosComparacionesCon70Particiones100Aristas.png}
+\caption{Distancias de las solucioens para K = 70 y 100\% de aristas}
+\end{center}
+\end{figure}
