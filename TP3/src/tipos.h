@@ -60,6 +60,7 @@ class Particion{
 		Particion(int nro);
 		double cuantoPesariaCon(Grafo *G, Vertice vertice);
 		double cuantoPesariaSin(Grafo *G, Vertice vertice);
+		double cuantoPesariaSwaping(Grafo *G, Vertice verticeMetido, Vertice verticeSacado);
 		void agregar(Grafo *G, Vertice vertice);
 		void agregarSinActualizarPeso(Vertice vertice);
 		void quitar(Grafo *G, Vertice vertice);

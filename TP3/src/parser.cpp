@@ -16,6 +16,7 @@ Parser::Parser(Opciones opt){
 	this->max_iteraciones = opt.max_iteraciones;
 	this->mostrar_info = opt.mostrar_info;
 	this->silence = opt.silence;
+	this->mejora2 = opt.mejora2;
 }
 
 
@@ -83,7 +84,7 @@ void Parser::resolver(){
 			Greed greed(G, k, false);
 			time = greed.resolver();
 			list<Particion> ini_k_particion = greed.dameKParticion();
-			BusquedaLocal busquedaLocal(G, ini_k_particion, k, this->mostrar_info);
+			BusquedaLocal busquedaLocal(G, ini_k_particion, k, this->mejora2, this->mostrar_info);
 
 			time += busquedaLocal.resolver();
 			list<Particion> k_particion = busquedaLocal.dameKParticion();

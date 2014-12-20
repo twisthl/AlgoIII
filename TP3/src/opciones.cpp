@@ -10,6 +10,7 @@ Opciones::Opciones(){
 	this->mostrar_info = false;
 	this->exercise = -1;
 	this->max_iteraciones = -1;
+	this->mejora2 = false;
 }
 
 bool Opciones::cargarArgumentos(int argc, char* argv[]){
@@ -63,6 +64,9 @@ bool Opciones::cargarArgumentos(int argc, char* argv[]){
 		else if ((string(argv[i]) == "-ph") || (string(argv[i]) == "--podar")) {
 			poda_habilitada = true;
 		}
+		else if ((string(argv[i]) == "-m2") || (string(argv[i]) == "--mejora2")) {
+			mejora2 = true;
+		}
 		else if ((string(argv[i]) == "-i") || (string(argv[i]) == "--info")) {
 			mostrar_info = true;
 		}
@@ -110,6 +114,7 @@ void Opciones::mostrarUso() {
 		<< "\t-p, --path\t\t[PATH]\tCarga el archivo de [PATH]\n"
 		<< "\t-o, --ouput\t\t[PATH]\tArchivo de salida\n"
 		<< "\t-ph, --podar\t\t\tHabilida la poda en del algoritmo exacto\n"
+		<< "\t-m2, --mejora2\t\t\tHabilida la segunda busqueda de vecindad para la busqueda local\n"
 		<< "\t-m, --maximo\t\t\tMaxima cantidad de iteraciones para el algoritmo GRASP\n"
 		<< "\t-i, --info\t\t\tSe muestra informacion adicional durante la ejecucion\n"
 		<< "\t-s, --silence\t\t\tLa ejecucion es silenciosa, no se muestra nada por pantalla\n"

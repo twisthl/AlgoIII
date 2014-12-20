@@ -31,6 +31,7 @@ class Parser {
 		string archivo_salida;
 		int max_iteraciones;
 		bool poda_habilitada;
+		bool mejora2;
 		bool mostrar_info;
 		bool silence;
 };

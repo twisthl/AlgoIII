@@ -28,7 +28,7 @@ double Grasp::resolver(){
 		
 		list<Particion> k_particion_inicial = greedyRandomizado();
 
-		BusquedaLocal busquedaLocal(this->G, k_particion_inicial, this->k, false);
+		BusquedaLocal busquedaLocal(this->G, k_particion_inicial, this->k, false, false);
 		busquedaLocal.resolver();
 		list<Particion> posibleSolucion = busquedaLocal.dameKParticion();
 

@@ -7,7 +7,7 @@ using namespace std;
 
 class BusquedaLocal {
 	public:
-		BusquedaLocal(Grafo *G, list<Particion> k_particion_inicial, int k, bool mostrarInfo);
+		BusquedaLocal(Grafo *G, list<Particion> k_particion_inicial, int k, bool mejora2, bool mostrarInfo);
 		~BusquedaLocal(){};
 		double resolver();
 		vector<int> dameSolucion();
@@ -15,11 +15,13 @@ class BusquedaLocal {
 
 	private:
 		bool mejorar();
+		bool mejorar2();
 		void mostrarMejoraVecino(vector<int> &ubicacion, double peso);
 
 		Grafo *G; 
 		int k;
 		bool mostrarInfo;
+		int vecindad;
 
 		list<Particion> k_particion;
 		vector<int> ubicacion;

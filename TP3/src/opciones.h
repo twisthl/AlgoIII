@@ -40,6 +40,7 @@ class Opciones{
 		bool mostrar_info;
 		bool silence;
 		int max_iteraciones;
+		bool mejora2;
 
 		string archivo_entrada;
 		string archivo_salida;

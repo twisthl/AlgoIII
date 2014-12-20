@@ -119,6 +119,18 @@ double Particion::cuantoPesariaSin(Grafo *G, Vertice vertice){
 	return pesaria;
 }
 
+double Particion::cuantoPesariaSwaping(Grafo *G, Vertice verticeMetido, Vertice verticeSacado){
+	double pesaria = this->cuantoPesariaSin(G, verticeSacado);
+	for (list<Vertice>::iterator it = this->vertices.begin(); it != this->vertices.end(); it++){
+		if (*it != verticeSacado){
+			Arista* pArista =  G->getArista(verticeMetido, *it);
+			if (pArista != NULL) 
+				pesaria += pArista->getPeso();
+		}
+	}
+	return pesaria;
+}
+
 void Particion::agregar(Grafo *G, Vertice vertice){
 	if (vertice == verticeX){
 		this->peso = pesoConVerticeX;
