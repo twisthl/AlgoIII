@@ -28,7 +28,7 @@ def construirComparaciones():
         s.close()
         s = open('../recursos/comparando/GRASP15K' + str(k) + 'M50COMPARACION.dat', 'wb+')
         s.close()
-        s = open('../recursos/comparando/GRASPK40' + str(k) + 'M50COMPARACION.dat', 'wb+')
+        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M50COMPARACION.dat', 'wb+')
         s.close()
         s = open('../recursos/comparando/GREEDK' + str(k) + 'M100COMPARACION.dat', 'wb+')
         s.close()
@@ -41,9 +41,15 @@ def construirComparaciones():
         s = open('../recursos/comparando/GRASP40K' + str(k) + 'M100COMPARACION.dat', 'wb+')
         s.close()
 
-    for k in range(2, 8):
-        for n in range(5,20):
-#        for k in range(2, 8):
+#    for k in range(2, 8):
+    for n in range(5,100):
+        for k in range(2, 8):
+            
+            if n> 16:
+                v = 3
+            else:
+                v = 16
+
             m = int(((n * (n-1))/2)*0.15)
 
             f = open('../recursos/comparando/EXACTO', 'wb+')
@@ -62,7 +68,7 @@ def construirComparaciones():
             f.close()
 
 
-            for q in range(0,10):
+            for q in range(0,v):
                 nombre = 'N' + str(n) + 'K' + str(k) + 'M15COMPARACION.grafo'
                 s = open(str('../recursos/comparando/' + nombre), 'wb+')
                 s.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
@@ -180,7 +186,7 @@ def construirComparaciones():
             s = open('../recursos/comparando/GRASP15K' + str(k) + 'M15COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGP15)+'\n')
             s.close()
-            s = open('../recursos/comparando/GRASPK40' + str(k) + 'M15COMPARACION.dat', 'a+')
+            s = open('../recursos/comparando/GRASP40K' + str(k) + 'M15COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGP40)+'\n')
             s.close()
 
@@ -203,7 +209,7 @@ def construirComparaciones():
             f.close()
 
 
-            for q in range(0,10):
+            for q in range(0,v):
                 nombre = 'N' + str(n) + 'K' + str(k) + 'M50COMPARACION.grafo'
                 s = open(str('../recursos/comparando/' + nombre), 'wb+')
                 s.write(str(n) + ' ' + str(m) + ' ' + str(k) + '\n')
@@ -344,7 +350,7 @@ def construirComparaciones():
             f.close()
 
 
-            for q in range(0,10):
+            for q in range(0,v):
                 nombre = 'N' + str(n) + 'K' + str(k) + 'M100COMPARACION.grafo'
 
                 r = open(str('../recursos/comparando/' + nombre), 'wb+')

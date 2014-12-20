@@ -1,7 +1,7 @@
 set terminal png size 1366, 768
 
 set xlabel "Cantidad de nodos"
-set ylabel "Divergencia contra el Algoritmo Exacto"
+set ylabel "Divergencia contra GRASO con 40 iteraciones"
 
 print "------------------------------gnuplot--------------------------------"
 print "              ...............ploteando.............."
@@ -34,5 +34,4 @@ set title titulo
 plot arch1 using 1:2 with lines linewidth 2 title etiqueta1 ,\
      arch2 using 1:2 with lines linewidth 2 title etiqueta2 ,\
      arch3 using 1:2 with lines linewidth 2 title etiqueta3 ,\
-	 arch4 using 1:2 with lines linewidth 2 title etiqueta4 ,\
-	 arch5 using 1:2 with lines linewidth 2 title etiqueta5
+	 arch4 using 1:2 with lines linewidth 2 title etiqueta4
