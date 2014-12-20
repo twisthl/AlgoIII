@@ -66,19 +66,19 @@ def construirComparaciones():
                     s.write(str(origen) + ' ' + str(destino) + ' '+ str(w) + '\n')
                 s.close()
 
-                bashCommand = " ./algo3tp3 -EX -p ../recursos/comparando/" + nombre + " -ph"
+                bashCommand = " ./algo3tp3 -EX -s -p ../recursos/comparando/" + nombre + " -ph"
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GD -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GD -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GP -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GP -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -BL -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -BL -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -PS -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -PS -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
 
@@ -170,19 +170,19 @@ def construirComparaciones():
                     s.write(str(origen) + ' ' + str(destino) + ' '+ str(w) + '\n')
                 s.close()
 
-                bashCommand = " ./algo3tp3 -EX -p ../recursos/comparando/" + nombre + " -ph"
+                bashCommand = " ./algo3tp3 -EX -s -p ../recursos/comparando/" + nombre + " -ph"
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GD -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GD -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GP -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GP -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -BL -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -BL -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -PS -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -PS -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
 
@@ -266,19 +266,19 @@ def construirComparaciones():
                         w = randint(1, 999)
                         r.write(str(i) + ' ' + str(j) + ' ' + str(w) + '\n')
                 r.close()
-                bashCommand = " ./algo3tp3 -EX -p ../recursos/comparando/" + nombre + " -ph"
+                bashCommand = " ./algo3tp3 -EX -s -p ../recursos/comparando/" + nombre + " -ph"
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GD -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GD -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GP -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GP -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -BL -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -BL -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -PS -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -PS -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
             f = open('../recursos/comparando/EXACTO', 'r')
