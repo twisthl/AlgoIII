@@ -56,7 +56,7 @@ A continuación presentamos un pseudo-gráfico del algoritmo realizado:
 		\item Para cada partición $p$
 			\begin{itemize}
 			\item Si $v$ esta en la partición $k$, Se calcula cuanto peso 'perdería' restando las aristas intraparticion que inciden en $k$
-			\item Sino se calcula cuanto peso 'sumaria' mover $v$ a $p$ guardando el peso, $v$ y $p$ si suma menos peso que con los $v$ y $p$ anteriores.
+			\item Sino se calcula cuanto peso 'sumaria' mover $v$ a $p$ guardando el peso, $v$ y $p$ si suma menos peso que con los $v$ y $p$ anteriores (recursión).
 			\end{itemize}
 		\item Si se llego a una solución mejor, se guarda
 		\end{itemize}
@@ -65,7 +65,21 @@ A continuación presentamos un pseudo-gráfico del algoritmo realizado:
 \end{itemize}
 
 
+\subsection{Análisis de complejidad}
+
+Para analizar la complejidad del algoritmo de busqueda local vamos a centrarnos en calcular el orden de complejidad temporal de peor caso de una iteracion.
+Asi, en cada iteracion de la llamada recursiva de nuestro algoritmo recorremos cada vertice $v$, y por cada vertice, cada particion $p$ asi que hasta aqui tenemos una complejidad en el orden de $O(n.k)$
+Dentro de estos dos ciclos se hace lo siguiente.
+\begin{itemize}
+\item Si $v$ esta en la partición $k$, Se calcula cuanto peso 'perdería' restando las aristas intraparticion que inciden en $k$ (1)
+\item Sino se calcula cuanto peso 'sumaria' mover $v$ a $p$ guardando el peso, $v$ y $p$ si suma menos peso que con los $v$ y $p$ anteriores. (2)
+\end{itemize}
+En el punto (1) en el peor caso, cuando todas las aristas esten en un mismo conjunto, esto tiene un costo igual a $O(m)$. con $m$ cantidad de aristas.  En el punto (2) pasa lo mismo que en el anterior, cuando todas las aristas esten en el mismo conjunto, esto tiene un costo del orden de $O(m)$.
+Pero en ambos casos, que son complementarios (sumar o restar las aristas que inciden en $v$ del mismo conjunto) al ejecutarse dentro de la iteracion por cada particion no hace una complejidad de $O(k.m)$ ya que el valor $m$ está amortizado, porque por cada particion no se realizaran $m$ calculos, sino que en el peor caso (porque no todas las aritas incidentes en $v$ son necesariamente intraparticion) se analizarán las $m$ aristas una vez recorridos los $k$ conjuntos, por lo que finalmente esto tiene una complejidad de $O(k+m)$, y en total cada recursion del algoritmo tiene una complejidad en el orden de $O(n.(k+m))$.
 
 
 
 
+\begin{itemize}
+\item
+\end{itemize}
