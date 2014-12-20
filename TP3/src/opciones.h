@@ -38,6 +38,7 @@ class Opciones{
 		bool archivo;
 		bool poda_habilitada;
 		bool mostrar_info;
+		bool silence;
 
 		string archivo_entrada;
 		string archivo_salida;

@@ -57,6 +57,9 @@ bool Opciones::cargarArgumentos(int argc, char* argv[]){
 		else if ((string(argv[i]) == "-i") || (string(argv[i]) == "--info")) {
 			mostrar_info = true;
 		}
+		else if ((string(argv[i]) == "-s") || (string(argv[i]) == "--silence")) {
+			silence = true;
+		}
 		else if ((string(argv[i]) == "-h") || (string(argv[i]) == "--help")) {
 			help = true;
 		}
@@ -99,6 +102,7 @@ void Opciones::mostrarUso() {
 		<< "\t-o, --ouput\t\t[PATH]\tArchivo de salida\n"
 		<< "\t-ph, --podar\t\t\tHabilida la poda en del algoritmo exacto\n"
 		<< "\t-i, --info\t\t\tSe muestra informacion adicional durante la ejecucion\n"
+		<< "\t-s, --silence\t\t\tLa ejecucion es silenciosa, no se muestra nada por pantalla\n"
 		<< endl;
 }
 

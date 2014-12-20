@@ -50,4 +50,4 @@ testingGrasp.o: testingGrasp.cpp
 	g++ -g -c $(CXXFLAGS) testingGrasp.cpp
 
 clean:
-	rm -rf *o algo3tp3
+	rm -rf *o algo3tp3 testingGrasp

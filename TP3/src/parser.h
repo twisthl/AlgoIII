@@ -22,6 +22,7 @@ class Parser {
 		void mostrarSolucion();
 
 	private:
+		void guardarSolucion();
 		void guardarPesoSolucion(string archivoPeso, double pesoSolucion);
 
 		int exercise;
@@ -30,6 +31,7 @@ class Parser {
 		string archivo_salida;
 		bool mostrar_info;
 		bool poda_habilitada;
+		bool silence;
 };
 
 #endif

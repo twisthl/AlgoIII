@@ -95,7 +95,7 @@ def construirComparaciones():
                     print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
                     print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
                     print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
-                print "calidadGD = " +  str(calidadGD)
+                print ""
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
                 sumatoriaGP += calidadGP
@@ -199,7 +199,7 @@ def construirComparaciones():
                     print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
                     print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
                     print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
-                print "calidadGD = " +  str(calidadGD)
+                print ""
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
                 sumatoriaGP += calidadGP
@@ -295,7 +295,7 @@ def construirComparaciones():
                     print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
                     print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
                     print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
-                print "calidadGD = " +  str(calidadGD)
+                print ""
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
                 sumatoriaGP += calidadGP

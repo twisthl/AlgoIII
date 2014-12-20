@@ -12,18 +12,9 @@ Parser::Parser(Opciones opt){
 
 	this->exercise = opt.exercise;
 	this->archivo_entrada = opt.archivo_entrada;
-	this->archivo_salida = opt.archivo_salida;
 	this->poda_habilitada = opt.poda_habilitada;
 	this->mostrar_info = opt.mostrar_info;
-
-	if (this->archivo_salida.empty()){
-		//cout << "No se especificó archivo de salida, se usa: " << endl;
-		//cout << "..recursos/output" << endl << endl;
-		this->archivo_salida = "..recursos/output";
-	}
-
-	fstream output(archivo_salida, ios::trunc);
-
+	this->silence = opt.silence;
 }
 
 
@@ -32,7 +23,8 @@ void Parser::resolver(){
 	// Se carga el archivo
 	ifstream file(this->archivo_entrada);
 	string line;
-	//cout << "# Carga archivo : " << this->archivo_entrada << endl << endl;
+	if (this->silence == false)
+		cout << "# Carga archivo : " << this->archivo_entrada << endl << endl;
 
 	int n;
 	int m;
@@ -99,7 +91,7 @@ void Parser::resolver(){
 			break;
 		}
 		case GRASP:{
-			Grasp grasp(G, k, this->mostrar_info, 0.4, 3, 5, 10);
+			Grasp grasp(G, k, this->mostrar_info, 0.4, 3, 1, 1);
 			time = grasp.resolver();
 			list<Particion> k_particion = grasp.dameKParticion();
 			guardarPesoSolucion("GRASP", cuantoPesa(k_particion));
@@ -124,11 +116,14 @@ void Parser::resolver(){
 		}
 	}
 
+	guardarSolucion();
 	guardarTiempoEjecucion(n, time);
-	//cout << "Tiempo de ejecucion: " << endl;
-	//cout << time << " sec" << endl;
-	//cout << endl;
-
+	if (this->silence == false){
+		cout << "Tiempo de ejecucion: " << endl;
+		cout << time << " sec" << endl;
+		cout << endl;
+	}
+	
 	file.close();
 }
 
@@ -141,11 +136,23 @@ void Parser::guardarPesoSolucion(string archivoPeso, double pesoSolucion){
 }
 
 void Parser::mostrarSolucion(){
-	//cout << "Solucion: ";
+	cout << "Solucion: ";
 	for (int i = 0; i < this->solucion.size(); i++){
-		//cout << solucion[i] << " ";
+		cout << solucion[i] << " ";
 	}
-	//cout << endl << endl;
+	cout << endl << endl;
+}
+
+void Parser::guardarSolucion(){
+	if (this->archivo_salida.empty())
+		this->archivo_salida = "../recursos/solucion";
+
+	fstream output(this->archivo_salida, ios::out | ios::app);
+	for (int i = 0; i < this->solucion.size(); i++){
+		output << solucion[i] << " ";
+	}
+	output << endl;
+	output.close();
 }
 
 void Parser::guardarTiempoEjecucion(int n, double time){
