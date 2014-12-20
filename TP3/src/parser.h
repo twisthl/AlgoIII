@@ -29,8 +29,9 @@ class Parser {
 		vector<int> solucion;
 		string archivo_entrada;
 		string archivo_salida;
-		bool mostrar_info;
+		int max_iteraciones;
 		bool poda_habilitada;
+		bool mostrar_info;
 		bool silence;
 };
 

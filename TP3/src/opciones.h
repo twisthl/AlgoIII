@@ -39,6 +39,7 @@ class Opciones{
 		bool poda_habilitada;
 		bool mostrar_info;
 		bool silence;
+		int max_iteraciones;
 
 		string archivo_entrada;
 		string archivo_salida;

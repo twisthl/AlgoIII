@@ -14,19 +14,31 @@ def construirComparaciones():
         s.close()
         s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M15COMPARACION.dat', 'wb+')
         s.close()
-        s = open('../recursos/comparando/GRASPK' + str(k) + 'M15COMPARACION.dat', 'wb+')
+        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M15COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M15COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M15COMPARACION.dat', 'wb+')
         s.close()
         s = open('../recursos/comparando/GREEDK' + str(k) + 'M50COMPARACION.dat', 'wb+')
         s.close()
         s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M50COMPARACION.dat', 'wb+')
         s.close()
-        s = open('../recursos/comparando/GRASPK' + str(k) + 'M50COMPARACION.dat', 'wb+')
+        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M50COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M50COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASPK40' + str(k) + 'M50COMPARACION.dat', 'wb+')
         s.close()
         s = open('../recursos/comparando/GREEDK' + str(k) + 'M100COMPARACION.dat', 'wb+')
         s.close()
         s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M100COMPARACION.dat', 'wb+')
         s.close()
-        s = open('../recursos/comparando/GRASPK' + str(k) + 'M100COMPARACION.dat', 'wb+')
+        s = open('../recursos/comparando/GRASP5K' + str(k) + 'M100COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASP15K' + str(k) + 'M100COMPARACION.dat', 'wb+')
+        s.close()
+        s = open('../recursos/comparando/GRASP40K' + str(k) + 'M100COMPARACION.dat', 'wb+')
         s.close()
 
     for k in range(2, 8):
@@ -40,7 +52,11 @@ def construirComparaciones():
             f.close()
             f = open('../recursos/comparando/BUSQUEDA', 'wb+')
             f.close()
-            f = open('../recursos/comparando/GRASP', 'wb+')
+            f = open('../recursos/comparando/GRASP5', 'wb+')
+            f.close()
+            f = open('../recursos/comparando/GRASP15', 'wb+')
+            f.close()
+            f = open('../recursos/comparando/GRASP40', 'wb+')
             f.close()
             f = open('../recursos/comparando/PEOR_SOLUCION', 'wb+')
             f.close()
@@ -72,7 +88,13 @@ def construirComparaciones():
                 bashCommand = " ./algo3tp3 -GD -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GP -s -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GP -m 5 -s -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
+                bashCommand = " ./algo3tp3 -GP -m 15 -s -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
+                bashCommand = " ./algo3tp3 -GP -m 40 -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
                 bashCommand = " ./algo3tp3 -BL -s -p ../recursos/comparando/" + nombre
@@ -85,45 +107,66 @@ def construirComparaciones():
             f = open('../recursos/comparando/EXACTO', 'r')
             lineasEX = f.readlines()
             f.close()
-            r = open('../recursos/comparando/GREED', 'r')
-            lineasGD = r.readlines()
-            r.close()
-            s = open('../recursos/comparando/BUSQUEDA', 'r')
-            lineasBL = s.readlines()
-            s.close()
-            t = open('../recursos/comparando/GRASP', 'r')
-            lineasGP = t.readlines()
-            t.close()
-            u = open('../recursos/comparando/PEOR_SOLUCION', 'r')
-            lineasPS = u.readlines()
-            u.close()
+            f = open('../recursos/comparando/GREED', 'r')
+            lineasGD = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/BUSQUEDA', 'r')
+            lineasBL = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP5', 'r')
+            lineasGP5 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP15', 'r')
+            lineasGP15 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP40', 'r')
+            lineasGP40 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasPS = f.readlines()
+            f.close()
 
             sumatoriaGD = 0
             sumatoriaBL = 0
-            sumatoriaGP = 0
+            sumatoriaGP5 = 0
+            sumatoriaGP15 = 0
+            sumatoriaGP40 = 0
             for z in range(0,len(lineasEX)):
                 if (float(lineasPS[z]) == float(lineasEX[z])):
                     calidadGD = 1
                     calidadBL = 1
-                    calidadGP = 1
+                    calidadGP5 = 1
+                    calidadGP15 = 1
+                    calidadGP40 = 1
                 else:
                     calidadGD = 1 - ((float(lineasGD[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadGD = calidadGD * calidadGD
                     calidadBL = 1 - ((float(lineasBL[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadBL = calidadBL * calidadBL
-                    calidadGP = 1 - ((float(lineasGP[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
-                    calidadGP = calidadGP * calidadGP
+                    calidadGP5 = 1 - ((float(lineasGP5[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP5 = calidadGP5 * calidadGP5
+                    calidadGP15 = 1 - ((float(lineasGP15[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP15 = calidadGP15 * calidadGP15
+                    calidadGP40 = 1 - ((float(lineasGP40[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP40 = calidadGP40 * calidadGP40
                     print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
                     print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
-                    print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
+                    print "calidadGP5 = 1 - (" + str(float(lineasGP5[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP5)
+                    print "calidadGP15= 1 - (" + str(float(lineasGP15[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP15)
+                    print "calidadGP40 = 1 - (" + str(float(lineasGP40[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP40)
+
                 print ""
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
-                sumatoriaGP += calidadGP
+                sumatoriaGP5 += calidadGP5
+                sumatoriaGP15 += calidadGP15
+                sumatoriaGP40 += calidadGP40
 
             promedioGD = sumatoriaGD/len(lineasEX)
             promedioBL = sumatoriaBL/len(lineasEX)
-            promedioGP = sumatoriaGP/len(lineasEX)
+            promedioGP5 = sumatoriaGP5/len(lineasEX)
+            promedioGP15 = sumatoriaGP15/len(lineasEX)
+            promedioGP40 = sumatoriaGP40/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M15COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGD)+'\n')
@@ -131,8 +174,14 @@ def construirComparaciones():
             s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M15COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioBL)+'\n')
             s.close()
-            s = open('../recursos/comparando/GRASPK' + str(k) + 'M15COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGP)+'\n')
+            s = open('../recursos/comparando/GRASP5K' + str(k) + 'M15COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP5)+'\n')
+            s.close()
+            s = open('../recursos/comparando/GRASP15K' + str(k) + 'M15COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP15)+'\n')
+            s.close()
+            s = open('../recursos/comparando/GRASPK40' + str(k) + 'M15COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP40)+'\n')
             s.close()
 
 
@@ -144,7 +193,11 @@ def construirComparaciones():
             f.close()
             f = open('../recursos/comparando/BUSQUEDA', 'wb+')
             f.close()
-            f = open('../recursos/comparando/GRASP', 'wb+')
+            f = open('../recursos/comparando/GRASP5', 'wb+')
+            f.close()
+            f = open('../recursos/comparando/GRASP15', 'wb+')
+            f.close()
+            f = open('../recursos/comparando/GRASP40', 'wb+')
             f.close()
             f = open('../recursos/comparando/PEOR_SOLUCION', 'wb+')
             f.close()
@@ -176,7 +229,13 @@ def construirComparaciones():
                 bashCommand = " ./algo3tp3 -GD -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GP -s -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GP -m 5 -s -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
+                bashCommand = " ./algo3tp3 -GP -m 15 -s -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
+                bashCommand = " ./algo3tp3 -GP -m 40 -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
                 bashCommand = " ./algo3tp3 -BL -s -p ../recursos/comparando/" + nombre
@@ -189,45 +248,66 @@ def construirComparaciones():
             f = open('../recursos/comparando/EXACTO', 'r')
             lineasEX = f.readlines()
             f.close()
-            r = open('../recursos/comparando/GREED', 'r')
-            lineasGD = r.readlines()
-            r.close()
-            s = open('../recursos/comparando/BUSQUEDA', 'r')
-            lineasBL = s.readlines()
-            s.close()
-            t = open('../recursos/comparando/GRASP', 'r')
-            lineasGP = t.readlines()
-            t.close()
-            u = open('../recursos/comparando/PEOR_SOLUCION', 'r')
-            lineasPS = u.readlines()
-            u.close()
+            f = open('../recursos/comparando/GREED', 'r')
+            lineasGD = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/BUSQUEDA', 'r')
+            lineasBL = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP5', 'r')
+            lineasGP5 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP15', 'r')
+            lineasGP15 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP40', 'r')
+            lineasGP40 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasPS = f.readlines()
+            f.close()
 
             sumatoriaGD = 0
             sumatoriaBL = 0
-            sumatoriaGP = 0
+            sumatoriaGP5 = 0
+            sumatoriaGP15 = 0
+            sumatoriaGP40 = 0
             for z in range(0,len(lineasEX)):
                 if (float(lineasPS[z]) == float(lineasEX[z])):
                     calidadGD = 1
                     calidadBL = 1
-                    calidadGP = 1
+                    calidadGP5 = 1
+                    calidadGP15 = 1
+                    calidadGP40 = 1
                 else:
                     calidadGD = 1 - ((float(lineasGD[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadGD = calidadGD * calidadGD
                     calidadBL = 1 - ((float(lineasBL[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadBL = calidadBL * calidadBL
-                    calidadGP = 1 - ((float(lineasGP[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
-                    calidadGP = calidadGP * calidadGP
+                    calidadGP5 = 1 - ((float(lineasGP5[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP5 = calidadGP5 * calidadGP5
+                    calidadGP15 = 1 - ((float(lineasGP15[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP15 = calidadGP15 * calidadGP15
+                    calidadGP40 = 1 - ((float(lineasGP40[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP40 = calidadGP40 * calidadGP40
                     print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
                     print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
-                    print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
+                    print "calidadGP5 = 1 - (" + str(float(lineasGP5[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP5)
+                    print "calidadGP15= 1 - (" + str(float(lineasGP15[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP15)
+                    print "calidadGP40 = 1 - (" + str(float(lineasGP40[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP40)
+
                 print ""
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
-                sumatoriaGP += calidadGP
+                sumatoriaGP5 += calidadGP5
+                sumatoriaGP15 += calidadGP15
+                sumatoriaGP40 += calidadGP40
 
             promedioGD = sumatoriaGD/len(lineasEX)
             promedioBL = sumatoriaBL/len(lineasEX)
-            promedioGP = sumatoriaGP/len(lineasEX)
+            promedioGP5 = sumatoriaGP5/len(lineasEX)
+            promedioGP15 = sumatoriaGP15/len(lineasEX)
+            promedioGP40 = sumatoriaGP40/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M50COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGD)+'\n')
@@ -235,8 +315,14 @@ def construirComparaciones():
             s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M50COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioBL)+'\n')
             s.close()
-            s = open('../recursos/comparando/GRASPK' + str(k) + 'M50COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGP)+'\n')
+            s = open('../recursos/comparando/GRASP5K' + str(k) + 'M50COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP5)+'\n')
+            s.close()
+            s = open('../recursos/comparando/GRASP15K' + str(k) + 'M50COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP15)+'\n')
+            s.close()
+            s = open('../recursos/comparando/GRASP40K' + str(k) + 'M50COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP40)+'\n')
             s.close()
 
 
@@ -248,7 +334,11 @@ def construirComparaciones():
             f.close()
             f = open('../recursos/comparando/BUSQUEDA', 'wb+')
             f.close()
-            f = open('../recursos/comparando/GRASP', 'wb+')
+            f = open('../recursos/comparando/GRASP5', 'wb+')
+            f.close()
+            f = open('../recursos/comparando/GRASP15', 'wb+')
+            f.close()
+            f = open('../recursos/comparando/GRASP40', 'wb+')
             f.close()
             f = open('../recursos/comparando/PEOR_SOLUCION', 'wb+')
             f.close()
@@ -272,7 +362,13 @@ def construirComparaciones():
                 bashCommand = " ./algo3tp3 -GD -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
-                bashCommand = " ./algo3tp3 -GP -s -p ../recursos/comparando/" + nombre
+                bashCommand = " ./algo3tp3 -GP -m 5 -s -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
+                bashCommand = " ./algo3tp3 -GP -m 15 -s -p ../recursos/comparando/" + nombre
+                os.system(bashCommand)
+
+                bashCommand = " ./algo3tp3 -GP -m 40 -s -p ../recursos/comparando/" + nombre
                 os.system(bashCommand)
 
                 bashCommand = " ./algo3tp3 -BL -s -p ../recursos/comparando/" + nombre
@@ -284,46 +380,67 @@ def construirComparaciones():
             f = open('../recursos/comparando/EXACTO', 'r')
             lineasEX = f.readlines()
             f.close()
-            r = open('../recursos/comparando/GREED', 'r')
-            lineasGD = r.readlines()
-            r.close()
-            s = open('../recursos/comparando/BUSQUEDA', 'r')
-            lineasBL = s.readlines()
-            s.close()
-            t = open('../recursos/comparando/GRASP', 'r')
-            lineasGP = t.readlines()
-            t.close()
-            u = open('../recursos/comparando/PEOR_SOLUCION', 'r')
-            lineasPS = u.readlines()
-            u.close()
+            f = open('../recursos/comparando/GREED', 'r')
+            lineasGD = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/BUSQUEDA', 'r')
+            lineasBL = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP5', 'r')
+            lineasGP5 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP15', 'r')
+            lineasGP15 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/GRASP40', 'r')
+            lineasGP40 = f.readlines()
+            f.close()
+            f = open('../recursos/comparando/PEOR_SOLUCION', 'r')
+            lineasPS = f.readlines()
+            f.close()
 
 
             sumatoriaGD = 0
             sumatoriaBL = 0
-            sumatoriaGP = 0
+            sumatoriaGP5 = 0
+            sumatoriaGP15 = 0
+            sumatoriaGP40 = 0
             for z in range(0,len(lineasEX)):
                 if (float(lineasPS[z]) == float(lineasEX[z])):
                     calidadGD = 1
                     calidadBL = 1
-                    calidadGP = 1
+                    calidadGP5 = 1
+                    calidadGP15 = 1
+                    calidadGP40 = 1
                 else:
                     calidadGD = 1 - ((float(lineasGD[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadGD = calidadGD * calidadGD
                     calidadBL = 1 - ((float(lineasBL[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
                     calidadBL = calidadBL * calidadBL
-                    calidadGP = 1 - ((float(lineasGP[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
-                    calidadGP = calidadGP * calidadGP
+                    calidadGP5 = 1 - ((float(lineasGP5[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP5 = calidadGP5 * calidadGP5
+                    calidadGP15 = 1 - ((float(lineasGP15[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP15 = calidadGP15 * calidadGP15
+                    calidadGP40 = 1 - ((float(lineasGP40[z]) - float(lineasEX[z])) / (float(lineasPS[z]) - float(lineasEX[z])))
+                    calidadGP40 = calidadGP40 * calidadGP40
                     print "calidadGD = 1 - (" + str(float(lineasGD[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGD)
                     print "calidadBL = 1 - (" + str(float(lineasBL[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadBL)
-                    print "calidadGP = 1 - (" + str(float(lineasGP[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP)
+                    print "calidadGP5 = 1 - (" + str(float(lineasGP5[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP5)
+                    print "calidadGP15= 1 - (" + str(float(lineasGP15[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP15)
+                    print "calidadGP40 = 1 - (" + str(float(lineasGP40[z]))+"-"+str(float(lineasEX[z]))+")/("+str(float(lineasPS[z]))+"-"+str(float(lineasEX[z])) +") = "+  str(calidadGP40)
+
                 print ""
                 sumatoriaGD += calidadGD
                 sumatoriaBL += calidadBL
-                sumatoriaGP += calidadGP
+                sumatoriaGP5 += calidadGP5
+                sumatoriaGP15 += calidadGP15
+                sumatoriaGP40 += calidadGP40
 
             promedioGD = sumatoriaGD/len(lineasEX)
             promedioBL = sumatoriaBL/len(lineasEX)
-            promedioGP = sumatoriaGP/len(lineasEX)
+            promedioGP5 = sumatoriaGP5/len(lineasEX)
+            promedioGP15 = sumatoriaGP15/len(lineasEX)
+            promedioGP40 = sumatoriaGP40/len(lineasEX)
 
             s = open('../recursos/comparando/GREEDK' + str(k) + 'M100COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioGD)+'\n')
@@ -331,8 +448,14 @@ def construirComparaciones():
             s = open('../recursos/comparando/BUSQUEDAK' + str(k) + 'M100COMPARACION.dat', 'a+')
             s.write(str(n)+"   "+str(promedioBL)+'\n')
             s.close()
-            s = open('../recursos/comparando/GRASPK' + str(k) + 'M100COMPARACION.dat', 'a+')
-            s.write(str(n)+"   "+str(promedioGP)+'\n')
+            s = open('../recursos/comparando/GRASP5K' + str(k) + 'M100COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP5)+'\n')
+            s.close()
+            s = open('../recursos/comparando/GRASP15K' + str(k) + 'M100COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP15)+'\n')
+            s.close()
+            s = open('../recursos/comparando/GRASP40K' + str(k) + 'M100COMPARACION.dat', 'a+')
+            s.write(str(n)+"   "+str(promedioGP40)+'\n')
             s.close()
 
 

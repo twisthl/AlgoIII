@@ -13,6 +13,7 @@ Parser::Parser(Opciones opt){
 	this->exercise = opt.exercise;
 	this->archivo_entrada = opt.archivo_entrada;
 	this->poda_habilitada = opt.poda_habilitada;
+	this->max_iteraciones = opt.max_iteraciones;
 	this->mostrar_info = opt.mostrar_info;
 	this->silence = opt.silence;
 }
@@ -91,10 +92,19 @@ void Parser::resolver(){
 			break;
 		}
 		case GRASP:{
-			Grasp grasp(G, k, this->mostrar_info, 0.4, 3, 1, 1);
+			int iteraciones;
+			int itSinCambios;
+			if (max_iteraciones != -1){
+				iteraciones = this->max_iteraciones;
+				itSinCambios = this->max_iteraciones;
+			}else{
+				iteraciones = 20;
+				itSinCambios = 6;
+			}
+			Grasp grasp(G, k, this->mostrar_info, 0.4, 3, iteraciones, itSinCambios);
 			time = grasp.resolver();
 			list<Particion> k_particion = grasp.dameKParticion();
-			guardarPesoSolucion("GRASP", cuantoPesa(k_particion));
+			guardarPesoSolucion("GRASP"+to_string(iteraciones), cuantoPesa(k_particion));
 			this->solucion = grasp.dameSolucion();
 			break;
 		}

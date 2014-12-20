@@ -67,16 +67,16 @@ int main(int argc, char * argv[]){
 	vector<Calidad> aux(21, calidad);
     vector<vector<Calidad> > tablaResultados(21, aux);
 
-    for (int n = 4; n <= 16; n+=4){
-    	double porcentajeRealizado = (n-4);
-		porcentajeRealizado = porcentajeRealizado / 16;
+    for (int n = 5; n <= 40; n+=4){
+    	double porcentajeRealizado = (n-5);
+		porcentajeRealizado = porcentajeRealizado / 40;
 		porcentajeRealizado = porcentajeRealizado * 100;
 		//cout << "porcentaje Realizado = " << porcentajeRealizado << "%" << endl;
 		for (int k = 2; k < n; k+= 2){
 			double porcentajeRealizado2 = (k-2);
 			porcentajeRealizado2 = porcentajeRealizado2 / n ;
 			porcentajeRealizado2 = porcentajeRealizado2 * 100;
-			porcentajeRealizado2 = porcentajeRealizado + porcentajeRealizado2 / 4;
+			porcentajeRealizado2 = porcentajeRealizado + porcentajeRealizado2 / 8;
 			cout << "porcentaje Realizado = " << porcentajeRealizado2 << "%" << endl;
 			for (int m = 3; m <= n*(n-1)/2; m+=3){
 				//100 grafos aleatorios con mismo m y k
