@@ -1,11 +1,124 @@
-El analisis de complejidad lo vamos a realizar en base a la cantidad de particiones posibles en k-subconjunto. Ya que si no aplicamos ninguna poda las estaríamos generando todas para verificar cual de ellas es la mínima.\\
-Para el primer vertices $v_1$, tenemos una única partición posible en donde ubicarlo, que la vamos a denominar $p_1$.\\
-Para el segundo vertice $v_2$, lo podemos ubicar tanto en la primer partición como en una nueva llamemosla $p_2$.\\
-Para el tercer nodo $v_3$, si ya habíamos ubicado a $v_1$ y $v_2$ en $p_1$, podemos colocarlo tambi\'en en $p_1$ o bien crear una nueva partición $p_2$ que no sería la misma que la anterior pues esa no existiría producto que $v_1$ y $v_2$ se encuentran en $p_1$, pero en cambio si ubicamos a $v_1$ en $p_1$ y a $v_2$ en $p_2$, podemos entonces ubicarlo en alguno de estos dos conjuntos o príamos crear una tercera partición $p_3$ (siempre y cuando k >=3) para ubicar a $v_3$.\\
-
-Así sucesivamente hasta llegar a $k$ vértices. Luego, para $v_1$ hay 1 posibble parrici\'on, para $v_2$ hay 2, para $v_3$ hay 3, hasta $v_k$ con $k$particiones posibles y eso es nos deja $k!$.\\
-
-Para los $(n-k)$ v\'ertices restantes tenemos $k$ subconjuntos por cada uno, por lo que es $k^{(n-k)}$.\\
 
 
-Finalmente podemos concluir que la complejidad del algoritmo es del orden de $O(k!\ *\ k^{(n-k)})$ en el peor caso, sin considerar las podas que reducen la cantidad de soluciones que computo. Para este analisis se considero que el resto de las operaciones son $O(1)$ lo cual es as\'i pues todas son operaciones elementales.
+\noindent
+Debemos aclarar en primer lugar que el algoritmo de backtracking genera un arbol de posibilidades con una rama nueva por cada llamada a la funci\'on recursiva. En particular, en nuestro algoritmo cada nodo lo identificamos como una configuraci\'on de vertices en particiones especificas. A su vez tambi\'en es el c\'odigo que se ejecuta para llegar de una configuraci\'on de particiones a otra.
+
+\noindent
+Cierto c\'odigo \textbf{combinar} se ejecuta una vez por cada nodo en el arbol y var\'ia dependiendo del estado anterior. \\
+En particular cada nodo comienza ejecutando el siguiente codigo:
+
+\lstset{language=C++,
+                basicstyle=\ttfamily\footnotesize,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                breaklines=true
+}
+\begin{lstlisting}
+
+if (verticeAUbicar == G->getCantVertices()) {
+	if (pesoAcumulado < this->mejorPeso){
+		this->mejorPeso = pesoAcumulado;
+		this->mejorKParticion = k_particion;
+		if (mostrarInfo) mostrarPotencialSolucion(this->mejorKParticion, this->mejorPeso);
+	}
+	return;
+}
+\end{lstlisting}
+
+\noindent 
+$verticeAUbicar == G->getCantVertices()$ corresponde a consultar si el nodo es el \'ultimo a ubicar. Comparacion de enteros la despreciamos \textbf{O(1)}.\\
+De ser el \'ultimo, se fija si la soluci\'on encontrada es mejor a una anterior encontrada, comparaci\'on de enteros \textbf{O(1)}. Podemos suponer el peor caso, que esto sea cierto. Luego cambia la soluci\'on guardada por la soluci\'on actual. Esto tiene un costo de copiar un vector<int> de tamanio $n$, es decir \textbf{O(n)}.\\
+Finalmente deducimos que todo este c\'odigo tiene un costo de \textbf{O(n)} para las hojas y de \textbf{O(1)} para el resto de los nodos.
+
+\noindent 
+La segunda cuota de codigo es la siguiente:
+
+\begin{lstlisting}
+
+list<Particion>::iterator itParticion;
+	for (itParticion = k_particion.begin(); itParticion != k_particion.end(); itParticion++){
+
+		double pesoOld = itParticion->getPeso();								O(1)
+		double pesoNew = itParticion->cuantoPesariaCon(G, verticeAUbicar);		O(1)
+		double difPeso = pesoNew - pesoOld;										O(1)
+
+		if (this->podaHabilitada && (this->mejorPeso <= pesoAcumulado+difPeso))	O(1)
+			continue;
+
+		// 'agregar' no vuelve a calcular el peso. Ya lo calcul'o en cuantoPesariaCon donde se cachea.
+		itParticion->agregar(G, verticeAUbicar);								O(1)
+		pesoAcumulado += difPeso;												O(1)
+
+		combinar(k_particion, verticeAUbicar+1, pesoAcumulado);					O(f)
+
+		pesoAcumulado -= difPeso;												O(1)
+		itParticion->quitarUltimoSinActualizarPeso();							O(1)
+		itParticion->setPeso(pesoOld);											O(1)
+	}
+\end{lstlisting}
+
+\noindent 
+Identificamos varias operaciones simples de asignaci\'on y comparaci\'on de enteros y un push y pop en una lista de enteros, todas despreciaremos a \textbf{O(1)}. \\
+identificamos la funci\'on llamada calcularPeligrosidad cuyo c\'odigo es:
+
+\begin{lstlisting}
+
+double Particion::cuantoPesariaCon(Grafo *G, Vertice vertice){
+	double pesaria = this->getPeso();
+	for (list<Vertice>::iterator it = this->vertices.begin(); it != this->vertices.end(); it++){
+		Arista* pArista =  G->getArista(vertice, *it);
+		if (pArista != NULL) 
+			pesaria += pArista->getPeso();
+	}
+	this->verticeX = vertice;
+	this->pesoConVerticeX = pesaria;
+	return pesaria;
+}
+\end{lstlisting}
+
+\noindent 
+Su complejidad resulta de hacer una iteraci\'on sobre todos los nodos de una parti\'on haciendo operaciones simples de enteros \textbf{O(1)}. El resultado entonces es \textbf{O(nEnP)} donde nEnP significa la cantidad de v\'ertices en la partici\'on. 
+
+\noindent 
+Volviendo a la segunda cuota de c\'odigo, identificamos entonces varias cosas. \\
+Se itera sobre cada partici\'on calculando el peso, con costo \textbf{cantidad de v\'ertices en la partici\'on} como vimos reci\'en.
+Luego la suma de los nodods en cada particion, es justamente todos los v\'ertices ya ubicados en la partici\'on. Este valor lo conocemos y es i. Donde i es el nivel del nodo actual y padre del nodo que se quiere insertar en el \'arbol. Esto se aprecia con notar que el algoritmo funciona descendiendo a nodos hijos siempre que ubique un vertice a una determinada partici\'on. Luego las particiones s\'olo pueden tener tantos v\'ertices como ascendentes del nodo. Dado que se encuentra en el nodo i, tiene i-1 ascendentes, que es entonces lo mismo que decir que se ubicaron i-1 v\'ertices.  \\
+Considerar la complejidad de iterar sobre particiones tampoco tendr\'ia caso ya que siempre hay mas o igual vertices que particiones y luego \textbf{O(particiones)} queda acotada por \textbf{O(v\'ertices)}.\\
+Aparte de calcular el peso se realizan otras operaciones por iteraci\'on en su mayor\'ia despreciables con excepci\'on de la llamada a la funcion recursiva \textbf{combinar}. Pero para el c\'alculo de complejidad ignoramos la complejidad de la funci\'on en cada instancia y en vez identificamos cuantas veces se ejecuta a lo largo del algoritmo.
+
+\begin{lstlisting}
+
+if (!podaHabilitada || particiones.size() + 1 < this->minparticiones) {
+	Camion camionNuevo(particiones.size(), quimicoACargar);   O(1)
+	particiones.push_back(camionNuevo);                       O(1)
+	carga[quimicoACargar] = camionNuevo.nro;               O(1)
+	combinar2(particione, quimicoACargar+1, carga);          O(1) 
+	carga[quimicoACargar] = -1;                            O(1)
+	particiones.pop_back();                                   O(1)
+}
+\end{lstlisting}
+
+\noindent 
+Esta tercera parte del c\'odigo es la que ubica el vertice nuevo a un partici\'on nuevo. La creaci\'on del partici\'on es \textbf{O(1)}, dado que s\'olo crea una estructura de un entero peligrosidadAcumulada = 0 y otro entero numero de camion. El resto iguales a vistas previamente son \textbf{O(1)}. Esto tiene una complejidad de \textbf{O(1)}. \\
+
+\noindent 
+Tomando en cuenta las 3 partes cada nodo tiene un algoritmo de complejidad \textbf{O(i)} a excepcion de las hojas que que adem\'as tienen un algoritmo extra acotado en \textbf{O(n)}. Como \textbf{O(i)} para una hoja es lo mismo que \textbf{O(n)}, la complejidad de la hoja es O(2n) u O(2i) igual a O(n) e igual a \textbf{O(i)}. \\
+
+\noindent 
+Ahora la segunda parte de la soluci\'on es contar cuantos nodos tiene el arbol generado por el algoritmo en cada nivel. De esta manera la sumatoria de los nodos de cada nivel por \textbf{O(i)} que es la complejidad de 1 nodo en el nivel i nos dar\'ia la complejidad del algoritmo.\\
+
+\noindent 
+Existe casualmente una secuencia particular llamada numeros de Bell que describe el número de particiones de un conjunto de n elementos, o equivalentemente, el número de relaciones de equivalencia en el mismo. \\
+Es decir que dada una cantidad Q de v\'ertices, el Q-esimo numero de Bell es la cantidad de maneras en que puedo agrupar los q v\'ertices.\\
+(Corroboramos esta relacion con un algoritmo que hicimos en haskell ubicado en ej3/recursos/nodos.hs que dado un determinado n, calcula la cantidad de nodos totales del arbol --(cambiar el archivo para probar distintos valores de n)--. En ambas deducimos la misma secuencia).\\
+
+\noindent 
+Luego la complejidad del algoritmo es: \\
+$\sum\limits_{i{{=}}1}^n B_{i}*i$
+
+\noindent 
+Por ultimo aclaramos que la inicializaci\'on del problema fue obviada. En particular contamos que hay en su mayoria operaciones de tiempo constante que no dependen de n. A excepci\'on de la inicializaci\'on de la matr\'iz de peligrosidad que almacena cada peligrosidad entre combinaci\'on de 2 vertices. Es una matriz de $n$x$n$ y su creaci\'on e inicializacion tienen un costo O(n2). O(n2) queda aplastado por la complejidad del resto del algoritmo a partir de n>2. Y Si n<=2, n es constante. Por lo tanto es obviada.
+
+
