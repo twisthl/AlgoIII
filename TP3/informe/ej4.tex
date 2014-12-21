@@ -5,7 +5,7 @@ Si la solución pudo ser mejorada, tomamos esta y se vuelve a ejecutar este proc
 Como se puede notar para cada solución factible definimos el conjunto de soluciones "vecinas" como: aquellas en las que difiere la posición de un solo nodo sobre los k conjuntos, iterando sobre estas hasta hallar la mejora de forma mayoritaria la solución. Esto se repite hasta que se encuentra un valor máximo local (máximo en cuanto a la optimalidad de la solución) que corresponde al mínimo peso obtenido.
 
 Pensamos también plantear la misma solución cambiando la vecindad de soluciones, en esta nueva heurística los vecinos no son las soluciones que difieren en la posición de un nodo, sino que los vecinos los tomamos como aquellos en los que la diferencia se da por el switcheo de dos nodos que pertenecen a distintos conjuntos.
-Finalmente descartamos esta segunda heuristica porque presentaba muchos casos desfavorables, por ejemplo la solucion inicial que tiene a todos los nodos en un solo conjunto, como la vecindad esta en intercambiar dos nodos, no podremos sacar ninguno de donde estan. O asi mismo una solucion que presente uno de los k conjuntos vacios. Nunca se podrian agregar nodos a este..
+Finalmente descartamos esta segunda heurística porque presentaba muchos casos desfavorables, por ejemplo la solución inicial que tiene a todos los nodos en un solo conjunto, como la vecindad esta en intercambiar dos nodos, no podremos sacar ninguno de donde están. O así mismo una solución que presente uno de los k conjuntos vacíos. Nunca se podrían agregar nodos a este..
 
 A modo de ejemplo presentamos una demostración gráfica de la heurística.
 
@@ -67,17 +67,66 @@ A continuación presentamos un pseudo-gráfico del algoritmo realizado:
 
 \subsection{Análisis de complejidad}
 
-Para analizar la complejidad del algoritmo de busqueda local vamos a centrarnos en calcular el orden de complejidad temporal de peor caso de una iteracion.
-Asi, en cada iteracion de la llamada recursiva de nuestro algoritmo recorremos cada vertice $v$, y por cada vertice, cada particion $p$ asi que hasta aqui tenemos una complejidad en el orden de $O(n.k)$
+Para analizar la complejidad del algoritmo de búsqueda local vamos a centrarnos en calcular el orden de complejidad temporal de peor caso de una iteración.
+Así, en cada iteración. de la llamada recursiva de nuestro algoritmo recorremos cada vértice $v$, y por cada vértice, cada partición $p$ así que hasta aquí tenemos una complejidad en el orden de $O(n.k)$
 Dentro de estos dos ciclos se hace lo siguiente.
 \begin{itemize}
 \item Si $v$ esta en la partición $k$, Se calcula cuanto peso 'perdería' restando las aristas intraparticion que inciden en $k$ (1)
 \item Sino se calcula cuanto peso 'sumaria' mover $v$ a $p$ guardando el peso, $v$ y $p$ si suma menos peso que con los $v$ y $p$ anteriores. (2)
 \end{itemize}
-En el punto (1) en el peor caso, cuando todas las aristas esten en un mismo conjunto, esto tiene un costo igual a $O(m)$. con $m$ cantidad de aristas.  En el punto (2) pasa lo mismo que en el anterior, cuando todas las aristas esten en el mismo conjunto, esto tiene un costo del orden de $O(m)$.
-Pero en ambos casos, que son complementarios (sumar o restar las aristas que inciden en $v$ del mismo conjunto) al ejecutarse dentro de la iteracion por cada particion no hace una complejidad de $O(k.m)$ ya que el valor $m$ está amortizado, porque por cada particion no se realizaran $m$ calculos, sino que en el peor caso (porque no todas las aritas incidentes en $v$ son necesariamente intraparticion) se analizarán las $m$ aristas una vez recorridos los $k$ conjuntos, por lo que finalmente esto tiene una complejidad de $O(k+m)$, y en total cada recursion del algoritmo tiene una complejidad en el orden de $O(n.(k+m))$.
+En el punto (1) en el peor caso, cuando todas las aristas estén en un mismo conjunto, esto tiene un costo igual a $O(m)$. con $m$ cantidad de aristas.  En el punto (2) pasa lo mismo que en el anterior, cuando todas las aristas estén en el mismo conjunto, esto tiene un costo del orden de $O(m)$.
+Pero en ambos casos, que son complementarios (sumar o restar las aristas que inciden en $v$ del mismo conjunto) al ejecutarse dentro de la iteración. por cada partición no hace una complejidad de $O(k.m)$ ya que el valor $m$ está amortizado, porque por cada partición no se realizaran $m$ cálculos, sino que en el peor caso (porque no todas las aristas incidentes en $v$ son necesariamente intraparticion) se analizarán las $m$ aristas una vez recorridos los $k$ conjuntos, por lo que finalmente esto tiene una complejidad de $O(k+m)$, y en total cada recursion del algoritmo tiene una complejidad en el orden de $O(n.(k+m))$.
+Para el caso de la vecindad que tiene como vecinos a aquellos que tienen switcheados dos vértices el análisis es el mismo, ya que el algoritmo es básicamente igual. Lo único que cambia es que en lugar de buscar donde posicionar un vértice, busca vértice por vértice, cuales dos switchear.
 
 
+\subsection{Experimentación}
+
+A la hora de analizar la performance del algoritmo en términos de tiempo de ejecución en función al tamaño de la entrada decidimos utilizar dos tipos de soluciones, aquellas que nos estrega el algoritmo greedy que nos daban una buena performance y un script que genera soluciones aleatorias.
+
+Primero hablaremos de la diferencia de performance entre las dos vecindades escogidas corrimos el script de python del que ya hablamos que genera casos de test para grafos con un 15\%, 50\% y 100\% de aristas (tomando como 100\% de aristas al grafo completo) y probamos ambas vecindades para los mismos grafos, obtuvimos el tiempo que tardan en obtener la mejor solución y los comparamos.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/PerformanceLocal1.png}
+\caption{}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/PerformanceLocal2.png}
+\caption{.}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/PerformanceLocal3.png}
+\caption{}
+\end{center}
+\end{figure}
+
+Como se puede observar en los gráficos presentados, en cuanto a performance ambos algoritmos tienen la misma complejidad temporal tal como habíamos sospechado y como lo habíamos analizado en el punto anterior.
+
+A continuación hablaremos de la calidad  de las soluciones, en cuanto a estas realizamos dos tests, uno corriendo los algoritmos a partir de la solución proporcionada por el algoritmo de grasp, y otra con soluciones aleatorias. En este caso tenemos como hipótesis que las soluciones que genere la vecindad que consta en cambiar un vértice de partición, serán mas cercanas a la solución óptima que las soluciones obtenidas del algoritmo con la vecindad que switchea vértices, ya que vemos que switchear es mas limitado que cambiar una por una, y hay ciertas soluciones que no podrán ser alcanzadas con esa metodología.
+
+Para esto corrimos las soluciones proporcionadas por el greedy y soluciones aleatorias, corriendo los algoritmos de las dos vecindades y graficamos la calidad de los mismos. La calidad es un valor entre 0 y 1 que se obtiene promediando el resultado del algoritmo comparado contra la mejor solución dada por el algoritmo exacto y la solución de peor caso.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/CalidadGreedyLocal.png}
+\caption{Comparación de calidad para heurística partiendo de solución greedy.}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{./img/CalidadAleatorioLocal.png}
+\caption{Comparación de calidad para heurística partiendo de solución aleatoria.}
+\end{center}
+\end{figure}
+
+Como se puede observar se cumplió lo que habíamos supuesto, el algoritmo de búsqueda local con la vecindad que difieren un nodo de conjunto logro optimizar mejor los resultados sobre los grafos que la segunda vecindad.
 
 
 \begin{itemize}
